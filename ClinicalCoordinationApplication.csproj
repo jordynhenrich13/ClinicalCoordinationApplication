@@ -53,13 +53,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="ClinicalCoordinatorDashboard.xaml.cs">
-	    <DependentUpon>ClinicalCoordinatorDashboard.xaml</DependentUpon>
-	  </Compile>
-	</ItemGroup>
-
-	<ItemGroup>
-	  <MauiXaml Update="ClinicalCoordinatorDashboard.xaml">
+	  <MauiXaml Update="CoordinatorDashboard.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>
