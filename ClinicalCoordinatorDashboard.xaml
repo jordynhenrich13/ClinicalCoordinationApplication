@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ClinicalCoordinationApplication.MainPage">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!-- Top Header with "Dashboard" text, side menu button, and profile icon -->
+        <Grid BackgroundColor="Blue" VerticalOptions="Start">
+            <Image Source="menu_icon.png" HorizontalOptions="Start" Margin="10">
+                <!-- Add your side menu icon -->
+            </Image>
+            <Label Text="Dashboard" TextColor="White" FontSize="24" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" />
+            <Image Source="profile_icon.png" HorizontalOptions="End" Margin="10">
+                <!-- Add your profile icon -->
+            </Image>
+        </Grid>
+
+        <!-- Content Below Header -->
+        <ScrollView Grid.Row="1">
+            <StackLayout Spacing="25" Padding="30,0" VerticalOptions="Center">
+
+                <!-- Dropdown menu -->
+                <Picker Title="Select Cohort" SelectedIndex="0">
+                    <Picker.ItemsSource>
+                        <x:String>October Cohort 2023</x:String>
+                        <x:String>February Cohort 2024</x:String>
+                        <x:String>June Cohort 2024</x:String>
+                        <x:String>October Cohort 2024</x:String>
+                    </Picker.ItemsSource>
+                </Picker>
+
+                <!-- Filter Button -->
+                <Button Text="Filter" HorizontalOptions="Center">
+                    <!-- Add your filter button content here -->
+                </Button>
+
+                <!-- Boxes with student names and numbers -->
+                <!-- You can use a ListView or other layout elements to display the boxes -->
+                <!-- Customize the styling as needed -->
+
+            </StackLayout>
+        </ScrollView>
+    </Grid>
+
+</ContentPage>
