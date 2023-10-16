@@ -1,12 +1,36 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ClinicalCoordinationApplication.SignIn"
              Title="SignIn">
-    <VerticalStackLayout>
+    <VerticalStackLayout
+        Spacing="20"
+        >
         <Label 
-            Text="Welcome to .NET MAUI!"
+            Text="Welcome!"
+            FontSize="24"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
+
+        <Button
+            x:Name="SignInButton"
+            Text="Sign In"
+            />
+
+        <Button
+            x:Name="CreateAnAccountButton"
+            Text="Don't have an account? Sign up."
+            Clicked="CreateAnAccount"
+            BackgroundColor="White"
+            TextColor="Blue"
+            />
+
+        <Button
+            x:Name="SkipSignInButton"
+            Text="Continue without signing in"
+            Clicked="SkipSignIn"
+            BackgroundColor="White"
+            TextColor="Gray"
+            />
     </VerticalStackLayout>
 </ContentPage>

@@ -2,8 +2,11 @@ namespace ClinicalCoordinationApplication;
 
 public partial class CreateAnAccount : ContentPage
 {
-	public CreateAnAccount()
+	private string userType;
+
+	public CreateAnAccount(string userType)
 	{
 		InitializeComponent();
+		this.userType = userType;
 	}
 }
