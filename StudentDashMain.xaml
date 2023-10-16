@@ -3,10 +3,95 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ClinicalCoordinationApplication.NewPage1"
              Title="NewPage1">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+    <ScrollView>
+        <!--Adult Health-->
+        <StackLayout>
+            <Frame BorderColor="Black" CornerRadius="5" Padding="10" Margin="20">
+                <StackLayout Orientation="Horizontal">
+                    <!--Need to bind pictures to status of clinical or # of order-->
+                    <Image Source="redstatus.png" WidthRequest="50" HeightRequest="50" />
+                    <StackLayout Orientation="Vertical">
+                        <Label Text="Adult Health" FontSize="25" HorizontalOptions="StartAndExpand"/>
+                        <StackLayout Orientation="Horizontal" HorizontalOptions="StartAndExpand">
+                            <Label Text="56 Hours" FontSize="Body" TextColor="Gray" />
+                            <Label Text="| 2 weeks" FontSize="Body" TextColor="Gray" />
+                        </StackLayout>
+                        <!--Need to bind to notes section in clinical class-->
+                        <Label Text="Notes:" FontSize="18" HorizontalOptions="StartAndExpand"/>
+                    </StackLayout>
+                </StackLayout>
+            </Frame>
+            <!--Adult Health II-->
+            <Frame BorderColor="Black" CornerRadius="5" Padding="10" Margin="20">
+                <StackLayout Orientation="Horizontal">
+                    <Image Source="redstatus.png" WidthRequest="50" HeightRequest="50" />
+                    <StackLayout Orientation="Vertical">
+                        <Label Text="Adult Health II" FontSize="25" HorizontalOptions="StartAndExpand"/>
+                        <StackLayout Orientation="Horizontal" HorizontalOptions="StartAndExpand">
+                            <Label Text="112 Hours" FontSize="Body" TextColor="Gray" />
+                            <Label Text="| 5 weeks" FontSize="Body" TextColor="Gray" />
+                        </StackLayout>
+                        <Label Text="Notes:" FontSize="18" HorizontalOptions="StartAndExpand"/>
+                    </StackLayout>
+                </StackLayout>
+            </Frame>
+            <!--Obstetric or Mental Health-->
+            <Frame BorderColor="Black" CornerRadius="5" Padding="10" Margin="20">
+                <StackLayout Orientation="Horizontal">
+                    <Image Source="redstatus.png" WidthRequest="50" HeightRequest="50" />
+                    <StackLayout Orientation="Vertical">
+                        <Label Text="Obstetric or Mental Health" FontSize="25" HorizontalOptions="StartAndExpand"/>
+                        <StackLayout Orientation="Horizontal" HorizontalOptions="StartAndExpand">
+                            <Label Text="112 Hours" FontSize="Body" TextColor="Gray" />
+                            <Label Text="| 4 weeks" FontSize="Body" TextColor="Gray" />
+                        </StackLayout>
+                        <Label Text="Notes:" FontSize="18" HorizontalOptions="StartAndExpand"/>
+                    </StackLayout>
+                </StackLayout>
+            </Frame>
+            <!--Pediatric or Geriatric-->
+            <Frame BorderColor="Black" CornerRadius="5" Padding="10" Margin="20">
+                <StackLayout Orientation="Horizontal">
+                    <Image Source="redstatus.png" WidthRequest="50" HeightRequest="50" />
+                    <StackLayout Orientation="Vertical">
+                        <Label Text="Pediatric or Geriatric" FontSize="25" HorizontalOptions="StartAndExpand"/>
+                        <StackLayout Orientation="Horizontal" HorizontalOptions="StartAndExpand">
+                            <Label Text="112 Hours" FontSize="Body" TextColor="Gray" />
+                            <Label Text="| 4 weeks" FontSize="Body" TextColor="Gray" />
+                        </StackLayout>
+                        <Label Text="Notes:" FontSize="18" HorizontalOptions="StartAndExpand"/>
+                    </StackLayout>
+                </StackLayout>
+            </Frame>
+            <!--Community Health-->
+            <Frame BorderColor="Black" CornerRadius="5" Padding="10" Margin="20">
+                <StackLayout Orientation="Horizontal">
+                    <Image Source="redstatus.png" WidthRequest="50" HeightRequest="50" />
+                    <StackLayout Orientation="Vertical">
+                        <Label Text="Community Health" FontSize="25" HorizontalOptions="StartAndExpand"/>
+                        <StackLayout Orientation="Horizontal" HorizontalOptions="StartAndExpand">
+                            <Label Text="168 Hours" FontSize="Body" TextColor="Gray" />
+                            <Label Text="| 6 weeks" FontSize="Body" TextColor="Gray" />
+                        </StackLayout>
+                        <Label Text="Notes:" FontSize="18" HorizontalOptions="StartAndExpand"/>
+                    </StackLayout>
+                </StackLayout>
+            </Frame>
+            <!--Clinical Synthesis-->
+            <Frame BorderColor="Black" CornerRadius="5" Padding="10" Margin="20">
+                <StackLayout Orientation="Horizontal">
+                    <Image Source="redstatus.png" WidthRequest="50" HeightRequest="50" />
+                    <StackLayout Orientation="Vertical">
+                        <Label Text="Clinical Synthesis" FontSize="25" HorizontalOptions="StartAndExpand"/>
+                        <StackLayout Orientation="Horizontal" HorizontalOptions="StartAndExpand">
+                            <Label Text="168 Hours" FontSize="Body" TextColor="Gray" />
+                            <Label Text="| 5 weeks" FontSize="Body" TextColor="Gray" />
+                        </StackLayout>
+                        <Label Text="Notes:" FontSize="18" HorizontalOptions="StartAndExpand"/>
+                    </StackLayout>
+                </StackLayout>
+            </Frame>
+            <Button TextColor="White" Text="Log Clinical Hours" WidthRequest="350" Margin="20"/>
+        </StackLayout>
+    </ScrollView>
 </ContentPage>
