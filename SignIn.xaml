@@ -3,6 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ClinicalCoordinationApplication.SignIn"
              Title="SignIn">
+
+    <Shell.TitleView>
+        <Label Text="Hi"
+              HorizontalOptions="Center"
+              VerticalOptions="Center" />
+    </Shell.TitleView>
     <VerticalStackLayout
         Spacing="20"
         Padding="20, 15"
@@ -13,25 +19,43 @@
             VerticalOptions="Center" 
             HorizontalOptions="Center" 
         />
+        <Entry 
+            x:Name="emailENT"
+            Placeholder="Email Address"
+        />
+        <Entry 
+            x:Name="passwordEnt"
+            Placeholder="Password"
+            IsPassword="True"
+        />
 
         <Button
             x:Name="SignInButton"
             Text="Sign In"
         />
+        <VerticalStackLayout
+            Spacing="-15"
+        >
+            <Label
+                Text="Don't have an account?"
+                HorizontalOptions="Center"
+            />
+            <Button
+                x:Name="CreateAnAccountButton"
+                Text="Create An Account."
+                Clicked="CreateAnAccount"
+                BackgroundColor="Transparent"
+                HorizontalOptions="Center"
+                TextColor="Blue"
+            />
 
-        <Button
-            x:Name="CreateAnAccountButton"
-            Text="Don't have an account? Sign up."
-            Clicked="CreateAnAccount"
-            BackgroundColor="White"
-            TextColor="Blue"
-        />
-
+        </VerticalStackLayout>
         <Button
             x:Name="SkipSignInButton"
             Text="Continue without signing in"
             Clicked="SkipSignIn"
-            BackgroundColor="White"
+            BackgroundColor="Transparent"
+            HorizontalOptions="Center"
             TextColor="Gray"
         />
     </VerticalStackLayout>
