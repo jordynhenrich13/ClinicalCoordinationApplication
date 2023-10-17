@@ -3,12 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ClinicalCoordinationApplication.SignIn"
              Title="SignIn">
-
-    <Shell.TitleView>
-        <Label Text="Hi"
-              HorizontalOptions="Center"
-              VerticalOptions="Center" />
-    </Shell.TitleView>
     <VerticalStackLayout
         Spacing="20"
         Padding="20, 15"
@@ -27,7 +21,7 @@
             x:Name="passwordEnt"
             Placeholder="Password"
             IsPassword="True"
-        />
+        />  
 
         <Button
             x:Name="SignInButton"

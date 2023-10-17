@@ -6,7 +6,7 @@
         {
             InitializeComponent();
 
-            MainPage = new SignIn("");
+            MainPage = new AppShell();
         }
     }
 }
