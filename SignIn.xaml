@@ -14,21 +14,23 @@
             HorizontalOptions="Center" 
         />
         <Entry 
-            x:Name="emailENT"
+            x:Name="EmailENT"
             Placeholder="Email Address"
         />
         <Entry 
-            x:Name="passwordEnt"
+            x:Name="PasswordEnt"
             Placeholder="Password"
             IsPassword="True"
         />  
 
         <Button
-            x:Name="SignInButton"
             Text="Sign In"
+            WidthRequest="150"
+            CornerRadius="0"
         />
         <VerticalStackLayout
-            Spacing="-15"
+            Spacing="-10"
+            Padding="0, 20"
         >
             <Label
                 Text="Don't have an account?"
