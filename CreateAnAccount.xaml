@@ -1,12 +1,77 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ClinicalCoordinationApplication.CreateAnAccount"
              Title="CreateAnAccount">
-    <VerticalStackLayout>
+    <VerticalStackLayout
+         Spacing="0"
+         Padding="20,0"
+    >
+        <Grid ColumnDefinitions="5, *" ColumnSpacing="15">
+            <Button
+             Grid.Column="0"
+             ImageSource="back_arrow.png"
+             HorizontalOptions="Center"
+             BackgroundColor="Transparent"
+            />
+            <Label 
+             Grid.Column="1"
+             VerticalOptions="Center" 
+             FontSize="Title" 
+             Text="Create an account"
+            />
+        </Grid>
         <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+              HorizontalOptions="Start"
+              VerticalOptions="Center" 
+              Text="Please fill in the required information to create an account."
+            />
+        <VerticalStackLayout
+            Spacing="30"
+            Padding="0, 20"
+        >
+            <Grid ColumnDefinitions=".9*, *">
+                <Entry 
+                    Grid.Column="0"
+                    x:Name="first_nameENT"
+                    Placeholder="First Name"
+                />
+                <Entry 
+                    Grid.Column="1"
+                    x:Name="last_nameENT"
+                    Placeholder="Last Name"
+                />
+            </Grid>
+            <Entry 
+                x:Name="EmailENT"
+                Placeholder="Email Address"
+            />
+            <Entry 
+                x:Name="PasswordEnt"
+                Placeholder="Password"
+                IsPassword="True"
+            />
+            <Button
+                Text="Create Account"
+                HorizontalOptions="Center"
+                CornerRadius="0"
+            />
+            <VerticalStackLayout
+                Spacing="-10"
+                Padding="0, 15"
+            >
+                <Label
+                    Text="Already have an account?"
+                    HorizontalOptions="Center"
+                />
+                <Button
+                    Text="Sign in here."
+                    BackgroundColor="Transparent"
+                    HorizontalOptions="Center"
+                    TextColor="Blue"
+                />
+
+            </VerticalStackLayout>
+        </VerticalStackLayout>
     </VerticalStackLayout>
 </ContentPage>
