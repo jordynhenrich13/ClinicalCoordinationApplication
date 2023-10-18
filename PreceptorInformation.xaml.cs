@@ -1,8 +1,8 @@
 namespace ClinicalCoordinationApplication;
 
-public partial class PreceptorInformation : ContentPage
+public partial class Preceptor : ContentPage
 {
-	public PreceptorInformation()
+	public Preceptor()
 	{
 		InitializeComponent();
 	}
