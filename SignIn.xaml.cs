@@ -26,7 +26,7 @@ public partial class SignIn : ContentPage
 			((App)Application.Current).MainPage = new CoordinatorDashboard();
 		} else
 		{
-            ((App)Application.Current).MainPage = new StudentDashboard();
+            ((App)Application.Current).MainPage = new StudentDashMain();
         }
 	}
 }
