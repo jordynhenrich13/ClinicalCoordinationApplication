@@ -1,8 +1,8 @@
 namespace ClinicalCoordinationApplication;
 
-public partial class StudentDashboard : ContentPage
+public partial class StudentDashMain : ContentPage
 {
-	public StudentDashboard()
+	public StudentDashMain()
 	{
 		InitializeComponent();
 	}
