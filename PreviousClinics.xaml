@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!--Olivia Ozbaki-->
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ClinicalCoordinationApplication.PreviousClinics"
+             Title="Previous Clinics">
+    <VerticalStackLayout>
+        <Frame Margin="16, 16, 16, 0">
+            <StackLayout>
+                <Label 
+                    Text="Select From Previous Clinics"
+                    VerticalOptions="Center" 
+                    HorizontalOptions="Start"
+                    FontSize="Medium"/>
+                <Label
+                    Text="Showing clinics within 50 miles"
+                    FontAttributes="Italic"/>
+                <ListView
+                    x:Name="PreviousClinicsList"
+                    HeightRequest="350"
+                    BindingContext="PreviousClinicsQueried">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                           <ViewCell>
+                               <Grid>
+                                   <Grid.ColumnDefinitions>
+                                       <ColumnDefinition Width="5*"/>
+                                       <ColumnDefinition Width="1*"/>
+                                   </Grid.ColumnDefinitions>
+                                   <Label Grid.Column="0" Text="{Binding ClinicName}"/>
+                                   <Label Grid.Column="1" Text="{Binding Distance}"/>
+                               </Grid>
+                           </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                <Button x:Name="SelectClinicButton" Text="Select Clinic" />
+            </StackLayout>
+        </Frame>
+        <Frame Margin="16, 16">
+            <StackLayout>
+                <Label Text="Find and Select a New Clinic"
+                       FontSize="Medium" />
+                <Button Text="Search for Clinic"
+                        Margin="0, 16"/>
+            </StackLayout>
+        </Frame>
+    </VerticalStackLayout>
+</ContentPage>
