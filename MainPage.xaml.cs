@@ -8,14 +8,24 @@
             InitializeComponent();
         }
 
-        private void openStudentView(object sender, EventArgs e)
+        private void OpenStudentView(object sender, EventArgs e)
         {
             Navigation.PushAsync(new SignIn("student"));
         }
 
-        private void openCoordinatorView(object sender, EventArgs e)
+        private void OpenCoordinatorView(object sender, EventArgs e)
         {
             Navigation.PushAsync(new SignIn("coordinator"));
+        }
+
+        private void OpenCoordinatorReportsView(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new CoordinatorReportsDashboard());
+        }
+
+        private void OpenDirectorReportsView(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new DirectorReportsDashboard());
         }
     }
 }

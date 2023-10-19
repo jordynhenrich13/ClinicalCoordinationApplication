@@ -21,13 +21,25 @@
             <Button
                 x:Name="StudentButton"
                 Text="I'm a Student"
-                Clicked="openStudentView"
+                Clicked="OpenStudentView"
                 HorizontalOptions="Center" />
 
             <Button
                 x:Name="CoordinatorButton"
                 Text="I'm a Coordinator"
-                Clicked="openCoordinatorView"
+                Clicked="OpenCoordinatorView"
+                HorizontalOptions="Center" />
+
+            <!-- TESTING PURPOSES -->
+            <Button
+                x:Name="CoordinatorReportsButton"
+                Text="Coordinator Reports"
+                Clicked="OpenCoordinatorReportsView"
+                HorizontalOptions="Center" />
+            <Button
+                x:Name="DirectorReportsButton"
+                Text="Director Reports"
+                Clicked="OpenDirectorReportsView"
                 HorizontalOptions="Center" />
         </VerticalStackLayout>
     </ScrollView>
