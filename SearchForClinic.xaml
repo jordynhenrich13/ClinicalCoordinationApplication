@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!--Olivia Ozbaki-->
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ClinicalCoordinationApplication.SearchForClinic"
+             Title="SearchForClinic">
+
+    <VerticalStackLayout>
+         <Label 
+            Text="Search for Clinic"
+            VerticalOptions="Center" 
+            HorizontalOptions="Start"
+             Margin="16, 0"
+             FontSize="Large" />
+        <Frame Margin="16, 16, 16, 0">
+            <StackLayout>
+                <Label Text="Search Filters"
+                       FontSize="Medium"
+                       Margin="0, 0, 0, 8"/>
+                <Label
+                    Text="Student Address:"/>
+                <Label
+                    Text="1975 Valley Rd, Menasha, WI, 54952"
+                    TextColor="DarkGray"/>
+                
+                <Label Text="Max Distance (mi)*"
+                       Margin="0, 10, 0, 0"/>
+                <Entry
+                    x:Name="MaxDistance"
+                    Placeholder="Max Distance"/>
+
+                <Label Text="Preferred Health System"
+                       Margin="0, 10, 0, 0"/>
+
+                <Entry
+                    x:Name="HealthSystems"
+                    Placeholder="Health systems, comma-separated"/>
+
+                <Button
+                    x:Name="SearchForClinicButton"
+                    Text="Search For Clinics"
+                    Margin="0, 10, 0, 0"
+                    />
+           </StackLayout>
+        </Frame>
+
+        <Frame Margin="16">
+            <StackLayout
+                HeightRequest="350">
+                <Label
+                Text="Clinics Found"
+                    FontSize="Medium"
+                    Margin="0, 0, 0, 8"/>
+                    <ListView
+                        x:Name="ClinicsFoundList"
+                        BindingContext="QueriedHealthcareSystems">
+                        <ListView.ItemTemplate>
+                                <DataTemplate>
+                                   <ViewCell>
+                                       <Grid>
+                                           <Grid.ColumnDefinitions>
+                                               <ColumnDefinition Width="5*"/>
+                                               <ColumnDefinition Width="1*"/>
+                                           </Grid.ColumnDefinitions>
+                                           <Label Grid.Column="0" Text="{Binding ClinicName}"/>
+                                           <Label Grid.Column="1" Text="{Binding Distance}"/>
+                                       </Grid>
+                                   </ViewCell>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                    </ListView>
+                <Button x:Name="SelectClinicButton" Text="Select Clinic" />
+            </StackLayout>
+        </Frame>
+        
+        
+    </VerticalStackLayout>
+</ContentPage>
