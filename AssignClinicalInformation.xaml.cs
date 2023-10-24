@@ -18,7 +18,8 @@ public partial class AssignClinicalInformation : ContentPage
             // You can add your code to navigate to the user's profile or perform any other action here
         }
 
-        private void OnNewNoteButtonClicked(object sender, EventArgs e)
+    [Obsolete]
+    private void OnNewNoteButtonClicked(object sender, EventArgs e)
         {
             var newNote = new Frame
             {
