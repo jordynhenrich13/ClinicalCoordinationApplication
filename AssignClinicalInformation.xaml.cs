@@ -18,56 +18,75 @@ public partial class AssignClinicalInformation : ContentPage
             // You can add your code to navigate to the user's profile or perform any other action here
         }
 
-        private void OnNewNoteButtonClicked(object sender, EventArgs e)
+    private void OnNewNoteButtonClicked(object sender, EventArgs e)
+    {
+        var newNote = new Frame
         {
-            var newNote = new Frame
-            {
-                CornerRadius = 10,
-                Padding = 5,
-            };
+            CornerRadius = 10,
+            Padding = 5,
+        };
 
-            var editor = new Editor
-            {
-                Placeholder = "Enter your notes here...",
-                HorizontalOptions = LayoutOptions.FillAndExpand,
-            };
-
-            newNote.Content = editor;
-
-            var deleteButton = new Button
-            {
-                Text = "Delete",
-                WidthRequest = 75,
-            };
-
-            deleteButton.Clicked += OnDeleteNoteButtonClicked;
-            deleteButton.IsVisible = true;
-
-            var noteStackLayout = new StackLayout
-            {
-                Orientation = StackOrientation.Horizontal,
-            };
-
-            noteStackLayout.Children.Add(newNote);
-            noteStackLayout.Children.Add(deleteButton);
-
-            NotesContainer.Children.Add(noteStackLayout);
-        }
-
-        private void OnDeleteNoteButtonClicked(object sender, EventArgs e)
+        var editor = new Editor
         {
-            // Get the "Delete" button that was clicked
-            var deleteButton = (Button)sender;
+            Placeholder = "Enter your notes here...",
+            HorizontalOptions = LayoutOptions.FillAndExpand,
+        };
 
-            // Find the parent StackLayout which contains the note and delete button
-            var parentStackLayout = deleteButton.Parent as StackLayout;
+        newNote.Content = editor;
 
-            if (parentStackLayout != null)
-            {
-                // Remove the parent StackLayout (the entire note with the delete button)
-                NotesContainer.Children.Remove(parentStackLayout);
+        var deleteButton = new Button
+        {
+            Text = "Delete",
+            WidthRequest = 75,
+        };
 
-            }
-        }
+        var noteStackLayout = new StackLayout
+        {
+            Orientation = StackOrientation.Horizontal,
+        };
 
+        noteStackLayout.Children.Add(newNote);
+        noteStackLayout.Children.Add(deleteButton);
+
+        NotesContainer.Children.Add(noteStackLayout);
     }
+
+
+
+    private void OnDeleteNoteButtonClicked(object sender, EventArgs e)
+    {
+        // Get the button that was clicked
+        var deleteButton = (Button)sender;
+
+        // Find the parent StackLayout which contains the note and delete button
+        var noteStackLayout = (StackLayout)deleteButton.Parent;
+
+        if (noteStackLayout != null)
+        {
+            // Remove the parent StackLayout (the entire note with the delete button)
+            NotesContainer.Children.Remove(noteStackLayout);
+        }
+    }
+
+    private void OnBackButtonClicked(object sender, EventArgs e) // Dashboard button
+    {
+        // Check if there are pages to navigate back to
+        if (Navigation.NavigationStack.Count > 1)
+        {
+            // Use PopAsync to navigate back to the previous page
+            Navigation.PopAsync();
+        }
+    }
+
+    private void OnYesButtonClicked(object sender, EventArgs e)
+    {
+        PreceptorInfo.IsVisible = true;
+    }
+
+    private void OnNoButtonClicked(object sender, EventArgs e)
+    {
+        // Handle the "No" button click
+        PreceptorInfo.IsVisible = false; // Hide the PreceptorInfo section
+    }
+
+}

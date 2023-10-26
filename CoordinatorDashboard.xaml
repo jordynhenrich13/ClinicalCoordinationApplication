@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ClinicalCoordinationApplication.CoordinatorDashboard"
+             x:Name="CoordinatorDashboardPage"
              Title="CoordinatorDashboard">
     <Grid>
         <Shell.TitleView>
@@ -45,7 +46,7 @@
                 <ImageButton Source="menupopup.png" WidthRequest="40" HeightRequest="40" Clicked="SideMenuButton_Clicked" Grid.Column="0" Grid.Row="0" VerticalOptions="Start" Margin="-60,10,0,0"/>
 
                 <!-- Add your profile icon button as an ImageButton -->
-                <ImageButton Source="profileicon.png" WidthRequest="40" HeightRequest="40" Clicked="ProfileIcon_Clicked" Grid.Column="2" Grid.Row="0"/>
+                <ImageButton Source="profileicon.png" WidthRequest="40" HeightRequest="40" Clicked="ProfileIcon_Clicked" Grid.Column="2" Grid.Row="0" />
 
 
                 <!-- Dropdown menu and Filter button -->
@@ -68,7 +69,7 @@
 
                 <!-- Display the Student Name and their cohort progress-->
                 <Label Text="Student Name" Grid.Column="0" Grid.ColumnSpan="2" FontAttributes="Bold" VerticalOptions="Center" Grid.Row="2" FontSize="28" Margin="20,10,0,0"/>
-                <Button Text="View Profile" Grid.Column="2" HorizontalOptions="End" Grid.Row="2" Margin="0,10,15,0"/>
+                <Button Text="View Profile" Grid.Column="2" HorizontalOptions="End" Grid.Row="2" Margin="0,10,15,0" Clicked="OnViewProfileButtonClicked" />
                 <StackLayout Grid.Row="3" Orientation="Horizontal">
                     <Frame BackgroundColor="Gray" WidthRequest="40" HeightRequest="40" Padding="10" Margin="25,20,15,0">
                         <Label Text="1" TextColor="White" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" />
@@ -127,32 +128,35 @@
 
 
                 <!-- Student #3-->
-                <Label Text="Student Name" Grid.Column="0" Grid.ColumnSpan="2" FontAttributes="Bold" VerticalOptions="Center" Grid.Row="6" FontSize="28" Margin="20,20,0,0"/>
+                <Label Text="Student Name" Grid.Column="0" Grid.ColumnSpan="2" FontAttributes="Bold" VerticalOptions="Center" Grid.Row="7" FontSize="28" Margin="20,20,0,0"/>
                 <Button Text="View Profile" Grid.Column="2" HorizontalOptions="End" Grid.Row="6" Margin="0,20,15,0"/>
-                <StackLayout Grid.Row="7" Orientation="Horizontal">
+                <StackLayout Grid.Row="8" Orientation="Horizontal">
                     <Frame BackgroundColor="Yellow" WidthRequest="40" HeightRequest="40" Padding="10" Margin="25,20,15,0">
                         <Label Text="1" TextColor="Black" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" />
                     </Frame>
                 </StackLayout>
-                <StackLayout Grid.Row="7" Orientation="Horizontal">
+                <StackLayout Grid.Row="8" Orientation="Horizontal">
                     <Frame BackgroundColor="Gray" WidthRequest="40" HeightRequest="40" Padding="10" Margin="105,20,15,0">
                         <Label Text="2" TextColor="White" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" />
                     </Frame>
                 </StackLayout>
-                <StackLayout Grid.Row="7" Orientation="Horizontal">
+                <StackLayout Grid.Row="8" Orientation="Horizontal">
                     <Frame BackgroundColor="Gray" WidthRequest="40" HeightRequest="40" Padding="10" Margin="185,20,15,0">
                         <Label Text="3" TextColor="White" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" />
                     </Frame>
                 </StackLayout>
-                <StackLayout Grid.Row="7" Orientation="Horizontal">
+                <StackLayout Grid.Row="8" Orientation="Horizontal">
                     <Frame BackgroundColor="Gray" WidthRequest="40" HeightRequest="40" Padding="10" Margin="265,20,15,0">
                         <Label Text="4" TextColor="White" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" />
                     </Frame>
                 </StackLayout>
-                <StackLayout Grid.Row="7" Orientation="Horizontal">
+                <StackLayout Grid.Row="8" Orientation="Horizontal">
                     <Frame BackgroundColor="Gray" WidthRequest="40" HeightRequest="40" Padding="10" Margin="345,20,15,0">
                         <Label Text="5" TextColor="White" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" />
                     </Frame>
+                </StackLayout>
+                <StackLayout Grid.Row="9" Orientation="Horizontal" Grid.Column="1">
+                    <Button Text="Update Status" Grid.Column="3" HorizontalOptions="End" Grid.Row="8" Margin="0,20,15,0" Clicked="UpdateStatusButton"/>
                 </StackLayout>
 
 

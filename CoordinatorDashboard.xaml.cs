@@ -27,9 +27,25 @@ public partial class CoordinatorDashboard : ContentPage
         // You can add your code to open the side menu or perform any other action here
     }
 
+    private void OnViewProfileButtonClicked(object sender, EventArgs e)
+    {
+        // Navigate to the UserProfilePage
+        Navigation.PushAsync(new StudentProfile());
+    }
+    // This goes to the profile of the student's profile that the coordinator is looking at
+    // KNOW THAT THIS IS NOT THE PROFILE OF THAT ACTUAL USER!!
+
     private void ProfileIcon_Clicked(object sender, EventArgs e)
     {
-        // Handle the profile icon button click
-        // You can add your code to navigate to the user's profile or perform any other action here
+        // Navigate to the StudentProfile page
+        Navigation.PushAsync(new UserProfile());
+    }
+    // This goes to the profile of whatever user is signed in, could be a coordinator or student or director
+    // The User Profile page should have a table in the database that holds the information specified on the UML
+
+    private void UpdateStatusButton(object sender, EventArgs e)
+    {
+        // Navigate to the assign clinical information
+        Navigation.PushAsync(new AssignClinicalInformation());
     }
 }
