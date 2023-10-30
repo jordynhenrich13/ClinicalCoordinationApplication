@@ -8,7 +8,8 @@ namespace ClinicalCoordinationApplication.Model
     }
     public enum CreateAccountError
     {
-
+        InvalidEmail,
+        InvalidPassword,
         NoError
     }
     public enum EditAccountError

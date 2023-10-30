@@ -29,15 +29,34 @@ namespace ClinicalCoordinationApplication.Model
 		{
             database = new Database();
         }
-        public SignInError SignIn(String email, String password)
+        public SignInError SignIn(string email, string password)
         {
-
+            //call db instead of null
+            Account account = null;
+            if (account == null)
+            {
+                return SignInError.InvalidEmailOrPassword;
+            }
+            if (password.CompareTo(account.Password) != 0) 
+            {
+                return SignInError.InvalidEmailOrPassword;
+            }
+            //sign in
 
             return SignInError.NoError;
         }
-        public CreateAccountError CreateAccount()
+        public CreateAccountError CreateAccount(string email, string password, string firstName, string lastName)
         {
-
+            if (email.IndexOf("@uwosh.edu") == -1)
+            {
+                return CreateAccountError.InvalidEmail;
+            }
+            if (password.Length < 8)
+            {
+                return CreateAccountError.InvalidPassword;
+            }
+            //makes an account
+            Account account = new(email, password, firstName, lastName, "Student");
             return CreateAccountError.NoError;
         }
         public EditAccountError EditAccount()

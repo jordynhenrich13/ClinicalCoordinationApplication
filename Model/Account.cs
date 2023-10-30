@@ -8,11 +8,20 @@ namespace ClinicalCoordinationApplication.Model
 {
     internal class Account
     {
-        private string firstName;
-        private string lastName;
         private string email;
         private string password;
+        private string firstName;
+        private string lastName;
         private string role;
+
+        public Account (string email, string password, string firstName, string lastName, string role) 
+        {
+            this.email = email;
+            this.password = password;
+            this.firstName = firstName;
+            this.lastName = lastName;
+            this.role = role;
+        }
 
         public string FirstName { get { return firstName; } set { firstName = value; } }
         public string LastName { get { return lastName; } set { lastName = value; } }
