@@ -64,60 +64,51 @@ namespace ClinicalCoordinationApplication.Model
 
             return EditAccountError.NoError;
         }
-
-        SignInError IBusinessLogic.SignIn()
+        public AddWorkedHoursError AddWorkedHours()
         {
-            throw new NotImplementedException();
+
+            return AddWorkedHoursError.NoError;
+        }
+        public EditWorkedHoursError EditWorkedHours()
+        {
+
+            return EditWorkedHoursError.NoError;
+        }
+        public DeleteWorkedHoursError DeleteWorkedHours()
+        {
+
+            return DeleteWorkedHoursError.NoError;
+        }
+        public UpdateClinicalInfoError UpdateClinicalInfo()
+        {
+            
+            return UpdateClinicalInfoError.NoError;
+        }
+        public AddClinicalNoteError AddClinicalNote()
+        {
+            
+            return AddClinicalNoteError.NoError;
+        }
+        public EditClinicalNoteError EditClinicalNote()
+        {
+            
+            return EditClinicalNoteError.NoError;
+        }
+        public DeleteClinicalNoteError DeleteClinicalNote()
+        {
+            
+            return DeleteClinicalNoteError.NoError;
+        }
+        public FindPreviousClinicsError FindPreviousClinics()
+        {
+            
+            return FindPreviousClinicsError.NoError;
         }
 
-        CreateAccountError IBusinessLogic.CreateAccount()
+        public FindNewClinicError FindNewClinic()
         {
-            throw new NotImplementedException();
-        }
-
-        AddWorkedHoursError IBusinessLogic.AddWorkedHours()
-        {
-            throw new NotImplementedException();
-        }
-
-        EditWorkedHoursError IBusinessLogic.EditWorkedHours()
-        {
-            throw new NotImplementedException();
-        }
-
-        DeleteWorkedHoursError IBusinessLogic.DeleteWorkedHours()
-        {
-            throw new NotImplementedException();
-        }
-
-        UpdateClinicalInfoError IBusinessLogic.UpdateClinicalInfo()
-        {
-            throw new NotImplementedException();
-        }
-
-        AddClinicalNoteError IBusinessLogic.AddClinicalNote()
-        {
-            throw new NotImplementedException();
-        }
-
-        EditClinicalNoteError IBusinessLogic.EditClinicalNote()
-        {
-            throw new NotImplementedException();
-        }
-
-        DeleteClinicalNoteError IBusinessLogic.DeleteClinicalNote()
-        {
-            throw new NotImplementedException();
-        }
-
-        FindPreviousClinicsError IBusinessLogic.FindPreviousClinics()
-        {
-            throw new NotImplementedException();
-        }
-
-        FindNewClinicError IBusinessLogic.FindNewClinic()
-        {
-            throw new NotImplementedException();
+            
+            return FindNewClinicError.NoError;
         }
     }
 }
