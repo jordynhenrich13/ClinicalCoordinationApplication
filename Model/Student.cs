@@ -1,7 +1,7 @@
 ﻿using System;
-using Android.Locations;
+//using Android.Locations;
 using System.Net.Mail;
-using Android.Media;
+//using Android.Media;
 using System.ComponentModel;
 
 namespace ClinicalCoordinationApplication.Model

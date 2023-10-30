@@ -22,8 +22,9 @@ public partial class SignIn : ContentPage
 	public void SkipSignIn(object sender, EventArgs e)
 	{
 		if (this.userType == "coordinator")
-		{
-			((App)Application.Current).MainPage = new CoordinatorDashboard();
+		{ // This should be a navigation, because if they want to sign in, they need the option to go back. 
+			// The way it was, set the coordinator dashboard to the main page, with no way of signing in.
+			Navigation.PushAsync(new CoordinatorDashboard());
 		} else
 		{
             ((App)Application.Current).MainPage = new StudentDashMain();

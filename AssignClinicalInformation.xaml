@@ -53,7 +53,6 @@
                 <ImageButton Source="profileicon.png" WidthRequest="40" HeightRequest="40" Clicked="ProfileIcon_Clicked" Grid.Column="2" Grid.Row="0"/>
 
                 <!-- Add the dashboard back button-->
-                <Button Text="&lt; Dashboard" WidthRequest="100" Grid.Column="0" HorizontalOptions="Start" Grid.Row="0" Padding="5" Margin="10,10,0,0" Clicked="OnBackButtonClicked"/>
 
                 <Label Text="Clinical 1: Adult Health I" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2" FontAttributes="Bold" Margin="10,40,0,0" FontSize="23"></Label>
                 <Label Text="56 hours | 2 weeks" Grid.Column="0" Grid.Row="3" Margin="10,0,0,0"></Label>
@@ -93,15 +92,15 @@
 
                 <!-- Notes page-->
                 <Label Text="Notes" Grid.Row="10" Grid.Column="0" Margin="14,30,0,0" FontSize="25" FontAttributes="Italic"></Label>
-                <StackLayout x:Name="NotesContainer" Spacing="10" Grid.Row="12" HorizontalOptions="FillAndExpand">
-                    <Frame BorderColor="Gray" CornerRadius="10" Padding="5" Grid.Row="10" Grid.RowSpan="2" HorizontalOptions="FillAndExpand">
-                        <Editor Placeholder="Enter your notes here..." HorizontalOptions="FillAndExpand" WidthRequest="200"/>
+                <!--<StackLayout x:Name="NotesContainer" Spacing="10" Grid.Row="11" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="3">-->
+                    <!--<Frame BorderColor="Gray" CornerRadius="10" Padding="5" HorizontalOptions="FillAndExpand">-->
+                        <Editor Placeholder="Enter your notes here..." HorizontalOptions="FillAndExpand" Grid.Row="11" Grid.RowSpan="8" Grid.ColumnSpan="3" VerticalOptions="FillAndExpand"/>
 
-                    </Frame>
+                    <!--</Frame>-->
 
-                    <Button Text="New Note" Clicked="OnNewNoteButtonClicked" Grid.Row="12"  WidthRequest="95" x:Name="NewNoteButton" />
-                    <Button Text="Delete" Clicked="OnDeleteNoteButtonClicked" Grid.Row="12" WidthRequest="75" x:Name="DeleteButton" IsVisible="false" />
-                </StackLayout>
+               <!--     <Button Text="New Note" Clicked="OnNewNoteButtonClicked" Grid.Row="17"  WidthRequest="95" x:Name="NewNoteButton" /> -->
+                    <!--<Button Text="Delete" Clicked="OnDeleteNoteButtonClicked" Grid.Row="12" WidthRequest="75" x:Name="DeleteButton" IsVisible="false" />-->
+                <!--</StackLayout>-->
             </Grid>
 
 

@@ -18,55 +18,56 @@ public partial class AssignClinicalInformation : ContentPage
             // You can add your code to navigate to the user's profile or perform any other action here
         }
 
-    private void OnNewNoteButtonClicked(object sender, EventArgs e)
-    {
-        var newNote = new Frame
-        {
-            CornerRadius = 10,
-            Padding = 5,
-        };
+    //private void OnNewNoteButtonClicked(object sender, EventArgs e)
+    //{
+    //    var newNote = new Frame
+    //    {
+    //        CornerRadius = 10,
+    //        Padding = 5,
+    //    };
 
-        var editor = new Editor
-        {
-            Placeholder = "Enter your notes here...",
-            HorizontalOptions = LayoutOptions.FillAndExpand,
-        };
+    //    var editor = new Editor
+    //    {
+    //        Placeholder = "Enter your notes here...",
+    //        HorizontalOptions = LayoutOptions.FillAndExpand,
+    //        HeightRequest = 200,
+    //    };
 
-        newNote.Content = editor;
+    //    newNote.Content = editor;
 
-        var deleteButton = new Button
-        {
-            Text = "Delete",
-            WidthRequest = 75,
-        };
+    //    var deleteButton = new Button
+    //    {
+    //        Text = "Delete",
+    //        WidthRequest = 75,
+    //    };
 
-        var noteStackLayout = new StackLayout
-        {
-            Orientation = StackOrientation.Horizontal,
-        };
+    //    var noteStackLayout = new StackLayout
+    //    {
+    //        Orientation = StackOrientation.Horizontal,
+    //    };
 
-        noteStackLayout.Children.Add(newNote);
-        noteStackLayout.Children.Add(deleteButton);
+    //    noteStackLayout.Children.Add(newNote);
+    //    noteStackLayout.Children.Add(deleteButton);
 
-        NotesContainer.Children.Add(noteStackLayout);
-    }
+    //    NotesContainer.Children.Add(noteStackLayout);
+    //}
 
 
 
-    private void OnDeleteNoteButtonClicked(object sender, EventArgs e)
-    {
-        // Get the button that was clicked
-        var deleteButton = (Button)sender;
+    //private void OnDeleteNoteButtonClicked(object sender, EventArgs e)
+    //{
+    //    // Get the button that was clicked
+    //    var deleteButton = (Button)sender;
 
-        // Find the parent StackLayout which contains the note and delete button
-        var noteStackLayout = (StackLayout)deleteButton.Parent;
+    //    // Find the parent StackLayout which contains the note and delete button
+    //    var noteStackLayout = (StackLayout)deleteButton.Parent;
 
-        if (noteStackLayout != null)
-        {
-            // Remove the parent StackLayout (the entire note with the delete button)
-            NotesContainer.Children.Remove(noteStackLayout);
-        }
-    }
+    //    if (noteStackLayout != null)
+    //    {
+    //        // Remove the parent StackLayout (the entire note with the delete button)
+    //        NotesContainer.Children.Remove(noteStackLayout);
+    //    }
+    //}
 
     private void OnBackButtonClicked(object sender, EventArgs e) // Dashboard button
     {
