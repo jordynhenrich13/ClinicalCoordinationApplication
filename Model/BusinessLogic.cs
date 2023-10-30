@@ -64,6 +64,61 @@ namespace ClinicalCoordinationApplication.Model
 
             return EditAccountError.NoError;
         }
-	}
+
+        SignInError IBusinessLogic.SignIn()
+        {
+            throw new NotImplementedException();
+        }
+
+        CreateAccountError IBusinessLogic.CreateAccount()
+        {
+            throw new NotImplementedException();
+        }
+
+        AddWorkedHoursError IBusinessLogic.AddWorkedHours()
+        {
+            throw new NotImplementedException();
+        }
+
+        EditWorkedHoursError IBusinessLogic.EditWorkedHours()
+        {
+            throw new NotImplementedException();
+        }
+
+        DeleteWorkedHoursError IBusinessLogic.DeleteWorkedHours()
+        {
+            throw new NotImplementedException();
+        }
+
+        UpdateClinicalInfoError IBusinessLogic.UpdateClinicalInfo()
+        {
+            throw new NotImplementedException();
+        }
+
+        AddClinicalNoteError IBusinessLogic.AddClinicalNote()
+        {
+            throw new NotImplementedException();
+        }
+
+        EditClinicalNoteError IBusinessLogic.EditClinicalNote()
+        {
+            throw new NotImplementedException();
+        }
+
+        DeleteClinicalNoteError IBusinessLogic.DeleteClinicalNote()
+        {
+            throw new NotImplementedException();
+        }
+
+        FindPreviousClinicsError IBusinessLogic.FindPreviousClinics()
+        {
+            throw new NotImplementedException();
+        }
+
+        FindNewClinicError IBusinessLogic.FindNewClinic()
+        {
+            throw new NotImplementedException();
+        }
+    }
 }
 
