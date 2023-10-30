@@ -1,38 +1,65 @@
 ﻿using System;
 namespace ClinicalCoordinationApplication.Model
 {
-    public enum AirportAdditionError
+    public enum SignInError
     {
-        InvalidIdLength,
-        InvalidCityLength,
-        InvalidRating,
-        InvalidDate,
-        DuplicateAirportId,
-        DBAdditionError,
+        InvalidEmailOrPassword,
         NoError
     }
-
-    public enum AirportDeletionError
+    public enum CreateAccountError
     {
-        AirportNotFound,
-        DBDeletionError,
+
         NoError
     }
-
-    public enum AirportEditError
+    public enum EditAccountError
     {
-        AirportNotFound,
-        InvalidFieldError,
-        DBEditError,
+
         NoError
     }
-
-    public enum FlyWisconsinLevel
+    public enum AddWorkedHoursError
     {
-        Bronze,
-        Silver,
-        Gold,
-        None
+
+        NoError
+    }
+    public enum EditWorkedHoursError
+    {
+
+        NoError
+    }
+    public enum DeleteWorkedHoursError
+    {
+
+        NoError
+    }
+    public enum UpdateClinicalInfoError
+    {
+
+        NoError
+    }
+    public enum AddClinicalNoteError
+    {
+
+        NoError
+    }
+    public enum EditClinicalNoteError
+    {
+
+        NoError
+    }
+    public enum DeleteClinicalNoteError
+    {
+
+        NoError
+    }
+    public enum FindPreviousClinicsError
+    {
+
+        NoError
+    }
+    public enum FindNewClinicError
+    {
+
+        NoError
     }
 }
 
