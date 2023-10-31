@@ -1,7 +1,7 @@
 ﻿using System;
 //using Android.Locations;
 using System.Net.Mail;
-using Android.Media;
+//using Android.Media;
 using System.ComponentModel;
 
 namespace ClinicalCoordinationApplication.Model
@@ -19,6 +19,7 @@ namespace ClinicalCoordinationApplication.Model
 
         private string address;
         private List<Clinical> clinicals;
+        private string password;
 
         public string FirstName {
             get { return firstName; }

@@ -45,7 +45,7 @@ namespace ClinicalCoordinationApplication.Model
 
             return SignInError.NoError;
         }
-        public CreateAccountError CreateAccount(string email, string password, string firstName, string lastName)
+        public CreateAccountError CreateStudentAccount(string email, string password, string firstName, string lastName)
         {
             //call db for account with email
             Account account = null;
@@ -62,7 +62,29 @@ namespace ClinicalCoordinationApplication.Model
                 return CreateAccountError.InvalidPassword;
             }
             //makes an account
-            database.CreateAccount(email, password, firstName, lastName);
+            database.CreateStudentAccount(email, password, firstName, lastName);
+            //Account account = new(email, password, firstName, lastName, "Student");
+            return CreateAccountError.NoError;
+        }
+
+        public CreateAccountError CreateCoordinatorAccount(string email, string password, string firstName, string lastName)
+        {
+            //call db for account with email
+            Account account = null;
+            if (account != null)
+            {
+                return CreateAccountError.EmailAlreadyUsed;
+            }
+            if (!email.Contains("@uwosh.edu") || (email.Length < 10 || email.Length > 150))
+            {
+                return CreateAccountError.InvalidEmail;
+            }
+            if (password.Length < 8 || password.Length > 50)
+            {
+                return CreateAccountError.InvalidPassword;
+            }
+            //makes an account
+            database.CreateStudentAccount(email, password, firstName, lastName);
             //Account account = new(email, password, firstName, lastName, "Student");
             return CreateAccountError.NoError;
         }

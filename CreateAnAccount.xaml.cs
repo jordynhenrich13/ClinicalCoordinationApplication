@@ -12,9 +12,9 @@ public partial class CreateAnAccount : ContentPage
 		this.userType = userType;
 	}
 
-	public void Button_Clicked()
+	public void Student_Button_Clicked()
 	{
-		MauiProgram.BusinessLogic.CreateAccount(EmailENT.ToString(), PasswordEnt.ToString(), first_nameENT.ToString(), last_nameENT.ToString());
+		MauiProgram.BusinessLogic.CreateStudentAccount(EmailENT.ToString(), PasswordEnt.ToString(), first_nameENT.ToString(), last_nameENT.ToString());
 
 		EmailENT.Text = "";
 		PasswordEnt.Text = "";
