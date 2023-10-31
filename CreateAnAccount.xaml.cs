@@ -25,6 +25,29 @@ public partial class CreateAnAccount : ContentPage
 
     private void Button_Clicked(object sender, EventArgs e)
     {
+        string firstName = first_nameENT.Text;
+        string lastName = last_nameENT.Text;
+        string email = EmailENT.Text;
+        string password = PasswordEnt.Text;
 
+        Database database = new Database();
+
+        CreateAccountError result = database.CreateStudentAccount(email, password, firstName, lastName);
+        Page signInPage = new SignIn("Student");
+
+        if (result == CreateAccountError.NoError)
+        {
+            // Account creation was successful. Now, navigate to the sign-in page.
+            // You should implement the navigation logic here. The exact method
+            // may depend on the framework you are using (e.g., Xamarin.Forms, Maui).
+
+            Application.Current.MainPage = new NavigationPage(signInPage);
+        }
+        else
+        {
+            // Handle the error and provide feedback to the user.
+            // You can display an error message or take appropriate action.
+        }
     }
+
 }
