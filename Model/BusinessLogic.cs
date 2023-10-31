@@ -53,19 +53,19 @@ namespace ClinicalCoordinationApplication.Model
             {
                 return CreateAccountError.EmailAlreadyUsed;
             }
-            if (!email.Contains("@uwosh.edu") || (email.Length < 10 && email.Length > 150))
+            if (!email.Contains("@uwosh.edu") || (email.Length < 10 || email.Length > 150))
             {
                 return CreateAccountError.InvalidEmail;
             }
-            if (password.Length < 8 && password.Length > 50)
+            if (password.Length < 8 || password.Length > 50)
             {
                 return CreateAccountError.InvalidPassword;
             }
-            if (firstName.Length < 1 && firstName.Length > 50)
+            if (firstName.Length < 1 || firstName.Length > 50)
             {
                 return CreateAccountError.InvalidFirstName;
             }
-            if (lastName.Length < 1 && lastName.Length > 50)
+            if (lastName.Length < 1 || lastName.Length > 50)
             {
                 return CreateAccountError.InvalidLastName;
             }
@@ -82,19 +82,19 @@ namespace ClinicalCoordinationApplication.Model
             {
                 return EditAccountError.EmailAlreadyUsed;
             }
-            if (!email.Contains("@uwosh.edu") || (email.Length < 10 && email.Length > 150))
+            if (!email.Contains("@uwosh.edu") || (email.Length < 10 || email.Length > 150))
             {
                 return EditAccountError.InvalidEmail;
             }
-            if (password.Length < 8 && password.Length > 50)
+            if (password.Length < 8 || password.Length > 50)
             {
                 return EditAccountError.InvalidPassword;
             }
-            if (firstName.Length < 1 && firstName.Length > 50)
+            if (firstName.Length < 1 || firstName.Length > 50)
             {
                 return EditAccountError.InvalidFirstName;
             }
-            if (lastName.Length < 1 && lastName.Length > 50)
+            if (lastName.Length < 1 || lastName.Length > 50)
             {
                 return EditAccountError.InvalidLastName;
             }

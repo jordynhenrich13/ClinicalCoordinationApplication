@@ -26,12 +26,12 @@ namespace ClinicalCoordinationApplication.Model
     }
     public enum AddWorkedHoursError
     {
-
+        InvalidNumber,
         NoError
     }
     public enum EditWorkedHoursError
     {
-
+        InvalidNumber,
         NoError
     }
     public enum DeleteWorkedHoursError
