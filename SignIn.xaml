@@ -21,14 +21,26 @@
             x:Name="PasswordEnt"
             Placeholder="Password"
             IsPassword="True"
-        />  
-
-        <Button
-            Text="Sign In"
-            WidthRequest="150"
-            CornerRadius="0"
-            Clicked="SignInClicked"
         />
+
+        <StackLayout
+    Orientation="Horizontal"
+    HorizontalOptions="CenterAndExpand"
+    Spacing="10">
+            <Button
+        Text="Coordinator Sign In"
+        WidthRequest="170"
+        CornerRadius="0"
+        Clicked="CoordinatorSignInClicked"
+    />
+            <Button
+        Text="Student Sign In"
+        WidthRequest="170"
+        CornerRadius="0"
+        Clicked="StudentSignInClicked"
+    />
+        </StackLayout>
+
         <VerticalStackLayout
             Spacing="-10"
             Padding="0, 20"
