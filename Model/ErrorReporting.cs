@@ -8,23 +8,30 @@ namespace ClinicalCoordinationApplication.Model
     }
     public enum CreateAccountError
     {
+        InvalidFirstName,
+        InvalidLastName,
+        EmailAlreadyUsed,
         InvalidEmail,
         InvalidPassword,
         NoError
     }
     public enum EditAccountError
     {
-
+        InvalidFirstName,
+        InvalidLastName,
+        EmailAlreadyUsed,
+        InvalidEmail,
+        InvalidPassword,
         NoError
     }
     public enum AddWorkedHoursError
     {
-
+        InvalidNumber,
         NoError
     }
     public enum EditWorkedHoursError
     {
-
+        InvalidNumber,
         NoError
     }
     public enum DeleteWorkedHoursError

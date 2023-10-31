@@ -31,93 +31,115 @@ namespace ClinicalCoordinationApplication.Model
         }
         public SignInError SignIn(string email, string password)
         {
-            //call db instead of null
+            //call db for account with email
             Account account = null;
             if (account == null)
             {
                 return SignInError.InvalidEmailOrPassword;
             }
-            if (password.CompareTo(account.Password) != 0) 
+            if (password.CompareTo(account.Password) != 0)
             {
                 return SignInError.InvalidEmailOrPassword;
             }
-            //sign in
+            //signin
 
             return SignInError.NoError;
         }
         public CreateAccountError CreateAccount(string email, string password, string firstName, string lastName)
         {
-            if (email.IndexOf("@uwosh.edu") == -1)
+            //call db for account with email
+            Account account = null;
+            if (account != null)
+            {
+                return CreateAccountError.EmailAlreadyUsed;
+            }
+            if (!email.Contains("@uwosh.edu") || (email.Length < 10 || email.Length > 150))
             {
                 return CreateAccountError.InvalidEmail;
             }
-            if (password.Length < 8)
+            if (password.Length < 8 || password.Length > 50)
             {
                 return CreateAccountError.InvalidPassword;
             }
             //makes an account
-            Account account = new(email, password, firstName, lastName, "Student");
+            database.CreateAccount(email, password, firstName, lastName);
+            //Account account = new(email, password, firstName, lastName, "Student");
             return CreateAccountError.NoError;
         }
-        public EditAccountError EditAccount()
+        public EditAccountError EditAccount(string email, string password, string firstName, string lastName)
         {
-
+            //call db for account with email
+            Account account = null;
+            if (account != null)
+            {
+                return EditAccountError.EmailAlreadyUsed;
+            }
+            if (!email.Contains("@uwosh.edu") || (email.Length < 10 || email.Length > 150))
+            {
+                return EditAccountError.InvalidEmail;
+            }
+            if (password.Length < 8 || password.Length > 50)
+            {
+                return EditAccountError.InvalidPassword;
+            }
+            if (firstName.Length < 1 || firstName.Length > 50)
+            {
+                return EditAccountError.InvalidFirstName;
+            }
+            if (lastName.Length < 1 || lastName.Length > 50)
+            {
+                return EditAccountError.InvalidLastName;
+            }
+            //Account with edits
+            Account editedAccount = new(email, password, firstName, lastName, "Student");
+            //db stuff
             return EditAccountError.NoError;
         }
-
-        SignInError IBusinessLogic.SignIn()
+        public AddWorkedHoursError AddWorkedHours()
         {
-            throw new NotImplementedException();
+
+            return AddWorkedHoursError.NoError;
+        }
+        public EditWorkedHoursError EditWorkedHours()
+        {
+
+            return EditWorkedHoursError.NoError;
+        }
+        public DeleteWorkedHoursError DeleteWorkedHours()
+        {
+
+            return DeleteWorkedHoursError.NoError;
+        }
+        public UpdateClinicalInfoError UpdateClinicalInfo()
+        {
+            
+            return UpdateClinicalInfoError.NoError;
+        }
+        public AddClinicalNoteError AddClinicalNote()
+        {
+            
+            return AddClinicalNoteError.NoError;
+        }
+        public EditClinicalNoteError EditClinicalNote()
+        {
+            
+            return EditClinicalNoteError.NoError;
+        }
+        public DeleteClinicalNoteError DeleteClinicalNote()
+        {
+            
+            return DeleteClinicalNoteError.NoError;
+        }
+        public FindPreviousClinicsError FindPreviousClinics()
+        {
+            
+            return FindPreviousClinicsError.NoError;
         }
 
-        CreateAccountError IBusinessLogic.CreateAccount()
+        public FindNewClinicError FindNewClinic()
         {
-            throw new NotImplementedException();
-        }
-
-        AddWorkedHoursError IBusinessLogic.AddWorkedHours()
-        {
-            throw new NotImplementedException();
-        }
-
-        EditWorkedHoursError IBusinessLogic.EditWorkedHours()
-        {
-            throw new NotImplementedException();
-        }
-
-        DeleteWorkedHoursError IBusinessLogic.DeleteWorkedHours()
-        {
-            throw new NotImplementedException();
-        }
-
-        UpdateClinicalInfoError IBusinessLogic.UpdateClinicalInfo()
-        {
-            throw new NotImplementedException();
-        }
-
-        AddClinicalNoteError IBusinessLogic.AddClinicalNote()
-        {
-            throw new NotImplementedException();
-        }
-
-        EditClinicalNoteError IBusinessLogic.EditClinicalNote()
-        {
-            throw new NotImplementedException();
-        }
-
-        DeleteClinicalNoteError IBusinessLogic.DeleteClinicalNote()
-        {
-            throw new NotImplementedException();
-        }
-
-        FindPreviousClinicsError IBusinessLogic.FindPreviousClinics()
-        {
-            throw new NotImplementedException();
-        }
-
-        FindNewClinicError IBusinessLogic.FindNewClinic()
-        {
-            throw new NotImplementedException();
+            
+            return FindNewClinicError.NoError;
         }
     }
 }

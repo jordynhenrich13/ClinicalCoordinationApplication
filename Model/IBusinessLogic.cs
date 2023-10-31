@@ -9,9 +9,9 @@ namespace ClinicalCoordinationApplication.Model
         public ObservableCollection<Clinic> Clinics { get; }
         public ObservableCollection<Clinical> Clinicals { get; }
         public ObservableCollection<AssignedPreceptor> Preceptors { get; }
-        SignInError SignIn();
-        CreateAccountError CreateAccount();
-        EditAccountError EditAccount();
+        SignInError SignIn(string email, string password);
+        CreateAccountError CreateAccount(string email, string password, string firstName, string lastName);
+        EditAccountError EditAccount(string email, string password, string firstName, string lastName);
         AddWorkedHoursError AddWorkedHours();
         EditWorkedHoursError EditWorkedHours();
         DeleteWorkedHoursError DeleteWorkedHours();
