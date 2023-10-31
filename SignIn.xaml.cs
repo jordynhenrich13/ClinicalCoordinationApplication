@@ -23,35 +23,66 @@ public partial class SignIn : ContentPage
 
     public void StudentSignInClicked(object sender, EventArgs e)
     {
-        
-       SignInError validSignIn =  MauiProgram.BusinessLogic.SignIn(EmailENT.ToString(), PasswordEnt.ToString());
+        string email = EmailENT.Text;
+        string password = PasswordEnt.Text;
 
+        if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password))
+        {
+            // Display an error message for empty fields.
+            DisplayAlert("Error", "Please enter both email and password.", "OK");
+        }
+        else
+        {
+            SignInError validSignIn = MauiProgram.BusinessLogic.SignIn(email, password);
 
-        //Navigation.PushAsync(new StudentDashMain());
-        Page studentDashMain = new StudentDashMain();
-        Application.Current.MainPage = new NavigationPage(studentDashMain);
+            if (validSignIn == SignInError.InvalidEmailOrPassword)
+            {
+                // Display an error message for invalid email or password.
+                DisplayAlert("Error", "Invalid email or password.", "OK");
+            }
+            else
+            {
+                // Successful sign-in logic here
+                // ...
 
-        // Clear the input fields.
-        EmailENT.Text = "";
-        PasswordEnt.Text = "";
-
+                // Clear the input fields.
+                EmailENT.Text = "";
+                PasswordEnt.Text = "";
+            }
+        }
     }
 
     public void CoordinatorSignInClicked(object sender, EventArgs e)
     {
+        string email = EmailENT.Text;
+        string password = PasswordEnt.Text;
 
-        SignInError validSignIn = MauiProgram.BusinessLogic.SignIn(EmailENT.ToString(), PasswordEnt.ToString());
+        if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password))
+        {
+            // Display an error message for empty fields.
+            DisplayAlert("Error", "Please enter both email and password.", "OK");
+        }
+        else
+        {
+            SignInError validSignIn = MauiProgram.BusinessLogic.SignIn(email, password);
 
+            if (validSignIn == SignInError.InvalidEmailOrPassword)
+            {
+                // Display an error message for invalid email or password.
+                DisplayAlert("Error", "Invalid email or password.", "OK");
+            }
+            else
+            {
+                // Successful sign-in logic here
+                // ...
 
-        //Navigation.PushAsync(new StudentDashMain());
-        Page coordinatorDashMain = new CoordinatorDashboard();
-        Application.Current.MainPage = new NavigationPage(coordinatorDashMain);
-
-        // Clear the input fields.
-        EmailENT.Text = "";
-        PasswordEnt.Text = "";
-
+                // Clear the input fields.
+                EmailENT.Text = "";
+                PasswordEnt.Text = "";
+            }
+        }
     }
+
 
     public void SkipSignIn(object sender, EventArgs e)
 	{
