@@ -31,7 +31,7 @@ namespace ClinicalCoordinationApplication.Model
         }
         public SignInError SignIn(string email, string password)
         {
-            //call db instead of null
+            //call db for account
             Account account = null;
             if (account == null)
             {
@@ -47,7 +47,13 @@ namespace ClinicalCoordinationApplication.Model
         }
         public CreateAccountError CreateAccount(string email, string password, string firstName, string lastName)
         {
-            if (email.IndexOf("@uwosh.edu") == -1)
+            //call db for account
+            Account account = null;
+            if (account != null)
+            {
+                return CreateAccountError.EmailAlreadyUsed;
+            }
+            if (!email.Contains("@uwosh.edu") || (email.Length < 10 && email.Length > 50))
             {
                 return CreateAccountError.InvalidEmail;
             }
@@ -55,8 +61,16 @@ namespace ClinicalCoordinationApplication.Model
             {
                 return CreateAccountError.InvalidPassword;
             }
-            //makes an account
-            Account account = new(email, password, firstName, lastName, "Student");
+            if (firstName.Length < 1 && firstName.Length > 50)
+            {
+                return CreateAccountError.InvalidFirstName;
+            }
+            if (lastName.Length < 1 && lastName.Length > 50)
+            {
+                return CreateAccountError.InvalidLastName;
+            }
+            //creates an account
+            Account newAccount = new(email, password, firstName, lastName, "Student");
             return CreateAccountError.NoError;
         }
         public EditAccountError EditAccount()
