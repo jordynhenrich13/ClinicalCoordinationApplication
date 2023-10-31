@@ -32,16 +32,16 @@ namespace ClinicalCoordinationApplication.Model
         public SignInError SignIn(string email, string password)
         {
             //call db instead of null
-            Account account = null;
-            if (account == null)
+            
+            if (database.SignIn(email, password) == "null")
             {
                 return SignInError.InvalidEmailOrPassword;
             }
-            if (password.CompareTo(account.Password) != 0) 
+            if (password.CompareTo(database.SignIn(email, password)) != 0) 
             {
                 return SignInError.InvalidEmailOrPassword;
             }
-            //sign in
+            //signin
 
             return SignInError.NoError;
         }

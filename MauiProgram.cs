@@ -1,10 +1,13 @@
 ﻿using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
+using ClinicalCoordinationApplication.Model;
 
 namespace ClinicalCoordinationApplication
 {
     public static class MauiProgram
     {
+        public static IBusinessLogic BusinessLogic = new BusinessLogic();
+
         public static MauiApp CreateMauiApp()
         {
             var builder = MauiApp.CreateBuilder();

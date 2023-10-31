@@ -27,6 +27,7 @@
             Text="Sign In"
             WidthRequest="150"
             CornerRadius="0"
+            Clicked="SignInClicked"
         />
         <VerticalStackLayout
             Spacing="-10"
