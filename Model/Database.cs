@@ -1,5 +1,6 @@
 ﻿using ClinicalCoordinationApplication.Model;
 //using Intents;
+//using Intents;
 using Npgsql;
 using System;
 using System.Collections.Generic;
@@ -35,6 +36,30 @@ public class Database : IDatabase
         return foundPassword;
     }
 
+    public CreateAccountError CreateAccount(string email, string password, string firstName, string LastName)
+    {
+            try
+            {
+                using var conn = new NpgsqlConnection(connString); // conn, short for connection, is a connection to the database
+
+                conn.Open(); // open the connection ... now we are connected!
+                var cmd = new NpgsqlCommand(); // create the sql commaned
+                cmd.Connection = conn; // commands need a connection, an actual command to execute
+                cmd.CommandText = "INSERT INTO Student (FirstName, Lastname, Email, Password) VALUES (@FirstName, @Lastname, @Email, @Password)";
+                cmd.Parameters.AddWithValue("FirstName", firstName);
+                cmd.Parameters.AddWithValue("lastName", LastName);
+                cmd.Parameters.AddWithValue("Email", email);
+                cmd.Parameters.AddWithValue("Password", password);
+                cmd.ExecuteNonQuery(); // used for INSERT, UPDATE & DELETE statements - returns # of affected rows 
+            }
+            catch (Npgsql.PostgresException pe)
+            {
+                Console.WriteLine("Insert failed, {0}", pe);
+                return CreateAccountError.InvalidEmail;
+            }
+            return CreateAccountError.NoError;
+        }
+    
 
     // Builds a ConnectionString, which is used to connect to the database
     static String GetConnectionString()

@@ -56,7 +56,8 @@ namespace ClinicalCoordinationApplication.Model
                 return CreateAccountError.InvalidPassword;
             }
             //makes an account
-            Account account = new(email, password, firstName, lastName, "Student");
+            database.CreateAccount(email, password, firstName, lastName);
+            //Account account = new(email, password, firstName, lastName, "Student");
             return CreateAccountError.NoError;
         }
         public EditAccountError EditAccount()

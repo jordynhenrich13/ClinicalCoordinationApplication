@@ -26,19 +26,14 @@ public partial class SignIn : ContentPage
         
        SignInError validSignIn =  MauiProgram.BusinessLogic.SignIn(EmailENT.ToString(), PasswordEnt.ToString());
 
-        if (this.userType == "coordinator" && validSignIn == SignInError.NoError)
-        {
-            Navigation.PushAsync(new CoordinatorDashboard());
-        }
-        else if(validSignIn == SignInError.NoError ) 
-        {
-            Navigation.PushAsync(new StudentDashMain());
-        }
+
+        //Navigation.PushAsync(new StudentDashMain());
+        Page studentDashMain = new StudentDashMain();
+        Application.Current.MainPage = new NavigationPage(studentDashMain);
 
         // Clear the input fields.
         EmailENT.Text = "";
         PasswordEnt.Text = "";
-
 
     }
 
