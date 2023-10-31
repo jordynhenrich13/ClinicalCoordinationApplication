@@ -21,7 +21,7 @@ public partial class SignIn : ContentPage
         Navigation.PushAsync(new CreateAnAccount(this.userType));
     }
 
-    public void SignInClicked(object sender, EventArgs e)
+    public void StudentSignInClicked(object sender, EventArgs e)
     {
         
        SignInError validSignIn =  MauiProgram.BusinessLogic.SignIn(EmailENT.ToString(), PasswordEnt.ToString());
@@ -37,7 +37,23 @@ public partial class SignIn : ContentPage
 
     }
 
-	public void SkipSignIn(object sender, EventArgs e)
+    public void CoordinatorSignInClicked(object sender, EventArgs e)
+    {
+
+        SignInError validSignIn = MauiProgram.BusinessLogic.SignIn(EmailENT.ToString(), PasswordEnt.ToString());
+
+
+        //Navigation.PushAsync(new StudentDashMain());
+        Page coordinatorDashMain = new CoordinatorDashboard();
+        Application.Current.MainPage = new NavigationPage(coordinatorDashMain);
+
+        // Clear the input fields.
+        EmailENT.Text = "";
+        PasswordEnt.Text = "";
+
+    }
+
+    public void SkipSignIn(object sender, EventArgs e)
 	{
 		if (this.userType == "coordinator")
 		{
