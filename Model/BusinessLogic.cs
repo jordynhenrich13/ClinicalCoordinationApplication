@@ -31,13 +31,13 @@ namespace ClinicalCoordinationApplication.Model
         }
         public SignInError SignIn(string email, string password)
         {
-            //call db instead of null
-            
-            if (database.SignIn(email, password) == "null")
+            //call db for account with email
+            Account account = null;
+            if (account == null)
             {
                 return SignInError.InvalidEmailOrPassword;
             }
-            if (password.CompareTo(database.SignIn(email, password)) != 0) 
+            if (password.CompareTo(account.Password) != 0)
             {
                 return SignInError.InvalidEmailOrPassword;
             }
@@ -47,11 +47,17 @@ namespace ClinicalCoordinationApplication.Model
         }
         public CreateAccountError CreateAccount(string email, string password, string firstName, string lastName)
         {
-            if (email.IndexOf("@uwosh.edu") == -1)
+            //call db for account with email
+            Account account = null;
+            if (account != null)
+            {
+                return CreateAccountError.EmailAlreadyUsed;
+            }
+            if (!email.Contains("@uwosh.edu") || (email.Length < 10 || email.Length > 150))
             {
                 return CreateAccountError.InvalidEmail;
             }
-            if (password.Length < 8)
+            if (password.Length < 8 || password.Length > 50)
             {
                 return CreateAccountError.InvalidPassword;
             }
@@ -60,9 +66,33 @@ namespace ClinicalCoordinationApplication.Model
             //Account account = new(email, password, firstName, lastName, "Student");
             return CreateAccountError.NoError;
         }
-        public EditAccountError EditAccount()
+        public EditAccountError EditAccount(string email, string password, string firstName, string lastName)
         {
-
+            //call db for account with email
+            Account account = null;
+            if (account != null)
+            {
+                return EditAccountError.EmailAlreadyUsed;
+            }
+            if (!email.Contains("@uwosh.edu") || (email.Length < 10 || email.Length > 150))
+            {
+                return EditAccountError.InvalidEmail;
+            }
+            if (password.Length < 8 || password.Length > 50)
+            {
+                return EditAccountError.InvalidPassword;
+            }
+            if (firstName.Length < 1 || firstName.Length > 50)
+            {
+                return EditAccountError.InvalidFirstName;
+            }
+            if (lastName.Length < 1 || lastName.Length > 50)
+            {
+                return EditAccountError.InvalidLastName;
+            }
+            //Account with edits
+            Account editedAccount = new(email, password, firstName, lastName, "Student");
+            //db stuff
             return EditAccountError.NoError;
         }
         public AddWorkedHoursError AddWorkedHours()
