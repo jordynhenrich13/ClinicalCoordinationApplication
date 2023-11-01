@@ -46,7 +46,7 @@ public partial class CreateAnAccount : ContentPage
         else
         {
             // Handle the error and provide feedback to the user.
-            // You can display an error message or take appropriate action.
+            DisplayAlert("Error", "Invalid email or password.", "OK");
         }
     }
 
