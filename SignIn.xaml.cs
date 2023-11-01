@@ -8,11 +8,11 @@ public partial class SignIn : ContentPage
     // Student OR Coordinator
     private string userType;
 
-    public SignIn(string userType)
+    public SignIn()
     {
         InitializeComponent();
         // Initialize type of user based on MainPage button selection
-        this.userType = userType;
+        //this.userType = userType;
         BindingContext = MauiProgram.BusinessLogic;
     }
 
