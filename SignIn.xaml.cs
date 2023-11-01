@@ -45,6 +45,8 @@ public partial class SignIn : ContentPage
                 // Successful sign-in logic here
                 // ...
 
+                Navigation.PushAsync(new StudentDashMain());
+
                 // Clear the input fields.
                 EmailENT.Text = "";
                 PasswordEnt.Text = "";

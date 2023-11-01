@@ -31,17 +31,13 @@ namespace ClinicalCoordinationApplication.Model
         }
         public SignInError SignIn(string email, string password)
         {
-            //call db for account with email
-            Account account = null;
-            if (account == null)
+            Student loggedInStudent = database.StudentSignIn(email, password);
+
+
+            if (loggedInStudent == null)
             {
                 return SignInError.InvalidEmailOrPassword;
             }
-            if (password.CompareTo(account.Password) != 0)
-            {
-                return SignInError.InvalidEmailOrPassword;
-            }
-            //signin
 
             return SignInError.NoError;
         }
