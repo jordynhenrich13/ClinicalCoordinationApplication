@@ -10,12 +10,12 @@
 
         private void OpenStudentView(object sender, EventArgs e)
         {
-            Navigation.PushAsync(new SignIn("student"));
+            Navigation.PushAsync(new SignIn());
         }
 
         private void OpenCoordinatorView(object sender, EventArgs e)
         {
-            Navigation.PushAsync(new SignIn("coordinator"));
+            Navigation.PushAsync(new SignIn());
         }
 
         private void OpenCoordinatorReportsView(object sender, EventArgs e)

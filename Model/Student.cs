@@ -100,6 +100,14 @@ namespace ClinicalCoordinationApplication.Model
             this.clinicals = clinicals;
 		}
 
+        public Student(string firstName, string lastName, string emailAddress, string password)
+        {
+            this.firstName = firstName;
+            this.lastName = lastName;
+            this.emailAddress= emailAddress;
+            this.password = password;
+        }
+
 
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged(string propertyName)

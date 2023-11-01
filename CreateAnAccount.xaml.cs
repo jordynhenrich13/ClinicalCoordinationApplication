@@ -23,6 +23,11 @@ public partial class CreateAnAccount : ContentPage
 
 	}
 
+    public void SignInHere_Clicked(object sender, EventArgs e)
+    {
+        Navigation.PushAsync(new SignIn());
+    }
+
     private void Button_Clicked(object sender, EventArgs e)
     {
         string firstName = first_nameENT.Text;
@@ -33,7 +38,7 @@ public partial class CreateAnAccount : ContentPage
         Database database = new Database();
 
         CreateAccountError result = database.CreateStudentAccount(email, password, firstName, lastName);
-        Page signInPage = new SignIn("Student");
+        Page signInPage = new SignIn();
 
         if (result == CreateAccountError.NoError)
         {

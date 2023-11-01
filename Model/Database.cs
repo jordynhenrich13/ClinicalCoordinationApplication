@@ -23,42 +23,54 @@ public class Database : IDatabase
         //CreateTables(connString);
     }
 
-    public string SignIn(string email, string password)
+    public Student StudentSignIn(string email, string password)
     {
+
         var conn = new NpgsqlConnection(connString);
         conn.Open();
         using var cmd = new NpgsqlCommand();
         cmd.Connection = conn;
-        cmd.CommandText = "DELETE FROM airports WHERE Id = @Id";
-        cmd.CommandText = "SELECT Password FROM Student WHERE Email = @email";
-        cmd.Parameters.AddWithValue("email", email);
-        string foundPassword = (string)cmd.ExecuteScalar();
-        return foundPassword;
+        cmd.CommandText = "SELECT firstname, lastname, email, password FROM Student WHERE Email = @email AND Password = @Password";
+        cmd.Parameters.AddWithValue("Email", email);
+        cmd.Parameters.AddWithValue("Password", password);
+
+        using var reader = cmd.ExecuteReader(); // used for SELECT statement, returns a forward-only traversable object
+        if (reader.Read())
+        { // there should be only one row, so we don't need a while loop TODO: Sanity check
+
+            return new Student(reader.GetString(0), reader.GetString(1), reader.GetString(2), reader.GetString(3));
+        }
+        else
+        {
+            Student nullStudent = null;
+            return nullStudent;
+        }
     }
+
 
     public CreateAccountError CreateStudentAccount(string email, string password, string firstName, string LastName)
     {
-            try
-            {
-                using var conn = new NpgsqlConnection(connString); // conn, short for connection, is a connection to the database
+        try
+        {
+            using var conn = new NpgsqlConnection(connString); // conn, short for connection, is a connection to the database
 
-                conn.Open(); // open the connection ... now we are connected!
-                var cmd = new NpgsqlCommand(); // create the sql commaned
-                cmd.Connection = conn; // commands need a connection, an actual command to execute
-                cmd.CommandText = "INSERT INTO Student (FirstName, Lastname, Email, Password) VALUES (@FirstName, @Lastname, @Email, @Password)";
-                cmd.Parameters.AddWithValue("FirstName", firstName);
-                cmd.Parameters.AddWithValue("lastName", LastName);
-                cmd.Parameters.AddWithValue("Email", email);
-                cmd.Parameters.AddWithValue("Password", password);
-                cmd.ExecuteNonQuery(); // used for INSERT, UPDATE & DELETE statements - returns # of affected rows 
-            }
-            catch (Npgsql.PostgresException pe)
-            {
-                Console.WriteLine("Insert failed, {0}", pe);
-                return CreateAccountError.InvalidEmail;
-            }
-            return CreateAccountError.NoError;
+            conn.Open(); // open the connection ... now we are connected!
+            var cmd = new NpgsqlCommand(); // create the sql commaned
+            cmd.Connection = conn; // commands need a connection, an actual command to execute
+            cmd.CommandText = "INSERT INTO Student (FirstName, Lastname, Email, Password) VALUES (@FirstName, @Lastname, @Email, @Password)";
+            cmd.Parameters.AddWithValue("FirstName", firstName);
+            cmd.Parameters.AddWithValue("lastName", LastName);
+            cmd.Parameters.AddWithValue("Email", email);
+            cmd.Parameters.AddWithValue("Password", password);
+            cmd.ExecuteNonQuery(); // used for INSERT, UPDATE & DELETE statements - returns # of affected rows 
         }
+        catch (Npgsql.PostgresException pe)
+        {
+            Console.WriteLine("Insert failed, {0}", pe);
+            return CreateAccountError.InvalidEmail;
+        }
+        return CreateAccountError.NoError;
+    }
 
     public CreateAccountError CreateCoordinatorAccount(string email, string password, string firstName, string LastName)
     {

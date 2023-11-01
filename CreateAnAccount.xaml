@@ -8,23 +8,12 @@
          Padding="20,0"
     >
         <Grid ColumnDefinitions="5, *" ColumnSpacing="15">
-            <Button
-             Grid.Column="0"
-             ImageSource="back_arrow.png"
-             HorizontalOptions="Center"
-             BackgroundColor="Transparent"
-            />
-            <Label 
-             Grid.Column="1"
-             VerticalOptions="Center" 
-             FontSize="Title" 
-             Text="Create an account"
-            />
         </Grid>
         <Label 
               HorizontalOptions="Start"
               VerticalOptions="Center" 
               Text="Please fill in the required information to create an account."
+              Margin="0, 30, 10, 0"
             />
         <VerticalStackLayout
             Spacing="30"
@@ -70,6 +59,7 @@
                     BackgroundColor="Transparent"
                     HorizontalOptions="Center"
                     TextColor="Blue"
+                    Clicked="SignInHere_Clicked"  
                 />
 
             </VerticalStackLayout>
