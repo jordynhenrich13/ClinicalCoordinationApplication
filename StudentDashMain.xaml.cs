@@ -6,4 +6,9 @@ public partial class StudentDashMain : ContentPage
 	{
 		InitializeComponent();
 	}
+
+	public void LogClinicalHours_Clicked(object sender, EventArgs e)
+	{
+		Navigation.PushAsync(new StudentDashHourLog());
+	}
 }

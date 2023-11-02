@@ -91,7 +91,7 @@
                     </StackLayout>
                 </StackLayout>
             </Frame>
-            <Button TextColor="White" Text="Log Clinical Hours" WidthRequest="350" Margin="20"/>
+            <Button TextColor="White" Text="Log Clinical Hours" WidthRequest="350" Margin="20" Clicked="LogClinicalHours_Clicked"/>
         </StackLayout>
     </ScrollView>
 </ContentPage>

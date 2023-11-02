@@ -88,12 +88,8 @@ public partial class SignIn : ContentPage
 
     public void SkipSignIn(object sender, EventArgs e)
 	{
-		if (this.userType == "coordinator")
-		{
-			((App)Application.Current).MainPage = new CoordinatorDashboard();
-		} else
-		{
-            ((App)Application.Current).MainPage = new StudentDashMain();
-        }
+
+        Navigation.PushAsync(new StudentDashMain());   
+        
     }
 }
