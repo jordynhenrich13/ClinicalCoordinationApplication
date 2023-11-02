@@ -47,6 +47,30 @@ public class Database : IDatabase
         }
     }
 
+    public Coordinator CoordinatorSignIn(string email, string password)
+    {
+
+        var conn = new NpgsqlConnection(connString);
+        conn.Open();
+        using var cmd = new NpgsqlCommand();
+        cmd.Connection = conn;
+        cmd.CommandText = "SELECT firstname, lastname, email, password FROM Coordinator WHERE Email = @email AND Password = @Password";
+        cmd.Parameters.AddWithValue("Email", email);
+        cmd.Parameters.AddWithValue("Password", password);
+
+        using var reader = cmd.ExecuteReader(); // used for SELECT statement, returns a forward-only traversable object
+        if (reader.Read())
+        { // there should be only one row, so we don't need a while loop TODO: Sanity check
+
+            return new Coordinator(reader.GetString(0), reader.GetString(1), reader.GetString(2), reader.GetString(3));
+        }
+        else
+        {
+            Coordinator nullCoordinator = null;
+            return nullCoordinator;
+        }
+    }
+
 
     public CreateAccountError CreateStudentAccount(string email, string password, string firstName, string LastName)
     {

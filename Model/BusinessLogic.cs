@@ -29,7 +29,7 @@ namespace ClinicalCoordinationApplication.Model
 		{
             database = new Database();
         }
-        public SignInError SignIn(string email, string password)
+        public SignInError StudentSignIn(string email, string password)
         {
             Student loggedInStudent = database.StudentSignIn(email, password);
 
@@ -41,6 +41,20 @@ namespace ClinicalCoordinationApplication.Model
 
             return SignInError.NoError;
         }
+
+        public SignInError CoordinatorSignIn(string email, string password)
+        {
+            Coordinator loggedInCoordinator = database.CoordinatorSignIn(email, password);
+
+
+            if (loggedInCoordinator == null)
+            {
+                return SignInError.InvalidEmailOrPassword;
+            }
+
+            return SignInError.NoError;
+        }
+
         public CreateAccountError CreateStudentAccount(string email, string password, string firstName, string lastName)
         {
             //call db for account with email

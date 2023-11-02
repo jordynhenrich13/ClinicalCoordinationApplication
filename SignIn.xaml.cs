@@ -33,7 +33,7 @@ public partial class SignIn : ContentPage
         }
         else
         {
-            SignInError validSignIn = MauiProgram.BusinessLogic.SignIn(email, password);
+            SignInError validSignIn = MauiProgram.BusinessLogic.StudentSignIn(email, password);
 
             if (validSignIn == SignInError.InvalidEmailOrPassword)
             {
@@ -66,7 +66,7 @@ public partial class SignIn : ContentPage
         }
         else
         {
-            SignInError validSignIn = MauiProgram.BusinessLogic.SignIn(email, password);
+            SignInError validSignIn = MauiProgram.BusinessLogic.CoordinatorSignIn(email, password);
 
             if (validSignIn == SignInError.InvalidEmailOrPassword)
             {
