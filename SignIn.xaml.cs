@@ -77,6 +77,7 @@ public partial class SignIn : ContentPage
             {
                 // Successful sign-in logic here
                 // ...
+                Navigation.PushAsync(new CoordinatorDashboard());
 
                 // Clear the input fields.
                 EmailENT.Text = "";

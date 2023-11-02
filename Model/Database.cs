@@ -54,7 +54,7 @@ public class Database : IDatabase
         conn.Open();
         using var cmd = new NpgsqlCommand();
         cmd.Connection = conn;
-        cmd.CommandText = "SELECT firstname, lastname, email, password FROM Coordinator WHERE Email = @email AND Password = @Password";
+        cmd.CommandText = "SELECT firstname, lastname, email, password FROM ClinicalCoordinator WHERE Email = @email AND Password = @Password";
         cmd.Parameters.AddWithValue("Email", email);
         cmd.Parameters.AddWithValue("Password", password);
 
@@ -105,7 +105,7 @@ public class Database : IDatabase
             conn.Open(); // open the connection ... now we are connected!
             var cmd = new NpgsqlCommand(); // create the sql commaned
             cmd.Connection = conn; // commands need a connection, an actual command to execute
-            cmd.CommandText = "INSERT INTO Coordinator (FirstName, Lastname, Email, Password) VALUES (@FirstName, @Lastname, @Email, @Password)";
+            cmd.CommandText = "INSERT INTO ClinicalCoordinator (FirstName, Lastname, Email, Password) VALUES (@FirstName, @Lastname, @Email, @Password)";
             cmd.Parameters.AddWithValue("FirstName", firstName);
             cmd.Parameters.AddWithValue("lastName", LastName);
             cmd.Parameters.AddWithValue("Email", email);
