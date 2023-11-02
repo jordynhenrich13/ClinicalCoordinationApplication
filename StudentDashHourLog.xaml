@@ -8,7 +8,7 @@
             <!-- Other content or controls here -->
             <Label Text="Select a Date:" FontSize="18" Margin="20,10" />
             <DatePicker x:Name="datePicker" Date="{Binding SelectedDate}" />
-            <Label Text="Shift Information" FontSize="20" HorizontalOptions="StartAndExpand" Margin="20"/>
+            <Label Text="Enter Time" FontSize="20" HorizontalOptions="StartAndExpand" Margin="0,50,0,0"/>
 
             <!-- Start Time Box -->
             <Frame BorderColor="Black" CornerRadius="5" Padding="10" Margin="20">
@@ -31,7 +31,7 @@
             <Editor x:Name="commentsEditor" Text="{Binding Comments}" Margin="20,0,20,20" Placeholder="Enter your notes or comments here" />
 
             <!-- Next Button -->
-            <Button x:Name="nextButton" BackgroundColor="Blue" Text="Next" TextColor="White" HorizontalOptions="FillAndExpand" Margin="100" />
+            <Button x:Name="nextButton" Clicked="ConfirmHours_Clicked" Text="Confirm Hours" TextColor="White" HorizontalOptions="FillAndExpand" Margin="70, 60, 70, 0" />
         </StackLayout>
     </ScrollView>
 </ContentPage>

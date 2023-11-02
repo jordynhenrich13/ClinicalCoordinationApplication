@@ -17,4 +17,10 @@ public partial class StudentDashHourLog : ContentPage
             InitializeComponent();
             BindingContext = this;
         }
+
+    private void ConfirmHours_Clicked(object sender, EventArgs e)
+    {
+        //business logic to call DB
+        Navigation.PushAsync(new StudentDashConfirmHours());
     }
+}

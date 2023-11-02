@@ -27,7 +27,7 @@
                     <Label Text="Notes will be shown from database here :)" FontSize="16" />
                 </StackLayout>
             </Frame>
-            <Button BackgroundColor="Blue" Text="Submit" TextColor="White" HorizontalOptions="FillAndExpand" Margin="100" />
+            <Button Text="Submit Hours" TextColor="White" HorizontalOptions="FillAndExpand" Margin="70, 80, 70, 0" Clicked="SubmitHours_Clicked" />
         </StackLayout>
     </ScrollView>
 </ContentPage>
