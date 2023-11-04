@@ -37,6 +37,11 @@ namespace ClinicalCoordinationApplication.Model
                 OnPropertyChanged(nameof(lastName));
             }
         }
+        // For searching for the student in coordinator dashboard
+        public string SearchName
+        {
+            get { return $"{FirstName} {LastName}"; }
+        }
 
         public string StudentID {
             get { return studentID; }

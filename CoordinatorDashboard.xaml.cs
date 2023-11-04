@@ -79,4 +79,7 @@ public partial class CoordinatorDashboard : ContentPage
     {
         Navigation.PushAsync(new Clinical6());
     }
+
+
+
 }

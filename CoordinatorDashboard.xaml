@@ -49,6 +49,9 @@
                 <!-- Add your profile icon button as an ImageButton -->
                 <ImageButton Source="profileicon.png" WidthRequest="40" HeightRequest="40" Clicked="ProfileIcon_Clicked" Grid.Column="2" Grid.Row="0" />
 
+                <!-- Add a search bar above the selected cohort -->
+                <SearchBar x:Name="studentSearchBar" Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" Grid.ColumnSpan="2" Placeholder="Search for a student" />
+
 
                 <!-- Dropdown menu and Filter button -->
                 <Picker Title="Select Cohort" x:Name="cohortPicker" SelectedIndexChanged="CohortPicker_SelectedIndexChanged" Grid.Row="1" Grid.Column="1">
