@@ -48,4 +48,9 @@ public partial class CoordinatorDashboard : ContentPage
         // Navigate to the assign clinical information
         Navigation.PushAsync(new AssignClinicalInformation());
     }
+    private void NavigateToAssignClinicalInformationPage(object sender, EventArgs e)
+    {
+        // Use the navigation logic to navigate to the AssignClinicalInformation page
+        Navigation.PushAsync(new AssignClinicalInformation());
+    }
 }

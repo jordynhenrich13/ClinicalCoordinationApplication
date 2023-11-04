@@ -90,4 +90,5 @@ public partial class AssignClinicalInformation : ContentPage
         PreceptorInfo.IsVisible = false; // Hide the PreceptorInfo section
     }
 
+
 }
