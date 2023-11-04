@@ -53,4 +53,30 @@ public partial class CoordinatorDashboard : ContentPage
         // Use the navigation logic to navigate to the AssignClinicalInformation page
         Navigation.PushAsync(new AssignClinicalInformation());
     }
+
+    // Navigate to clinical 1 when the button text '1' is pressed
+    private void Clinical1(object sender, EventArgs e)
+    {
+        Navigation.PushAsync(new Clinical1());
+    }
+    private void Clinical2(object sender, EventArgs e)
+    {
+        Navigation.PushAsync(new Clinical2());
+    }
+    private void Clinical3(object sender, EventArgs e)
+    {
+        Navigation.PushAsync(new Clinical3());
+    }
+    private void Clinical4(object sender, EventArgs e)
+    {
+        Navigation.PushAsync(new Clinical4());
+    }
+    private void Clinical5(object sender, EventArgs e)
+    {
+        Navigation.PushAsync(new Clinical5());
+    }
+    private void Clinical6(object sender, EventArgs e)
+    {
+        Navigation.PushAsync(new Clinical6());
+    }
 }

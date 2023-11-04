@@ -1,8 +1,8 @@
 namespace ClinicalCoordinationApplication;
 
-public partial class Clinical1 : ContentPage
+public partial class Clinical5 : ContentPage
 {
-	public Clinical1()
+	public Clinical5()
 	{
 		InitializeComponent();
 	}
