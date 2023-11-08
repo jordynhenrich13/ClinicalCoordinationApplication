@@ -6,6 +6,15 @@
     <ScrollView>
         <!--Adult Health-->
         <StackLayout>
+            <Frame BorderColor="Black" CornerRadius="0" Padding="10" BackgroundColor="LightGray">
+                <StackLayout>
+                    <Label Text="Welcome to Student Dashboard!" FontSize="20" TextColor="Black" HorizontalOptions="CenterAndExpand" Margin="10"/>
+                    <Label Text="Current Clinical" FontSize="16" TextColor="Black"/>
+                    <Label Text="Clinical Site: " FontSize="16" TextColor="Black"/>
+                    <Label Text="Logged Hours: " FontSize="16" TextColor="Black"/>
+                    <Label Text="Preceptor: " FontSize="16" TextColor="Black"/>
+                </StackLayout>
+            </Frame>
             <Frame BorderColor="Black" CornerRadius="5" Padding="10" Margin="20">
                 <StackLayout Orientation="Horizontal">
                     <!--Need to bind pictures to status of clinical or # of order-->
@@ -17,7 +26,7 @@
                             <Label Text="| 2 weeks" FontSize="Body" TextColor="Gray" />
                         </StackLayout>
                         <!--Need to bind to notes section in clinical class-->
-                        <Label Text="Notes:" FontSize="18" HorizontalOptions="StartAndExpand"/>
+                        <Label Text="Description:" FontSize="18" HorizontalOptions="StartAndExpand"/>
                     </StackLayout>
                 </StackLayout>
             </Frame>
@@ -31,7 +40,7 @@
                             <Label Text="112 Hours" FontSize="Body" TextColor="Gray" />
                             <Label Text="| 5 weeks" FontSize="Body" TextColor="Gray" />
                         </StackLayout>
-                        <Label Text="Notes:" FontSize="18" HorizontalOptions="StartAndExpand"/>
+                        <Label Text="Description:" FontSize="18" HorizontalOptions="StartAndExpand"/>
                     </StackLayout>
                 </StackLayout>
             </Frame>
@@ -45,7 +54,7 @@
                             <Label Text="112 Hours" FontSize="Body" TextColor="Gray" />
                             <Label Text="| 4 weeks" FontSize="Body" TextColor="Gray" />
                         </StackLayout>
-                        <Label Text="Notes:" FontSize="18" HorizontalOptions="StartAndExpand"/>
+                        <Label Text="Description:" FontSize="18" HorizontalOptions="StartAndExpand"/>
                     </StackLayout>
                 </StackLayout>
             </Frame>
@@ -59,7 +68,7 @@
                             <Label Text="112 Hours" FontSize="Body" TextColor="Gray" />
                             <Label Text="| 4 weeks" FontSize="Body" TextColor="Gray" />
                         </StackLayout>
-                        <Label Text="Notes:" FontSize="18" HorizontalOptions="StartAndExpand"/>
+                        <Label Text="Description:" FontSize="18" HorizontalOptions="StartAndExpand"/>
                     </StackLayout>
                 </StackLayout>
             </Frame>
@@ -73,7 +82,7 @@
                             <Label Text="168 Hours" FontSize="Body" TextColor="Gray" />
                             <Label Text="| 6 weeks" FontSize="Body" TextColor="Gray" />
                         </StackLayout>
-                        <Label Text="Notes:" FontSize="18" HorizontalOptions="StartAndExpand"/>
+                        <Label Text="Description:" FontSize="18" HorizontalOptions="StartAndExpand"/>
                     </StackLayout>
                 </StackLayout>
             </Frame>
@@ -87,7 +96,7 @@
                             <Label Text="168 Hours" FontSize="Body" TextColor="Gray" />
                             <Label Text="| 5 weeks" FontSize="Body" TextColor="Gray" />
                         </StackLayout>
-                        <Label Text="Notes:" FontSize="18" HorizontalOptions="StartAndExpand"/>
+                        <Label Text="Description:" FontSize="18" HorizontalOptions="StartAndExpand"/>
                     </StackLayout>
                 </StackLayout>
             </Frame>
