@@ -16,6 +16,10 @@ namespace ClinicalCoordinationApplication.Model
 
         ObservableCollection<AssignedPreceptor> IBusinessLogic.Preceptors => throw new NotImplementedException();
 
+        public string loggedInUserRole;
+        public string loggedInUserName;
+
+
         /*
         public ObservableCollection<Student> Students { get { return database.} }
 
@@ -39,6 +43,8 @@ namespace ClinicalCoordinationApplication.Model
                 return SignInError.InvalidEmailOrPassword;
             }
 
+            loggedInUserRole = "Student";
+
             return SignInError.NoError;
         }
 
@@ -51,6 +57,8 @@ namespace ClinicalCoordinationApplication.Model
             {
                 return SignInError.InvalidEmailOrPassword;
             }
+
+            loggedInUserRole = "Coordinator";
 
             return SignInError.NoError;
         }
@@ -73,7 +81,6 @@ namespace ClinicalCoordinationApplication.Model
             }
             //makes an account
             database.CreateStudentAccount(email, password, firstName, lastName);
-            //Account account = new(email, password, firstName, lastName, "Student");
             return CreateAccountError.NoError;
         }
 
@@ -94,8 +101,7 @@ namespace ClinicalCoordinationApplication.Model
                 return CreateAccountError.InvalidPassword;
             }
             //makes an account
-            database.CreateStudentAccount(email, password, firstName, lastName);
-            //Account account = new(email, password, firstName, lastName, "Student");
+            database.CreateCoordinatorAccount(email, password, firstName, lastName);
             return CreateAccountError.NoError;
         }
         public EditAccountError EditAccount(string email, string password, string firstName, string lastName)

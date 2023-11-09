@@ -1,31 +1,64 @@
-﻿namespace ClinicalCoordinationApplication
+﻿using ClinicalCoordinationApplication.Model;
+using Microsoft.Maui.Controls;
+
+namespace ClinicalCoordinationApplication
 {
-    public partial class MainPage : ContentPage
+    public partial class MainPage : FlyoutPage
     {
 
         public MainPage()
         {
             InitializeComponent();
+            Flyout = new FlyoutMenuPage();
         }
 
-        private void OpenStudentView(object sender, EventArgs e)
+        public MainPage(string userRole)
         {
-            Navigation.PushAsync(new SignIn());
+            InitializeComponent();
+
+            if (userRole == "Coordinator")
+            {
+                Detail = new NavigationPage(new CoordinatorDashboard());
+            }
+            else
+            {
+                Detail = new NavigationPage(new StudentDashMain());
+            }
+
+            Flyout = new FlyoutMenuPage();
         }
 
-        private void OpenCoordinatorView(object sender, EventArgs e)
-        {
-            Navigation.PushAsync(new SignIn());
-        }
 
-        private void OpenCoordinatorReportsView(object sender, EventArgs e)
+        void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Navigation.PushAsync(new CoordinatorReportsDashboard());
-        }
+            // Code for the FlyoutMenuNavigation
+            var item = e.CurrentSelection.FirstOrDefault() as FlyoutPageItem;
+            if (item != null)
+            {
+                Detail = new NavigationPage((Page)Activator.CreateInstance(item.TargetType));
 
-        private void OpenDirectorReportsView(object sender, EventArgs e)
-        {
-            Navigation.PushAsync(new DirectorReportsDashboard());
+                switch (item.Title)
+                {
+                    case "Student Dashboard":
+                        Detail = new NavigationPage(new StudentDashMain());
+                        break;
+
+                    case "Coordinator Dashboard":
+                        Detail = new NavigationPage(new CoordinatorDashboard());
+                        break;
+
+                    case "Coordinator Reports":
+                        Detail = new NavigationPage(new CoordinatorReportsDashboard());
+                        break;
+
+                    case "User Profile":
+                        Detail = new NavigationPage(new UserProfile());
+                        break;
+                }
+
+                if (!((IFlyoutPageController)this).ShouldShowSplitMode)
+                    IsPresented = false;
+            }
         }
     }
 }

@@ -6,13 +6,11 @@ namespace ClinicalCoordinationApplication;
 public partial class SignIn : ContentPage
 {
     // Student OR Coordinator
-    private string userType;
+    private readonly string userType;
 
     public SignIn()
     {
         InitializeComponent();
-        // Initialize type of user based on MainPage button selection
-        //this.userType = userType;
         BindingContext = MauiProgram.BusinessLogic;
     }
 
@@ -42,10 +40,8 @@ public partial class SignIn : ContentPage
             }
             else
             {
-                // Successful sign-in logic here
-                // ...
-
-                Navigation.PushAsync(new StudentDashMain());
+                // Replaces MainPage at the root level with the FlyoutMenuPage
+                ((App)Application.Current).MainPage = new MainPage("Student");
 
                 // Clear the input fields.
                 EmailENT.Text = "";
@@ -75,9 +71,8 @@ public partial class SignIn : ContentPage
             }
             else
             {
-                // Successful sign-in logic here
-                // ...
-                Navigation.PushAsync(new CoordinatorDashboard());
+                // Replaces MainPage at the root level with the FlyoutMenuPage
+                ((App)Application.Current).MainPage = new MainPage("Coordinator");
 
                 // Clear the input fields.
                 EmailENT.Text = "";
@@ -89,8 +84,7 @@ public partial class SignIn : ContentPage
 
     public void SkipSignIn(object sender, EventArgs e)
 	{
-
-        Navigation.PushAsync(new StudentDashMain());   
-        
+        // Replaces MainPage at the root level with the FlyoutMenuPage
+        ((App)Application.Current).MainPage = new MainPage("Student");
     }
 }

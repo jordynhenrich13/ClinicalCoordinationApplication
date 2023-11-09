@@ -67,6 +67,18 @@ namespace ClinicalCoordinationApplication.Model
                 OnPropertyChanged(nameof(emailAddress));
             }
         }
+
+        public string Password
+        {
+            get { return password; }
+            set
+            {
+                password = value;
+                OnPropertyChanged(nameof(password));
+            }
+        }
+
+
         public string PhoneNumber {
             get { return phoneNumber; }
             set
@@ -84,6 +96,7 @@ namespace ClinicalCoordinationApplication.Model
                 OnPropertyChanged(nameof(address));
             }
         }
+
         public List<Clinical> Clinicals {
             get { return clinicals; }
             set

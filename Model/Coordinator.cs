@@ -57,6 +57,17 @@ namespace ClinicalCoordinationApplication.Model
                 OnPropertyChanged(nameof(emailAddress));
             }
         }
+
+        public string Password
+        {
+            get { return password; }
+            set
+            {
+                password = value;
+                OnPropertyChanged(nameof(password));
+            }
+        }
+
         public string PhoneNumber
         {
             get { return phoneNumber; }
