@@ -69,5 +69,11 @@ namespace ClinicalCoordinationApplication.Model
 
         NoError
     }
+    public enum FindStudentError
+    {
+        SearchTooLong,
+        InvalidFormat,
+        NoError
+    }
 }
 

@@ -71,6 +71,22 @@ namespace ClinicalCoordinationApplication.Model
             {
                 return CreateAccountError.InvalidPassword;
             }
+            if (firstName.Length < 1 || firstName.Length > 50)
+            {
+                return CreateAccountError.InvalidFirstName;
+            }
+            if (firstName.Contains(','))
+            {
+                return CreateAccountError.InvalidFirstName;
+            }
+            if (lastName.Length < 1 || lastName.Length > 50)
+            {
+                return CreateAccountError.InvalidLastName;
+            }
+            if (lastName.Contains(','))
+            {
+                return CreateAccountError.InvalidLastName;
+            }
             //makes an account
             database.CreateStudentAccount(email, password, firstName, lastName);
             //Account account = new(email, password, firstName, lastName, "Student");
@@ -92,6 +108,22 @@ namespace ClinicalCoordinationApplication.Model
             if (password.Length < 8 || password.Length > 50)
             {
                 return CreateAccountError.InvalidPassword;
+            }
+            if (firstName.Length < 1 || firstName.Length > 50)
+            {
+                return CreateAccountError.InvalidFirstName;
+            }
+            if (firstName.Contains(','))
+            {
+                return CreateAccountError.InvalidFirstName;
+            }
+            if (lastName.Length < 1 || lastName.Length > 50)
+            {
+                return CreateAccountError.InvalidLastName;
+            }
+            if (lastName.Contains(','))
+            {
+                return CreateAccountError.InvalidLastName;
             }
             //makes an account
             database.CreateStudentAccount(email, password, firstName, lastName);
@@ -118,7 +150,15 @@ namespace ClinicalCoordinationApplication.Model
             {
                 return EditAccountError.InvalidFirstName;
             }
+            if (firstName.Contains(','))
+            {
+                return EditAccountError.InvalidFirstName;
+            }
             if (lastName.Length < 1 || lastName.Length > 50)
+            {
+                return EditAccountError.InvalidLastName;
+            }
+            if (lastName.Contains(','))
             {
                 return EditAccountError.InvalidLastName;
             }
@@ -172,6 +212,34 @@ namespace ClinicalCoordinationApplication.Model
         {
             
             return FindNewClinicError.NoError;
+        }
+        public FindStudentError FindStudent(string search)
+        {
+            if (search.Contains(','))
+            {
+                if (search.Length > 102)
+                {
+                    return FindStudentError.SearchTooLong;
+                }
+                if (search.IndexOf(',', search.IndexOf(',') + 1) <= 0)
+                {
+                    return FindStudentError.InvalidFormat;
+                }
+                string[] temp = search.Split(',');
+                string lastName = temp[0];
+                string firstName = temp[1].Substring(1);
+                //search for matching first and last name
+            }
+            else
+            {
+                if (search.Length > 50)
+                {
+                    return FindStudentError.SearchTooLong;
+                }
+                //search for matching first or last name
+
+            }
+            return FindStudentError.NoError;
         }
     }
 }
