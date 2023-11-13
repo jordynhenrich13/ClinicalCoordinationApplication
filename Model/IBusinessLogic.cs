@@ -24,6 +24,8 @@ namespace ClinicalCoordinationApplication.Model
         DeleteClinicalNoteError DeleteClinicalNote();
         FindPreviousClinicsError FindPreviousClinics();
         FindNewClinicError FindNewClinic();
+
+        void DeleteProfile();
     }
 }
 

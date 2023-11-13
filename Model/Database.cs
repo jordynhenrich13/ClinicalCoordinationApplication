@@ -2,6 +2,7 @@
 //using Intents;
 //using Intents;
 using Npgsql;
+using NpgsqlTypes;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -16,6 +17,82 @@ public class Database : IDatabase
     private string connString;
     // Constructor initializes and sets up the database.
     // It also ensures that the file exists or creates it if not.
+
+    public static string userId { get; set; }
+
+    public string GetUserType()
+    {
+        if (userId != null)
+        {
+            Student studentFound = QueryStudentData(userId);
+            Coordinator coordinatorFound = QueryCoordinatorData(userId);
+
+            if (studentFound == null)
+            {
+                if (coordinatorFound == null)
+                {
+                    return "";
+                }
+
+                if (coordinatorFound.FirstName == "Erika")
+                {
+                    return "Director";
+                }
+
+                return "Coordinator";
+            }
+            else
+            {
+                return "Student";
+            }
+        }
+        return null;
+    }
+
+    private Student QueryStudentData(string userId)
+    {
+        using var conn = new NpgsqlConnection(connString);
+        conn.Open();
+        using var cmd = new NpgsqlCommand();
+        cmd.Connection = conn;
+        cmd.CommandText = "SELECT FirstName, Lastname, Email FROM Student WHERE Email = @Email";
+        cmd.Parameters.AddWithValue("Email", NpgsqlDbType.Varchar, userId);
+
+        using var reader = cmd.ExecuteReader();
+
+        if (reader.Read())
+        {
+            if (!reader.IsDBNull(0))
+            {
+                return new Student(reader.GetString(0), reader.GetString(1), reader.GetString(2));
+            }
+        }
+
+        return null;
+    }
+
+    private Coordinator QueryCoordinatorData(string userId)
+    {
+        using var conn = new NpgsqlConnection(connString);
+        conn.Open();
+        using var cmd = new NpgsqlCommand();
+        cmd.Connection = conn;
+        cmd.CommandText = "SELECT FirstName, Lastname, Email FROM ClinicalCoordinator WHERE Email = @Email";
+        cmd.Parameters.AddWithValue("Email", NpgsqlDbType.Varchar, userId);
+
+        using var reader = cmd.ExecuteReader();
+
+        if (reader.Read())
+        {
+            if (!reader.IsDBNull(0))
+            {
+                return new Coordinator(reader.GetString(0), reader.GetString(1), reader.GetString(2));
+            }
+        }
+
+        return null;
+    }
+
 
     public Database()
     {
@@ -37,8 +114,8 @@ public class Database : IDatabase
         using var reader = cmd.ExecuteReader(); // used for SELECT statement, returns a forward-only traversable object
         if (reader.Read())
         { // there should be only one row, so we don't need a while loop TODO: Sanity check
-
-            return new Student(reader.GetString(0), reader.GetString(1), reader.GetString(2), reader.GetString(3));
+            userId = reader.GetString(2);
+            return new Student(reader.GetString(0), reader.GetString(1), reader.GetString(2));
         }
         else
         {
@@ -54,21 +131,35 @@ public class Database : IDatabase
         conn.Open();
         using var cmd = new NpgsqlCommand();
         cmd.Connection = conn;
-        cmd.CommandText = "SELECT firstname, lastname, email, password FROM ClinicalCoordinator WHERE Email = @email AND Password = @Password";
+        cmd.CommandText = "SELECT FirstName, LastName, Email, Password FROM ClinicalCoordinator WHERE Email = @Email AND Password = @Password";
         cmd.Parameters.AddWithValue("Email", email);
         cmd.Parameters.AddWithValue("Password", password);
 
         using var reader = cmd.ExecuteReader(); // used for SELECT statement, returns a forward-only traversable object
         if (reader.Read())
         { // there should be only one row, so we don't need a while loop TODO: Sanity check
-
-            return new Coordinator(reader.GetString(0), reader.GetString(1), reader.GetString(2), reader.GetString(3));
+            userId = reader.GetString(2);
+            return new Coordinator(reader.GetString(0), reader.GetString(1), reader.GetString(2));
         }
         else
         {
             Coordinator nullCoordinator = null;
             return nullCoordinator;
         }
+    }
+
+    /// <summary>
+    /// Used to alter profiles for debugging purposes
+    /// </summary>
+    public void DeleteProfile()
+    {
+        var conn = new NpgsqlConnection(connString);
+        conn.Open();
+        using var cmd = new NpgsqlCommand();
+        cmd.Connection = conn;
+        cmd.CommandText = "DELETE FROM ClinicalCoordinator WHERE Email = @Email";
+        cmd.Parameters.AddWithValue("Email", "jansse18@uwosh.edu");
+        using var reader = cmd.ExecuteReader();
     }
 
 

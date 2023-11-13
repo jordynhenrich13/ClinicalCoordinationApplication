@@ -19,7 +19,7 @@ namespace ClinicalCoordinationApplication.Model
 
         private string address;
         private List<Clinical> clinicals;
-        private string password;
+        //private string password;
 
         public string FirstName {
             get { return firstName; }
@@ -68,15 +68,15 @@ namespace ClinicalCoordinationApplication.Model
             }
         }
 
-        public string Password
-        {
-            get { return password; }
-            set
-            {
-                password = value;
-                OnPropertyChanged(nameof(password));
-            }
-        }
+        //public string Password
+        //{
+        //    get { return password; }
+        //    set
+        //    {
+        //        password = value;
+        //        OnPropertyChanged(nameof(password));
+        //    }
+        //}
 
 
         public string PhoneNumber {
@@ -118,12 +118,12 @@ namespace ClinicalCoordinationApplication.Model
             this.clinicals = clinicals;
 		}
 
-        public Student(string firstName, string lastName, string emailAddress, string password)
+        public Student(string firstName, string lastName, string emailAddress)
         {
             this.firstName = firstName;
             this.lastName = lastName;
             this.emailAddress= emailAddress;
-            this.password = password;
+            //this.password = password;
         }
 
 

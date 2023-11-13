@@ -16,7 +16,8 @@ public partial class SignIn : ContentPage
 
     public void CreateAnAccount(object sender, EventArgs e)
     {
-        Navigation.PushAsync(new CreateAnAccount(this.userType));
+        //MauiProgram.BusinessLogic.DeleteProfile(); //DEBUGGING PURPOSES
+        Navigation.PushAsync(new CreateAnAccount());
     }
 
     public void StudentSignInClicked(object sender, EventArgs e)
@@ -40,8 +41,8 @@ public partial class SignIn : ContentPage
             }
             else
             {
-                // Replaces MainPage at the root level with the FlyoutMenuPage
-                ((App)Application.Current).MainPage = new MainPage("Student");
+                // Navigates to AppShell (Allows for Flyout Menu!)
+                Application.Current.MainPage = new AppShell();
 
                 // Clear the input fields.
                 EmailENT.Text = "";
@@ -71,8 +72,8 @@ public partial class SignIn : ContentPage
             }
             else
             {
-                // Replaces MainPage at the root level with the FlyoutMenuPage
-                ((App)Application.Current).MainPage = new MainPage("Coordinator");
+                // Navigates to AppShell (Allows for Flyout Menu!)
+                Application.Current.MainPage = new AppShell();
 
                 // Clear the input fields.
                 EmailENT.Text = "";
@@ -84,7 +85,7 @@ public partial class SignIn : ContentPage
 
     public void SkipSignIn(object sender, EventArgs e)
 	{
-        // Replaces MainPage at the root level with the FlyoutMenuPage
-        ((App)Application.Current).MainPage = new MainPage("Student");
+        // Navigates to AppShell (Allows for Flyout Menu!)
+        Application.Current.MainPage = new AppShell();
     }
 }

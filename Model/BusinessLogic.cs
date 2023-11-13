@@ -16,8 +16,9 @@ namespace ClinicalCoordinationApplication.Model
 
         ObservableCollection<AssignedPreceptor> IBusinessLogic.Preceptors => throw new NotImplementedException();
 
-        public string loggedInUserRole;
-        public string loggedInUserName;
+        public string LoggedInUserType { get; set; } // TODO: RETURNS NULL!
+        public string LoggedInUserName { get; set; } // TODO: RETURNS NULL!
+        // Probably needs refactoring at a database level as this use of informai is not recommended
 
 
         /*
@@ -33,6 +34,17 @@ namespace ClinicalCoordinationApplication.Model
 		{
             database = new Database();
         }
+
+        public string GetUserType()
+        {
+            return database.GetUserType();
+        }
+
+        public void DeleteProfile()
+        {
+            database.DeleteProfile();
+        }
+
         public SignInError StudentSignIn(string email, string password)
         {
             Student loggedInStudent = database.StudentSignIn(email, password);
@@ -43,7 +55,8 @@ namespace ClinicalCoordinationApplication.Model
                 return SignInError.InvalidEmailOrPassword;
             }
 
-            loggedInUserRole = "Student";
+            LoggedInUserType = "Student";
+            LoggedInUserName = loggedInStudent.FirstName + " " + loggedInStudent.LastName;
 
             return SignInError.NoError;
         }
@@ -58,7 +71,15 @@ namespace ClinicalCoordinationApplication.Model
                 return SignInError.InvalidEmailOrPassword;
             }
 
-            loggedInUserRole = "Coordinator";
+            if (loggedInCoordinator.FirstName == "Erika")
+            {
+                LoggedInUserType = "Director";
+            } else
+            {
+                LoggedInUserType = "Coordinator";
+            }
+
+            LoggedInUserName = loggedInCoordinator.FirstName + " " + loggedInCoordinator.LastName;
 
             return SignInError.NoError;
         }
