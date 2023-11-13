@@ -54,7 +54,7 @@
 
                 <!-- Add the dashboard back button-->
 
-                <Label Text="Clinical 1: Adult Health I" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2" FontAttributes="Bold" Margin="10,40,0,0" FontSize="23"></Label>
+                <Label Text="Clinical 4: Adult Health I" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2" FontAttributes="Bold" Margin="10,40,0,0" FontSize="23"></Label>
                 <Label Text="56 hours | 2 weeks" Grid.Column="0" Grid.Row="3" Margin="10,0,0,0"></Label>
                 <Label Text="Clinic" Grid.Column="0" Grid.Row="4" Margin="10,30,0,0" FontAttributes="Bold" FontSize="23"></Label>
                 <!-- Center line under clinic-->

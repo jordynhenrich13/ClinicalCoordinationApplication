@@ -12,6 +12,9 @@
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
                 <Label Text="Dashboard" TextColor="White" VerticalOptions="Center" Grid.Column="2"/>
@@ -40,21 +43,24 @@
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
-                   
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+
                 </Grid.ColumnDefinitions>
 
                 <!-- Add your side menu button as an ImageButton -->
                 <ImageButton Source="menupopup.png" WidthRequest="40" HeightRequest="40" Clicked="SideMenuButton_Clicked" Grid.Column="0" Grid.Row="0" VerticalOptions="Start" Margin="-60,10,0,0"/>
 
                 <!-- Add your profile icon button as an ImageButton -->
-                <ImageButton Source="profileicon.png" WidthRequest="40" HeightRequest="40" Clicked="ProfileIcon_Clicked" Grid.Column="2" Grid.Row="0" />
+                <ImageButton Source="profileicon.png" WidthRequest="40" HeightRequest="40" Clicked="ProfileIcon_Clicked" Grid.Column="6" Grid.Row="0" />
 
                 <!-- Add a search bar above the selected cohort -->
-                <SearchBar x:Name="studentSearchBar" Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" Grid.ColumnSpan="2" Placeholder="Search for a student" />
+                <SearchBar x:Name="studentSearchBar" Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" Grid.ColumnSpan="4" Placeholder="Search for a student" />
 
 
                 <!-- Dropdown menu and Filter button -->
-                <Picker Title="Select Cohort" x:Name="cohortPicker" SelectedIndexChanged="CohortPicker_SelectedIndexChanged" Grid.Row="1" Grid.Column="1">
+                <Picker Title="Select Cohort" x:Name="cohortPicker" SelectedIndexChanged="CohortPicker_SelectedIndexChanged" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3">
                     <!-- Add your cohort options here -->
                     <Picker.ItemsSource>
                         <x:Array Type="{x:Type x:String}">
@@ -64,7 +70,7 @@
                     </Picker.ItemsSource>
                 </Picker>
 
-                <Button Text="Filter" WidthRequest="100" HeightRequest="40" Grid.Row="1" Grid.Column="2">
+                <Button Text="Filter" WidthRequest="100" HeightRequest="40" Grid.Row="1" Grid.Column="5" Margin="-40,0,0,0" >
                     <!-- Add your filter button content here -->
                 </Button>
 
@@ -73,120 +79,117 @@
 
 
                 <!-- Display the Student Name and their cohort progress-->
-                <Label Text="Student Name" Grid.Column="0" Grid.ColumnSpan="2" FontAttributes="Bold" VerticalOptions="Center" Grid.Row="2" FontSize="28" Margin="20,10,0,0"/>
-                <Button Text="View Profile" Grid.Column="2" HorizontalOptions="End" Grid.Row="2" Margin="0,10,15,0" Clicked="OnViewProfileButtonClicked" />
-                <StackLayout Grid.Row="3" Orientation="Horizontal">
-                    <Button Text="1" BackgroundColor="Gray" WidthRequest="40" HeightRequest="40" Padding="10" Margin="-40,19,0,0"
+                <Label Text="Student Name" Grid.Column="0" Grid.ColumnSpan="4" FontAttributes="Bold" VerticalOptions="Center" Grid.Row="2" FontSize="28" Margin="20,10,0,0"/>
+                <Button Text="View Profile" Grid.Column="6" Grid.Row="2" Margin="0,10,15,0" Clicked="OnViewProfileButtonClicked" />
+                <StackLayout Grid.Row="3" Orientation="Horizontal" Grid.Column="0">
+                    <Button Text="1" BackgroundColor="Gray" WidthRequest="40" HeightRequest="40" Padding="10" Margin="0,19,0,0" 
                            TextColor="White" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Clicked="Clinical1" />
                 </StackLayout>
 
-                <StackLayout Grid.Row="3" Orientation="Horizontal">
-                    <Button Text="2" BackgroundColor="Gray" WidthRequest="40" HeightRequest="40" Padding="10" Margin="90,19,0,0"
+                <StackLayout Grid.Row="3" Orientation="Horizontal" Grid.Column="1">
+                    <Button Text="2" BackgroundColor="Gray" WidthRequest="40" HeightRequest="40" Padding="10" Margin="0,19,0,0" 
            TextColor="White" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Clicked="Clinical2" />
                 </StackLayout>
 
-                <StackLayout Grid.Row="3" Orientation="Horizontal">
-                    <Button Text="3" BackgroundColor="Gray" WidthRequest="40" HeightRequest="40" Padding="10" Margin="220,19,0,0"
+                <StackLayout Grid.Row="3" Orientation="Horizontal" Grid.Column="2">
+                    <Button Text="3" BackgroundColor="Gray" WidthRequest="40" HeightRequest="40" Padding="10" Margin="0,19,0,0" 
            TextColor="White" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Clicked="Clinical3" />
                 </StackLayout>
 
-                <StackLayout Grid.Row="3" Orientation="Horizontal">
-                    <Button Text="4" BackgroundColor="Gray" WidthRequest="40" HeightRequest="40" Padding="10" Margin="350,19,0,0"
+                <StackLayout Grid.Row="3" Orientation="Horizontal" Grid.Column="3">
+                    <Button Text="4" BackgroundColor="Gray" WidthRequest="40" HeightRequest="40" Padding="10" Margin="0,19,0,0"
            TextColor="White" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Clicked="Clinical4" />
                 </StackLayout>
 
-                <StackLayout Grid.Row="3" Orientation="Horizontal">
-                    <Button Text="5" BackgroundColor="Gray" WidthRequest="40" HeightRequest="40" Padding="10" Margin="480,19,0,0"
+                <StackLayout Grid.Row="3" Orientation="Horizontal" Grid.Column="4">
+                    <Button Text="5" BackgroundColor="Gray" WidthRequest="40" HeightRequest="40" Padding="10" Margin="0,19,0,0"
            TextColor="White" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Clicked="Clinical5" />
                 </StackLayout>
 
-                <StackLayout Grid.Row="3" Orientation="Horizontal">
-                    <Button Text="6" BackgroundColor="Gray" WidthRequest="40" HeightRequest="40" Padding="10" Margin="610,19,0,0"
+                <StackLayout Grid.Row="3" Orientation="Horizontal" Grid.Column="5">
+                    <Button Text="6" BackgroundColor="Gray" WidthRequest="40" HeightRequest="40" Padding="10" Margin="0,19,0,0"
            TextColor="White" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Clicked="Clinical6" />
                 </StackLayout>
                 
-                <StackLayout Grid.Row="4" Orientation="Horizontal" Grid.Column="1">
-                    <Button Text="Update Status" Grid.Column="3" HorizontalOptions="End" Grid.Row="8" Margin="0,20,15,0" Clicked="UpdateStatusButton"/>
+                <StackLayout Grid.Row="4" Orientation="Horizontal" Grid.Column="2">
+                    <Button Text="Update Status" HorizontalOptions="End" Grid.Row="8" Margin="0,20,15,0" Clicked="UpdateStatusButton"/>
                 </StackLayout>
 
 
                 <!-- Student #2-->
-                <Label Text="Student Name" Grid.Column="0" Grid.ColumnSpan="2" FontAttributes="Bold" VerticalOptions="Center" Grid.Row="5" FontSize="28" Margin="20,20,0,0"/>
-                <Button Text="View Profile" Grid.Column="2" HorizontalOptions="End" Grid.Row="5" Margin="0,20,15,0" Clicked="OnViewProfileButtonClicked" />
-                <StackLayout Grid.Row="6" Orientation="Horizontal">
-                    <Button Text="1" BackgroundColor="Green" WidthRequest="40" HeightRequest="40" Padding="10" Margin="-40,19,0,0"
-            TextColor="White" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"
-            Clicked="Clinical1" />
-                </StackLayout>
-                
-                <StackLayout Grid.Row="6" Orientation="Horizontal">
-                    <Button Text="2" BackgroundColor="Yellow" WidthRequest="40" HeightRequest="40" Padding="10" Margin="90,19,0,0"
-            TextColor="Black" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Clicked="Clinical2"/>
-                </StackLayout>
-                
-                <StackLayout Grid.Row="6" Orientation="Horizontal">
-                    <Button Text="3" BackgroundColor="Gray" WidthRequest="40" HeightRequest="40" Padding="10" Margin="220,19,0,0"
-            TextColor="White" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Clicked="Clinical3"/>
-                </StackLayout>
-                
-                <StackLayout Grid.Row="6" Orientation="Horizontal">
-                    <Button Text="4" BackgroundColor="Gray" WidthRequest="40" HeightRequest="40" Padding="10" Margin="350,19,0,0"
-            TextColor="White" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Clicked="Clinical4"/>
-                </StackLayout>
-                
-                <StackLayout Grid.Row="6" Orientation="Horizontal">
-                    <Button Text="5" BackgroundColor="Gray" WidthRequest="40" HeightRequest="40" Padding="10" Margin="480,19,0,0"
-            TextColor="White" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Clicked="Clinical5"/>
-                </StackLayout>
-                
-                <StackLayout Grid.Row="6" Orientation="Horizontal">
-                    <Button Text="6" BackgroundColor="Gray" WidthRequest="40" HeightRequest="40" Padding="10" Margin="610,19,0,0"
-            TextColor="White" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Clicked="Clinical6"/>
+                <Label Text="Student Name" Grid.Column="0" Grid.ColumnSpan="4" FontAttributes="Bold" VerticalOptions="Center" Grid.Row="5" FontSize="28" Margin="20,10,0,0"/>
+                <Button Text="View Profile" Grid.Column="6" Grid.Row="5" Margin="0,10,15,0" Clicked="OnViewProfileButtonClicked" />
+                <StackLayout Grid.Row="6" Orientation="Horizontal" Grid.Column="0">
+                    <Button Text="1" BackgroundColor="Gray" WidthRequest="40" HeightRequest="40" Padding="10" Margin="0,19,0,0" 
+                TextColor="White" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Clicked="Clinical1" />
                 </StackLayout>
 
-                <StackLayout Grid.Row="7" Orientation="Horizontal" Grid.Column="1">
-                    <Button Text="Update Status" Grid.Column="3" HorizontalOptions="End" Grid.Row="8" Margin="0,20,15,0" Clicked="UpdateStatusButton"/>
+                <StackLayout Grid.Row="6" Orientation="Horizontal" Grid.Column="1">
+                    <Button Text="2" BackgroundColor="Gray" WidthRequest="40" HeightRequest="40" Padding="10" Margin="0,19,0,0" 
+TextColor="White" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Clicked="Clinical2" />
+                </StackLayout>
+
+                <StackLayout Grid.Row="6" Orientation="Horizontal" Grid.Column="2">
+                    <Button Text="3" BackgroundColor="Gray" WidthRequest="40" HeightRequest="40" Padding="10" Margin="0,19,0,0" 
+TextColor="White" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Clicked="Clinical3" />
+                </StackLayout>
+
+                <StackLayout Grid.Row="6" Orientation="Horizontal" Grid.Column="3">
+                    <Button Text="4" BackgroundColor="Gray" WidthRequest="40" HeightRequest="40" Padding="10" Margin="0,19,0,0"
+TextColor="White" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Clicked="Clinical4" />
+                </StackLayout>
+
+                <StackLayout Grid.Row="6" Orientation="Horizontal" Grid.Column="4">
+                    <Button Text="5" BackgroundColor="Gray" WidthRequest="40" HeightRequest="40" Padding="10" Margin="0,19,0,0"
+TextColor="White" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Clicked="Clinical5" />
+                </StackLayout>
+
+                <StackLayout Grid.Row="6" Orientation="Horizontal" Grid.Column="5">
+                    <Button Text="6" BackgroundColor="Gray" WidthRequest="40" HeightRequest="40" Padding="10" Margin="0,19,0,0"
+TextColor="White" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Clicked="Clinical6" />
+                </StackLayout>
+
+                <StackLayout Grid.Row="7" Orientation="Horizontal" Grid.Column="2">
+                    <Button Text="Update Status" HorizontalOptions="End" Grid.Row="8" Margin="0,20,15,0" Clicked="UpdateStatusButton"/>
                 </StackLayout>
 
 
                 <!-- Student #3-->
-                <Label Text="Student Name" Grid.Column="0" Grid.ColumnSpan="2" FontAttributes="Bold" VerticalOptions="Center" Grid.Row="8" FontSize="28" Margin="20,20,0,0"/>
-                <Button Text="View Profile" Grid.Column="2" HorizontalOptions="End" Grid.Row="8" Margin="0,20,15,0" Clicked="OnViewProfileButtonClicked" />
-                <StackLayout Grid.Row="9" Orientation="Horizontal">
-                    <Button Text="1" BackgroundColor="Yellow" WidthRequest="40" HeightRequest="40" Padding="10" Margin="-40,19,0,0"
-            TextColor="Black" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"
-            Clicked="Clinical1" />
-                </StackLayout>
-                
-                <StackLayout Grid.Row="9" Orientation="Horizontal">
-                    <Button Text="2" BackgroundColor="Gray" WidthRequest="40" HeightRequest="40" Padding="10" Margin="90,19,0,0"
-            TextColor="White" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Clicked="Clinical2"/>
-                </StackLayout>
-                
-                <StackLayout Grid.Row="9" Orientation="Horizontal">
-                    <Button Text="3" BackgroundColor="Gray" WidthRequest="40" HeightRequest="40" Padding="10" Margin="220,19,0,0"
-            TextColor="White" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Clicked="Clinical3"/>
-                </StackLayout>
-                
-                <StackLayout Grid.Row="9" Orientation="Horizontal">
-                    <Button Text="4" BackgroundColor="Gray" WidthRequest="40" HeightRequest="40" Padding="10" Margin="350,19,0,0"
-            TextColor="White" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Clicked="Clinical4"/>
-                </StackLayout>
-                
-                <StackLayout Grid.Row="9" Orientation="Horizontal">
-                    <Button Text="5" BackgroundColor="Gray" WidthRequest="40" HeightRequest="40" Padding="10" Margin="480,19,0,0"
-            TextColor="White" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Clicked="Clinical5" />
-                </StackLayout>
-                
-                <StackLayout Grid.Row="9" Orientation="Horizontal">
-                    <Button Text="6" BackgroundColor="Gray" WidthRequest="40" HeightRequest="40" Padding="10" Margin="610,19,0,0"
-            TextColor="White" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Clicked="Clinical6"/>
-                </StackLayout>
-                
-                <StackLayout Grid.Row="10" Orientation="Horizontal" Grid.Column="1">
-                    <Button Text="Update Status" Grid.Column="3" HorizontalOptions="End" Grid.Row="8" Margin="0,20,15,0" Clicked="UpdateStatusButton"/>
+                <Label Text="Student Name" Grid.Column="0" Grid.ColumnSpan="4" FontAttributes="Bold" VerticalOptions="Center" Grid.Row="8" FontSize="28" Margin="20,10,0,0"/>
+                <Button Text="View Profile" Grid.Column="6" Grid.Row="8" Margin="0,10,15,0" Clicked="OnViewProfileButtonClicked" />
+                <StackLayout Grid.Row="9" Orientation="Horizontal" Grid.Column="0">
+                    <Button Text="1" BackgroundColor="Gray" WidthRequest="40" HeightRequest="40" Padding="10" Margin="0,19,0,0" 
+                TextColor="White" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Clicked="Clinical1" />
                 </StackLayout>
 
+                <StackLayout Grid.Row="9" Orientation="Horizontal" Grid.Column="1">
+                    <Button Text="2" BackgroundColor="Gray" WidthRequest="40" HeightRequest="40" Padding="10" Margin="0,19,0,0" 
+TextColor="White" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Clicked="Clinical2" />
+                </StackLayout>
+
+                <StackLayout Grid.Row="9" Orientation="Horizontal" Grid.Column="2">
+                    <Button Text="3" BackgroundColor="Gray" WidthRequest="40" HeightRequest="40" Padding="10" Margin="0,19,0,0" 
+TextColor="White" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Clicked="Clinical3" />
+                </StackLayout>
+
+                <StackLayout Grid.Row="9" Orientation="Horizontal" Grid.Column="3">
+                    <Button Text="4" BackgroundColor="Gray" WidthRequest="40" HeightRequest="40" Padding="10" Margin="0,19,0,0"
+TextColor="White" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Clicked="Clinical4" />
+                </StackLayout>
+
+                <StackLayout Grid.Row="9" Orientation="Horizontal" Grid.Column="4">
+                    <Button Text="5" BackgroundColor="Gray" WidthRequest="40" HeightRequest="40" Padding="10" Margin="0,19,0,0"
+TextColor="White" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Clicked="Clinical5" />
+                </StackLayout>
+
+                <StackLayout Grid.Row="9" Orientation="Horizontal" Grid.Column="5">
+                    <Button Text="6" BackgroundColor="Gray" WidthRequest="40" HeightRequest="40" Padding="10" Margin="0,19,0,0"
+TextColor="White" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Clicked="Clinical6" />
+                </StackLayout>
+
+                <StackLayout Grid.Row="10" Orientation="Horizontal" Grid.Column="2">
+                    <Button Text="Update Status" HorizontalOptions="End" Grid.Row="8" Margin="0,20,15,0" Clicked="UpdateStatusButton"/>
+                </StackLayout>
 
 
             </Grid>
