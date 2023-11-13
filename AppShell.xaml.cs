@@ -26,9 +26,9 @@ namespace ClinicalCoordinationApplication
 
 
             // Displays the relavent flyout menu items based on user type
-            if (userType == "Student" || string.IsNullOrEmpty(userType))
+            if (userType == "Student")
             {
-                Current.Items.Add(new StudentDashMain());  
+                // No additional items needed in the flyout menu (at the moment)
             }
 
             if (userType == "Coordinator")
@@ -40,6 +40,11 @@ namespace ClinicalCoordinationApplication
             {
                 Items.Add(new CoordinatorReportsDashboard());
                 Items.Add(new DirectorReportsDashboard());
+            }
+
+            if (string.IsNullOrEmpty(userType))
+            {
+                Items.Add(new SignIn());
             }
         }
     }
