@@ -5,7 +5,7 @@
              xmlns:clinicalcoordinationapplication="clr-namespace:ClinicalCoordinationApplication"
              x:DataType="clinicalcoordinationapplication:App"
              x:Class="ClinicalCoordinationApplication.DirectorReportsDashboard"
-             Title="Reports">
+             Title="Request Reports">
     <VerticalStackLayout>
         <Border
             StrokeShape="RoundRectangle 8,8,8,8"

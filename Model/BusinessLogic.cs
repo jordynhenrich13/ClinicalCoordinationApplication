@@ -16,6 +16,11 @@ namespace ClinicalCoordinationApplication.Model
 
         ObservableCollection<AssignedPreceptor> IBusinessLogic.Preceptors => throw new NotImplementedException();
 
+        public string LoggedInUserType { get; set; } // TODO: RETURNS NULL!
+        public string LoggedInUserName { get; set; } // TODO: RETURNS NULL!
+        // Probably needs refactoring at a database level as this use of informai is not recommended
+
+
         /*
         public ObservableCollection<Student> Students { get { return database.} }
 
@@ -29,6 +34,17 @@ namespace ClinicalCoordinationApplication.Model
 		{
             database = new Database();
         }
+
+        public string GetUserType()
+        {
+            return database.GetUserType();
+        }
+
+        public void DeleteProfile()
+        {
+            database.DeleteProfile();
+        }
+
         public SignInError StudentSignIn(string email, string password)
         {
             Student loggedInStudent = database.StudentSignIn(email, password);
@@ -38,6 +54,9 @@ namespace ClinicalCoordinationApplication.Model
             {
                 return SignInError.InvalidEmailOrPassword;
             }
+
+            LoggedInUserType = "Student";
+            LoggedInUserName = loggedInStudent.FirstName + " " + loggedInStudent.LastName;
 
             return SignInError.NoError;
         }
@@ -51,6 +70,16 @@ namespace ClinicalCoordinationApplication.Model
             {
                 return SignInError.InvalidEmailOrPassword;
             }
+
+            if (loggedInCoordinator.FirstName == "Erika")
+            {
+                LoggedInUserType = "Director";
+            } else
+            {
+                LoggedInUserType = "Coordinator";
+            }
+
+            LoggedInUserName = loggedInCoordinator.FirstName + " " + loggedInCoordinator.LastName;
 
             return SignInError.NoError;
         }
@@ -89,7 +118,6 @@ namespace ClinicalCoordinationApplication.Model
             }
             //makes an account
             database.CreateStudentAccount(email, password, firstName, lastName);
-            //Account account = new(email, password, firstName, lastName, "Student");
             return CreateAccountError.NoError;
         }
 
@@ -126,8 +154,7 @@ namespace ClinicalCoordinationApplication.Model
                 return CreateAccountError.InvalidLastName;
             }
             //makes an account
-            database.CreateStudentAccount(email, password, firstName, lastName);
-            //Account account = new(email, password, firstName, lastName, "Student");
+            database.CreateCoordinatorAccount(email, password, firstName, lastName);
             return CreateAccountError.NoError;
         }
         public EditAccountError EditAccount(string email, string password, string firstName, string lastName)

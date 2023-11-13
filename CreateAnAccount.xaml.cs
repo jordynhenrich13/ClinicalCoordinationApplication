@@ -4,12 +4,11 @@ namespace ClinicalCoordinationApplication;
 
 public partial class CreateAnAccount : ContentPage
 {
-	private string userType;
+    private static string userType;
 
-	public CreateAnAccount(string userType)
+	public CreateAnAccount()
 	{
-		InitializeComponent();
-		this.userType = userType;
+        InitializeComponent();
 	}
 
 	public void Student_Button_Clicked()
@@ -22,6 +21,18 @@ public partial class CreateAnAccount : ContentPage
 		last_nameENT.Text = "";
 
 	}
+
+    public void OnUserTypeButtonChanged(object sender, CheckedChangedEventArgs e)
+    {
+        if (sender == CoordinatorRadioButton && e.Value)
+        {
+            userType = "Coordinator";
+        }
+        else if (sender == StudentRadioButton && e.Value)
+        {
+            userType = "Student";
+        }
+    }
 
     public void SignInHere_Clicked(object sender, EventArgs e)
     {
@@ -37,8 +48,19 @@ public partial class CreateAnAccount : ContentPage
 
         Database database = new Database();
 
-        CreateAccountError result = database.CreateStudentAccount(email, password, firstName, lastName);
-        Page signInPage = new SignIn();
+        CreateAccountError result = CreateAccountError.NoError;
+
+        if (userType != null)
+        {
+            if (userType == "Student")
+            {
+                result = database.CreateStudentAccount(email, password, firstName, lastName);
+            }
+            else if (userType == "Coordinator")
+            {
+                result = database.CreateCoordinatorAccount(email, password, firstName, lastName);
+            }
+        }
 
         if (result == CreateAccountError.NoError)
         {
@@ -46,12 +68,12 @@ public partial class CreateAnAccount : ContentPage
             // You should implement the navigation logic here. The exact method
             // may depend on the framework you are using (e.g., Xamarin.Forms, Maui).
 
-            Application.Current.MainPage = new NavigationPage(signInPage);
+            Application.Current.MainPage = new NavigationPage(new SignIn());
         }
         else
         {
             // Handle the error and provide feedback to the user.
-            DisplayAlert("Error", "Invalid email or password.", "OK");
+            DisplayAlert("Error", "Could not create an account.", "OK");
         }
     }
 

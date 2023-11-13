@@ -6,19 +6,18 @@ namespace ClinicalCoordinationApplication;
 public partial class SignIn : ContentPage
 {
     // Student OR Coordinator
-    private string userType;
+    private readonly string userType;
 
     public SignIn()
     {
         InitializeComponent();
-        // Initialize type of user based on MainPage button selection
-        //this.userType = userType;
         BindingContext = MauiProgram.BusinessLogic;
     }
 
     public void CreateAnAccount(object sender, EventArgs e)
     {
-        Navigation.PushAsync(new CreateAnAccount(this.userType));
+        //MauiProgram.BusinessLogic.DeleteProfile(); //DEBUGGING PURPOSES
+        Navigation.PushAsync(new CreateAnAccount());
     }
 
     public void StudentSignInClicked(object sender, EventArgs e)
@@ -42,10 +41,8 @@ public partial class SignIn : ContentPage
             }
             else
             {
-                // Successful sign-in logic here
-                // ...
-
-                Navigation.PushAsync(new StudentDashMain());
+                // Navigates to AppShell (Allows for Flyout Menu!)
+                Application.Current.MainPage = new AppShell();
 
                 // Clear the input fields.
                 EmailENT.Text = "";
@@ -75,9 +72,8 @@ public partial class SignIn : ContentPage
             }
             else
             {
-                // Successful sign-in logic here
-                // ...
-                Navigation.PushAsync(new CoordinatorDashboard());
+                // Navigates to AppShell (Allows for Flyout Menu!)
+                Application.Current.MainPage = new AppShell();
 
                 // Clear the input fields.
                 EmailENT.Text = "";
@@ -89,8 +85,7 @@ public partial class SignIn : ContentPage
 
     public void SkipSignIn(object sender, EventArgs e)
 	{
-
-        Navigation.PushAsync(new StudentDashMain());   
-        
+        // Navigates to AppShell (Allows for Flyout Menu!)
+        Application.Current.MainPage = new AppShell();
     }
 }
