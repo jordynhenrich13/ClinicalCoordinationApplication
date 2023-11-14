@@ -257,7 +257,7 @@ public class Database : IDatabase
             conn.Open();
             if (firstName.CompareTo("") == 0)
             {
-                using var cmd = new NpgsqlCommand("SELECT firstname, lastname, email, FROM Student WHERE firstname LIKE %@search% OR lastname LIKE %@search%", conn);
+                using var cmd = new NpgsqlCommand("SELECT firstname, lastname, email FROM Student WHERE firstname LIKE %@search% OR lastname LIKE %@search%", conn);
                 cmd.Parameters.AddWithValue("search", lastName);
                 using var reader = cmd.ExecuteReader();
                 while (reader.Read())
@@ -271,7 +271,7 @@ public class Database : IDatabase
             }
             else
             {
-                using var cmd = new NpgsqlCommand("SELECT firstname, lastname, email, FROM Student WHERE firstname LIKE %@first% AND lastname LIKE %@last%", conn);
+                using var cmd = new NpgsqlCommand("SELECT firstname, lastname, email FROM Student WHERE firstname LIKE %@first% AND lastname LIKE %@last%", conn);
                 cmd.Parameters.AddWithValue("last", lastName);
                 cmd.Parameters.AddWithValue("first", firstName);
                 using var reader = cmd.ExecuteReader();
