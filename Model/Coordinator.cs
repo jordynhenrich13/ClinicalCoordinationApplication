@@ -19,6 +19,24 @@ namespace ClinicalCoordinationApplication.Model
         private string address;
         //private string password;
 
+        public Coordinator(string firstName, string lastName, string employeeID, string emailAddress, string phoneNumber, string address)
+        {
+            this.firstName = firstName;
+            this.lastName = lastName;
+            this.employeeID = employeeID;
+            this.emailAddress = emailAddress;
+            this.phoneNumber = phoneNumber;
+            this.address = address;
+        }
+
+        public Coordinator(string firstName, string lastName, string emailAddress)
+        {
+            this.firstName = firstName;
+            this.lastName = lastName;
+            this.emailAddress = emailAddress;
+            //this.password = password;
+        }
+
         public string FirstName
         {
             get { return firstName; }
@@ -87,27 +105,6 @@ namespace ClinicalCoordinationApplication.Model
                 OnPropertyChanged(nameof(address));
             }
         }
-
-
-        public Coordinator(string firstName, string lastName, string employeeID,  string emailAddress, string phoneNumber, string address)
-        {
-            this.firstName = firstName;
-            this.lastName = lastName;
-            this.employeeID = employeeID;
-            this.emailAddress = emailAddress;
-            this.phoneNumber = phoneNumber;
-            this.address = address;
-        }
-
-        public Coordinator(string firstName, string lastName, string emailAddress)
-        {
-            this.firstName = firstName;
-            this.lastName = lastName;
-            this.emailAddress = emailAddress;
-            //this.password = password;
-        }
-
-
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged(string propertyName)
         {
