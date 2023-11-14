@@ -233,7 +233,7 @@ public class Database : IDatabase
         var conn = new NpgsqlConnection(GetConnectionString());
         conn.Open();
 
-        using var cmd = new NpgsqlCommand("SELECT firstname, lastname, email, FROM Student", conn);
+        using var cmd = new NpgsqlCommand("SELECT firstname, lastname, email FROM Student", conn);
         using var reader = cmd.ExecuteReader();
         while (reader.Read())
         {
