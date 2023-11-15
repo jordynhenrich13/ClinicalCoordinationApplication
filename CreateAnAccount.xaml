@@ -44,7 +44,7 @@
                 <Label Text="Status at UWO" />
                 <HorizontalStackLayout x:Name="UserType">
                     <RadioButton x:Name="CoordinatorRadioButton" CheckedChanged="OnUserTypeButtonChanged" Content="Coordinator" />
-                    <RadioButton x:Name="StudentRadioButton" CheckedChanged="OnUserTypeButtonChanged" Content="Student" />
+                    <RadioButton x:Name="StudentRadioButton" CheckedChanged="OnUserTypeButtonChanged" Content="Student" IsChecked="True"/>
                 </HorizontalStackLayout>
             </StackLayout>
             <Button

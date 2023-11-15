@@ -11,8 +11,21 @@ namespace ClinicalCoordinationApplication
         private string lastName;
         private Clinic clinic;
         private string preceptorDepartment;
-        private string emailAddress;
+        private string email;
         private string phoneNumber;
+
+        public AssignedPreceptor(string firstName, string lastName, Clinic clinic, string preceptorDepartment, string email, string phoneNumber)
+        {
+            this.firstName = firstName;
+            this.lastName = lastName;
+
+            this.clinic = clinic;
+            this.preceptorDepartment = preceptorDepartment;
+
+            this.email = email;
+            this.phoneNumber = phoneNumber;
+
+        }
 
         public string FirstName {
             get { return firstName; }
@@ -49,12 +62,12 @@ namespace ClinicalCoordinationApplication
             }
         }
 
-        public string EmailAddress {
-            get { return emailAddress; }
+        public string Email {
+            get { return email; }
             set
             {
-                emailAddress = value;
-                OnPropertyChanged(nameof(emailAddress));
+                email = value;
+                OnPropertyChanged(nameof(email));
             }
         }
 
@@ -65,20 +78,6 @@ namespace ClinicalCoordinationApplication
                 phoneNumber = value;
                 OnPropertyChanged(nameof(phoneNumber));
             }
-        }
-
-
-        public AssignedPreceptor(string firstName, string lastName, Clinic clinic, string preceptorDepartment, string emailAddress, string phoneNumber)
-        {
-            this.firstName = firstName;
-            this.lastName = lastName;
-
-            this.clinic = clinic;
-            this.preceptorDepartment = preceptorDepartment;
-
-            this.emailAddress = emailAddress;
-            this.phoneNumber = phoneNumber;
-
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

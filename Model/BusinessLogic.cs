@@ -66,7 +66,7 @@ namespace ClinicalCoordinationApplication.Model
                 return SignInError.InvalidEmailOrPassword;
             }
 
-            if (loggedInCoordinator.FirstName == "Erika")
+            if (loggedInCoordinator.Email.CompareTo("jansse18@uwosh.edu") == 0 )
             {
                 LoggedInUserType = "Director";
             } else
@@ -263,7 +263,6 @@ namespace ClinicalCoordinationApplication.Model
                     return FindStudentError.SearchTooLong;
                 }
                 database.FindStudent(search, "");
-
             }
             return FindStudentError.NoError;
         }
