@@ -73,6 +73,7 @@ namespace ClinicalCoordinationApplication.Model
     {
         SearchTooLong,
         InvalidFormat,
+        NoStudentFound,
         NoError
     }
 }

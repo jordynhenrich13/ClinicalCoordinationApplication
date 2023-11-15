@@ -13,13 +13,31 @@ namespace ClinicalCoordinationApplication.Model
         private string lastName;
 
         private string studentID;
-        private string graduationDate;
-        private string emailAddress;
+        private string email;
         private string phoneNumber;
 
         private string address;
         private List<Clinical> clinicals;
         //private string password;
+
+        public Student(string firstName, string lastName, string studentID, string email, string phoneNumber, string address, List<Clinical> clinicals)
+        {
+            this.firstName = firstName;
+            this.lastName = lastName;
+            this.studentID = studentID;
+            this.email = email;
+            this.phoneNumber = phoneNumber;
+            this.address = address;
+            this.clinicals = clinicals;
+        }
+
+        public Student(string firstName, string lastName, string email)
+        {
+            this.firstName = firstName;
+            this.lastName = lastName;
+            this.email = email;
+            //this.password = password;
+        }
 
         public string FirstName {
             get { return firstName; }
@@ -51,20 +69,12 @@ namespace ClinicalCoordinationApplication.Model
                 OnPropertyChanged(nameof(studentID));
             }
         }
-        public string GraduationDate {
-            get { return graduationDate; }
+        public string Email {
+            get { return email; }
             set
             {
-                graduationDate = value;
-                OnPropertyChanged(nameof(graduationDate));
-            }
-        }
-        public string EmailAddress {
-            get { return emailAddress; }
-            set
-            {
-                emailAddress = value;
-                OnPropertyChanged(nameof(emailAddress));
+                email = value;
+                OnPropertyChanged(nameof(email));
             }
         }
 
@@ -105,27 +115,6 @@ namespace ClinicalCoordinationApplication.Model
                 OnPropertyChanged(nameof(clinicals));
             }
         }
-
-        public Student(string firstName, string lastName, string studentID, string graduationDate, string emailAddress, string phoneNumber, string address, List<Clinical> clinicals)
-		{
-            this.firstName = firstName;
-            this.lastName = lastName;
-            this.studentID = studentID;
-            this.graduationDate = graduationDate;
-            this.emailAddress = emailAddress;
-            this.phoneNumber = phoneNumber;
-            this.address = address;
-            this.clinicals = clinicals;
-		}
-
-        public Student(string firstName, string lastName, string emailAddress)
-        {
-            this.firstName = firstName;
-            this.lastName = lastName;
-            this.emailAddress= emailAddress;
-            //this.password = password;
-        }
-
 
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged(string propertyName)
