@@ -28,7 +28,7 @@ public partial class SignIn : ContentPage
         if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password))
         {
             // Display an error message for empty fields.
-            DisplayAlert("Error", "Please enter both email and password.", "OK");
+            DisplayAlert("Error", "Please enter email and password.", "OK");
         }
         else
         {

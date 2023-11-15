@@ -53,7 +53,7 @@
                 <ImageButton Source="menupopup.png" WidthRequest="40" HeightRequest="40" Clicked="SideMenuButton_Clicked" Grid.Column="0" Grid.Row="0" VerticalOptions="Start" Margin="-60,10,0,0"/>
 
                 <!-- Add a search bar above the selected cohort -->
-                <SearchBar x:Name="studentSearchBar" Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" Grid.ColumnSpan="6" Placeholder="Search for a student" />
+                <SearchBar x:Name="studentSearchBar" Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" Grid.ColumnSpan="6" Placeholder="Search for a student" SearchButtonPressed="OnStudentSearched"/>
 
 
                 <Picker Title="Select Cohort" x:Name="cohortPicker" SelectedIndexChanged="CohortPicker_SelectedIndexChanged" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="6">

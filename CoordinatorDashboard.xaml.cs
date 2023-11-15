@@ -7,6 +7,15 @@ public partial class CoordinatorDashboard : ContentPage
 		InitializeComponent();
 	}
 
+    private void OnStudentSearched(object sender, EventArgs e)
+    {
+        SearchBar searchBar = (SearchBar)sender;
+        if (searchBar.Text.CompareTo("") != 0)
+        {
+            MauiProgram.BusinessLogic.FindStudent(searchBar.Text);
+        }
+    }
+
     private void CohortPicker_SelectedIndexChanged(object sender, EventArgs e)
     {
         // Get the selected index
