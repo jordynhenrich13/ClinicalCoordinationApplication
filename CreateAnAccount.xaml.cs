@@ -9,7 +9,7 @@ public partial class CreateAnAccount : ContentPage
 	public CreateAnAccount()
 	{
         InitializeComponent();
-	}
+    }
 
 	public void Student_Button_Clicked()
 	{
@@ -41,25 +41,14 @@ public partial class CreateAnAccount : ContentPage
 
     private void Button_Clicked(object sender, EventArgs e)
     {
-        string firstName = first_nameENT.Text;
-        string lastName = last_nameENT.Text;
-        string email = EmailENT.Text;
-        string password = PasswordEnt.Text;
-
-        Database database = new Database();
-
-        CreateAccountError result = CreateAccountError.NoError;
-
-        if (userType != null)
+        CreateAccountError result;
+        if (userType == "Student")
         {
-            if (userType == "Student")
-            {
-                result = database.CreateStudentAccount(email, password, firstName, lastName);
-            }
-            else if (userType == "Coordinator")
-            {
-                result = database.CreateCoordinatorAccount(email, password, firstName, lastName);
-            }
+            result = MauiProgram.BusinessLogic.CreateStudentAccount(EmailENT.Text, PasswordEnt.Text, first_nameENT.Text, last_nameENT.Text);
+        }
+        else 
+        {
+            result = MauiProgram.BusinessLogic.CreateCoordinatorAccount(EmailENT.Text, PasswordEnt.Text, first_nameENT.Text, last_nameENT.Text);
         }
 
         if (result == CreateAccountError.NoError)
@@ -70,10 +59,25 @@ public partial class CreateAnAccount : ContentPage
 
             Application.Current.MainPage = new NavigationPage(new SignIn());
         }
-        else
+        else if (result == CreateAccountError.InvalidFirstName)
         {
-            // Handle the error and provide feedback to the user.
-            DisplayAlert("Error", "Could not create an account.", "OK");
+            DisplayAlert("Error", "First name cannot be longer than 50 characters.", "OK");
+        }
+        else if (result == CreateAccountError.InvalidLastName)
+        {
+            DisplayAlert("Error", "Last name cannot be longer than 50 characters.", "OK");
+        }
+        else if (result == CreateAccountError.InvalidEmail)
+        {
+            DisplayAlert("Error", "Email must be an UWO email address (@uwosh.edu).", "OK");
+        }
+        else if (result == CreateAccountError.EmailAlreadyUsed)
+        {
+            DisplayAlert("Error", "Email address has already been used.", "OK");
+        }
+        else if (result == CreateAccountError.InvalidPassword)
+        {
+            DisplayAlert("Error", "Password must be between 8 and 50 characters.", "OK");
         }
     }
 

@@ -7,9 +7,15 @@ namespace ClinicalCoordinationApplication.Model
 	{
         private IDatabase database { get; set; }
 
-        //temp implementations so no errors
-        ObservableCollection<Student> IBusinessLogic.Students => throw new NotImplementedException();
+        public ObservableCollection<Student> Students { get { return database.Students; } }
+        /*
+        public ObservableCollection<Clinic> Clinics { get { return database.} }
 
+        public ObservableCollection<Clinical> Clinicals { get { return database.} }
+
+        public ObservableCollection<AssignedPreceptor> Preceptors { get { return database.} }
+        */
+        //temp implementations so no errors
         ObservableCollection<Clinic> IBusinessLogic.Clinics => throw new NotImplementedException();
 
         ObservableCollection<Clinical> IBusinessLogic.Clinicals => throw new NotImplementedException();
@@ -18,18 +24,7 @@ namespace ClinicalCoordinationApplication.Model
 
         public string LoggedInUserType { get; set; } // TODO: RETURNS NULL!
         public string LoggedInUserName { get; set; } // TODO: RETURNS NULL!
-        // Probably needs refactoring at a database level as this use of informai is not recommended
-
-
-        /*
-        public ObservableCollection<Student> Students { get { return database.} }
-
-        public ObservableCollection<Clinic> Clinics { get { return database.} }
-
-        public ObservableCollection<Clinical> Clinicals { get { return database.} }
-
-        public ObservableCollection<AssignedPreceptor> Preceptors { get { return database.} }
-        */
+        // Probably needs refactoring at a database level as this use of informai is not recommende
         public BusinessLogic()
 		{
             database = new Database();
@@ -71,7 +66,7 @@ namespace ClinicalCoordinationApplication.Model
                 return SignInError.InvalidEmailOrPassword;
             }
 
-            if (loggedInCoordinator.FirstName == "Erika")
+            if (loggedInCoordinator.Email.CompareTo("jansse18@uwosh.edu") == 0 )
             {
                 LoggedInUserType = "Director";
             } else
@@ -245,10 +240,6 @@ namespace ClinicalCoordinationApplication.Model
         {
             if (search.Contains(','))
             {
-                if (search.Length > 102)
-                {
-                    return FindStudentError.SearchTooLong;
-                }
                 if (search.IndexOf(',', search.IndexOf(',') + 1) <= 0)
                 {
                     return FindStudentError.InvalidFormat;
@@ -256,7 +247,15 @@ namespace ClinicalCoordinationApplication.Model
                 string[] temp = search.Split(',');
                 string lastName = temp[0];
                 string firstName = temp[1].Substring(1);
-                //search for matching first and last name
+                if (lastName.Length > 50)
+                {
+                    return FindStudentError.SearchTooLong;
+                }
+                if (firstName.Length > 50)
+                {
+                    return FindStudentError.SearchTooLong;
+                }
+                database.FindStudent(lastName, firstName);
             }
             else
             {
@@ -264,8 +263,7 @@ namespace ClinicalCoordinationApplication.Model
                 {
                     return FindStudentError.SearchTooLong;
                 }
-                //search for matching first or last name
-
+                database.FindStudent(search, "");
             }
             return FindStudentError.NoError;
         }

@@ -21,7 +21,14 @@ public class Database : IDatabase
     // It also ensures that the file exists or creates it if not.
 
     public static string userId { get; set; }
-
+    ObservableCollection<Student> students = new();
+    public Database()
+    {
+        connString = GetConnectionString();
+        //CreateTables(connString);
+        SelectAllStudents();
+    }
+    public ObservableCollection<Student> Students { get { return students; } }
     public string GetUserType()
     {
         if (userId != null)
@@ -122,13 +129,6 @@ public class Database : IDatabase
         }
 
         return null;
-    }
-
-
-    public Database()
-    {
-        connString = GetConnectionString();
-        //CreateTables(connString);
     }
 
     public Student StudentSignIn(string email, string password)
@@ -242,6 +242,8 @@ public class Database : IDatabase
         return CreateAccountError.NoError;
     }
 
+
+
     // Builds a ConnectionString, which is used to connect to the database
     static String GetConnectionString()
     {
@@ -255,6 +257,69 @@ public class Database : IDatabase
         connStringBuilder.ApplicationName = "whatever"; // ignored, apparently
         connStringBuilder.IncludeErrorDetail = true;
         return connStringBuilder.ConnectionString;
+    }
+    public ObservableCollection<Student> SelectAllStudents()
+    {
+        students.Clear();
+        var conn = new NpgsqlConnection(GetConnectionString());
+        conn.Open();
+
+        using var cmd = new NpgsqlCommand("SELECT firstname, lastname, email FROM Student", conn);
+        using var reader = cmd.ExecuteReader();
+        while (reader.Read())
+        {
+            String firstName = reader.GetString(0);
+            String lastName = reader.GetString(1);
+            String email = reader.GetString(2);
+            Student student = new Student(firstName, lastName, email);
+            students.Add(student);
+        }
+
+        return students;
+    }
+    public ObservableCollection<Student> FindStudent(string lastName, string firstName)
+    {
+        try
+        {
+            students.Clear();
+            var conn = new NpgsqlConnection(GetConnectionString());
+            conn.Open();
+            if (firstName.CompareTo("") == 0)
+            {
+                using var cmd = new NpgsqlCommand("SELECT firstname, lastname, email FROM Student WHERE firstname LIKE @search% OR lastname LIKE @search%", conn);
+                cmd.Parameters.AddWithValue("search", lastName);
+                using var reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    String dbfirstName = reader.GetString(0);
+                    String dblastName = reader.GetString(1);
+                    String email = reader.GetString(2);
+                    Student student = new Student(dbfirstName, dblastName, email);
+                    students.Add(student);
+                }
+            }
+            else
+            {
+                using var cmd = new NpgsqlCommand("SELECT firstname, lastname, email FROM Student WHERE firstname LIKE @first% AND lastname LIKE @last%", conn);
+                cmd.Parameters.AddWithValue("last", lastName);
+                cmd.Parameters.AddWithValue("first", firstName);
+                using var reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    String dbfirstName = reader.GetString(0);
+                    String dblastName = reader.GetString(1);
+                    String email = reader.GetString(2);
+                    Student student = new Student(dbfirstName, dblastName, email);
+                    students.Add(student);
+                }
+            }
+        }
+        catch (Npgsql.PostgresException ex)
+        {
+            students.Clear();
+            return students;
+        }
+        return students;
     }
 
     //static void CreateTables(string connString)

@@ -79,15 +79,18 @@ public partial class Clinical2 : ContentPage
         }
     }
 
-    private void OnYesButtonClicked(object sender, EventArgs e)
+    private void OnCheckBoxChanged(object sender, CheckedChangedEventArgs e)
     {
-        PreceptorInfo.IsVisible = true;
-    }
-
-    private void OnNoButtonClicked(object sender, EventArgs e)
-    {
-        // Handle the "No" button click
-        PreceptorInfo.IsVisible = false; // Hide the PreceptorInfo section
+        if (e.Value)
+        {
+            // If the checkbox is checked, show the PreceptorInfo section
+            PreceptorInfo.IsVisible = true;
+        }
+        else
+        {
+            // If the checkbox is not checked, hide the PreceptorInfo section
+            PreceptorInfo.IsVisible = false;
+        }
     }
 
 

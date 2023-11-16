@@ -13,11 +13,29 @@ namespace ClinicalCoordinationApplication.Model
         private string lastName;
 
         private string employeeID;
-        private string emailAddress;
+        private string email;
         private string phoneNumber;
 
         private string address;
         //private string password;
+
+        public Coordinator(string firstName, string lastName, string employeeID, string email, string phoneNumber, string address)
+        {
+            this.firstName = firstName;
+            this.lastName = lastName;
+            this.employeeID = employeeID;
+            this.email = email;
+            this.phoneNumber = phoneNumber;
+            this.address = address;
+        }
+
+        public Coordinator(string firstName, string lastName, string email)
+        {
+            this.firstName = firstName;
+            this.lastName = lastName;
+            this.email = email;
+            //this.password = password;
+        }
 
         public string FirstName
         {
@@ -48,13 +66,13 @@ namespace ClinicalCoordinationApplication.Model
             }
         }
 
-        public string EmailAddress
+        public string Email
         {
-            get { return emailAddress; }
+            get { return email; }
             set
             {
-                emailAddress = value;
-                OnPropertyChanged(nameof(emailAddress));
+                email = value;
+                OnPropertyChanged(nameof(email));
             }
         }
 
@@ -87,27 +105,6 @@ namespace ClinicalCoordinationApplication.Model
                 OnPropertyChanged(nameof(address));
             }
         }
-
-
-        public Coordinator(string firstName, string lastName, string employeeID,  string emailAddress, string phoneNumber, string address)
-        {
-            this.firstName = firstName;
-            this.lastName = lastName;
-            this.employeeID = employeeID;
-            this.emailAddress = emailAddress;
-            this.phoneNumber = phoneNumber;
-            this.address = address;
-        }
-
-        public Coordinator(string firstName, string lastName, string emailAddress)
-        {
-            this.firstName = firstName;
-            this.lastName = lastName;
-            this.emailAddress = emailAddress;
-            //this.password = password;
-        }
-
-
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged(string propertyName)
         {
