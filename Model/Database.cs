@@ -1,4 +1,5 @@
 ﻿using ClinicalCoordinationApplication.Model;
+using Microsoft.Maui.ApplicationModel.Communication;
 //using Intents;
 //using Intents;
 using Npgsql;
@@ -10,6 +11,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+//using Windows.Networking;
 
 
 namespace ClinicalCoordinationApplication;
@@ -108,6 +110,35 @@ public class Database : IDatabase
 
         return null;
     }
+
+    public AddWorkedHoursError AddHoursWorked(String clinical, DateTime dateWorked, TimeSpan clinicalHoursWorked, string notes)
+    {
+        try
+        {
+            int primaryKey = 003; 
+            string studentEmail = "henrij13@uwosh.edu";
+            using var conn = new NpgsqlConnection(connString); // conn, short for connection, is a connection to the database
+            conn.Open(); // open the connection ... now we are connected!
+            var cmd = new NpgsqlCommand(); // create the sql commaned
+            cmd.Connection = conn; // commands need a connection, an actual command to execute
+            cmd.CommandText = "INSERT INTO clinical (clinicalID, studentemail, clinicalname, dateWorked, hoursworked, notes) " +
+                " VALUES (@primaryKey, @studentEmail, @clinical, @dateWorked, @clinicalHoursWorked, @notes)";
+            cmd.Parameters.AddWithValue("primaryKey", primaryKey);
+            cmd.Parameters.AddWithValue("studentEmail", studentEmail);
+            cmd.Parameters.AddWithValue("clinical", clinical);
+            cmd.Parameters.AddWithValue("dateWorked", dateWorked.ToString("yyyy-MM-dd"));
+            cmd.Parameters.AddWithValue("clinicalHoursWorked", (int)clinicalHoursWorked.TotalHours);
+            cmd.Parameters.AddWithValue("notes", notes);
+            var numAffected = cmd.ExecuteNonQuery();
+
+            return AddWorkedHoursError.NoError;
+        } catch (Exception ex)
+        {
+            return AddWorkedHoursError.InvalidNumber;
+        }
+    }
+
+
 
     private Coordinator QueryCoordinatorData(string userId)
     {
