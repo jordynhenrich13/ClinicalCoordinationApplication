@@ -17,4 +17,6 @@ Added search bar to coordinator dashboard - to search for students 😀 😀
 Updated coordinator dashbord design 😀 
 Added functionality/ navigation to clinical buttons
 Added functionality/ navigation to student profile
+Connected student's first and last name to Coordinator Dashboard from the database
+*Binded the clinical buttons for the coordinator dashboard, but need to work on the UI for the buttons to appear*
 
