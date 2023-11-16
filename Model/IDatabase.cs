@@ -16,6 +16,7 @@ namespace ClinicalCoordinationApplication.Model
         public string GetUserType();
 
         public void DeleteProfile();
+
     }
 }
 

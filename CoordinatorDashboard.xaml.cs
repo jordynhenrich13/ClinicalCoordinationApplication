@@ -1,11 +1,76 @@
+using ClinicalCoordinationApplication.Model;
+using System.Collections.ObjectModel;
+
 namespace ClinicalCoordinationApplication;
 
 public partial class CoordinatorDashboard : ContentPage
+
 {
-	public CoordinatorDashboard()
-	{
-		InitializeComponent();
-	}
+
+    private IDatabase Database = new Database();
+    public ObservableCollection<ClinicalButton> ClinicalButtons { get; set; } = new ObservableCollection<ClinicalButton>();
+
+    public ObservableCollection<Student> Students { get; set; } = new ObservableCollection<Student>();
+
+    public CoordinatorDashboard()
+    {
+        InitializeComponent();
+        BindingContext = this;
+
+        // Populate clinical buttons with corresponding clinical pages
+        ClinicalButtons.Add(new ClinicalButton("Clinical 1", typeof(Clinical1)));
+        ClinicalButtons.Add(new ClinicalButton("Clinical 2", typeof(Clinical2)));
+        ClinicalButtons.Add(new ClinicalButton("Clinical 3", typeof(Clinical3)));
+        ClinicalButtons.Add(new ClinicalButton("Clinical 4", typeof(Clinical4)));
+        ClinicalButtons.Add(new ClinicalButton("Clinical 5", typeof(Clinical5)));
+        ClinicalButtons.Add(new ClinicalButton("Clinical 6", typeof(Clinical6)));
+
+        UpdateStudentList();
+    }
+
+    private void UpdateStudentList()
+    {
+        // Fetch the list of students from the database
+        Students.Clear();
+        ObservableCollection<Student> studentsFromDatabase = Database.SelectAllStudents();
+
+        // Add fetched students to the observable collection
+        foreach (var student in studentsFromDatabase)
+        {
+            Students.Add(student);
+        }
+    }
+    private void ClinicalButtonClicked(object sender, EventArgs e)
+    {
+        Button button = (Button)sender;
+
+        // Assuming you have a property in your Student class that indicates the clinical page
+        string clinicalPageNumber = button.Text;  // Assuming the Text property of the button is set to "1", "2", ..., "6"
+
+        // Now you can navigate to the corresponding clinical page based on the clinicalPageNumber
+        switch (clinicalPageNumber)
+        {
+            case "1":
+                Navigation.PushAsync(new Clinical1());
+                break;
+            case "2":
+                Navigation.PushAsync(new Clinical2());
+                break;
+            case "3":
+                Navigation.PushAsync(new Clinical3());
+                break;
+            case "4":
+                Navigation.PushAsync(new Clinical4());
+                break;
+            case "5":
+                Navigation.PushAsync(new Clinical5());
+                break;
+            case "6":
+                Navigation.PushAsync(new Clinical6());
+                break;
+        }
+    }
+
 
     private void OnStudentSearched(object sender, EventArgs e)
     {

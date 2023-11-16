@@ -6,6 +6,7 @@ using NpgsqlTypes;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,13 +21,43 @@ public class Database : IDatabase
 
     public static string userId { get; set; }
     ObservableCollection<Student> students = new();
+
+    // This is for the binding context for the student's name to be binded in the coordinator dashboard and display their first and last name
+    private string studentName;
     public Database()
     {
         connString = GetConnectionString();
         //CreateTables(connString);
         SelectAllStudents();
     }
-    public ObservableCollection<Student> Students { get { return students; } }
+    public ObservableCollection<Student> Students
+    {
+        get { return students; }
+        set
+        {
+            if (students != value)
+            {
+                students = value;
+                OnPropertyChanged(nameof(Students));
+            }
+        }
+    }
+
+    public string StudentName
+    {
+        get { return studentName; }
+        set
+        {
+            if (studentName != value)
+            {
+                studentName = value;
+                // Notify property changed to update the UI
+                OnPropertyChanged(nameof(StudentName));
+            }
+        }
+    }
+
+
     public string GetUserType()
     {
         if (userId != null)
@@ -102,7 +133,6 @@ public class Database : IDatabase
 
     public Student StudentSignIn(string email, string password)
     {
-
         var conn = new NpgsqlConnection(connString);
         conn.Open();
         using var cmd = new NpgsqlCommand();
@@ -111,10 +141,12 @@ public class Database : IDatabase
         cmd.Parameters.AddWithValue("Email", email);
         cmd.Parameters.AddWithValue("Password", password);
 
-        using var reader = cmd.ExecuteReader(); // used for SELECT statement, returns a forward-only traversable object
+        using var reader = cmd.ExecuteReader();
         if (reader.Read())
-        { // there should be only one row, so we don't need a while loop TODO: Sanity check
+        {
             userId = reader.GetString(2);
+            // Set the student name property
+            StudentName = $"{reader.GetString(0)} {reader.GetString(1)}";
             return new Student(reader.GetString(0), reader.GetString(1), reader.GetString(2));
         }
         else
@@ -289,6 +321,13 @@ public class Database : IDatabase
             return students;
         }
         return students;
+    }
+
+    public event PropertyChangedEventHandler PropertyChanged;
+
+    protected virtual void OnPropertyChanged(string propertyName)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 
     //static void CreateTables(string connString)
