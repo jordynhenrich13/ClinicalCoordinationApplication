@@ -1,3 +1,5 @@
+using ClinicalCoordinationApplication.Model;
+
 namespace ClinicalCoordinationApplication;
 
 public partial class StudentDashHourLog : ContentPage
@@ -7,12 +9,14 @@ public partial class StudentDashHourLog : ContentPage
         public TimeSpan EndTime { get; set; }
         public string Comments { get; set; }
 
+        BusinessLogic businessLogic = new BusinessLogic();
+
         public StudentDashHourLog()
         {
             SelectedDate = DateTime.Now;
             StartTime = TimeSpan.FromHours(DateTime.Now.Hour);
             EndTime = TimeSpan.FromHours(DateTime.Now.Hour + 1);
-            Comments = string.Empty;
+            //Comments = string.Empty;
 
             InitializeComponent();
             BindingContext = this;
@@ -20,7 +24,8 @@ public partial class StudentDashHourLog : ContentPage
 
     private void ConfirmHours_Clicked(object sender, EventArgs e)
     {
-        //business logic to call DB
-        Navigation.PushAsync(new StudentDashConfirmHours());
+        
+        businessLogic.AddWorkedHours(clinicalPicker.SelectedItem?.ToString(), SelectedDate, startTimePicker.Time, endTimePicker.Time, commentsEditor.Text);
+        Navigation.PushAsync(new StudentDashSuccess());
     }
 }

@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ClinicalCoordinationApplication.StudentDashSuccess"
-             Title="StudentDashSuccess">
+             Title="">
     <StackLayout>
         <VerticalStackLayout>
             <Label Text="Success!" HorizontalOptions="CenterAndExpand" FontSize="30" Margin="20"/>

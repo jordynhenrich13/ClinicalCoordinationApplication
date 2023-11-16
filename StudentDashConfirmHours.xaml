@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ClinicalCoordinationApplication.StudentDashConfirmHours"
-             Title="StudentDashConfirmHours">
+             Title="Confirm Clinical Hours">
     <ScrollView>
         <StackLayout>
             <Label Text="Confirm and Submit Time" FontSize="18" />

@@ -2,13 +2,29 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ClinicalCoordinationApplication.StudentDashHourLog"
-             Title="StudentDashHourLog">
+             Title="Clinical Hour Log">
     <ScrollView>
         <StackLayout>
-            <!-- Other content or controls here -->
-            <Label Text="Select a Date:" FontSize="18" Margin="20,10" />
-            <DatePicker x:Name="datePicker" Date="{Binding SelectedDate}" />
-            <Label Text="Enter Time" FontSize="20" HorizontalOptions="StartAndExpand" Margin="0,50,0,0"/>
+            <!-- Select Clinical -->
+            <StackLayout Orientation="Horizontal" Margin="20,10">
+                <Label Text="Select Clinical:" FontSize="18" VerticalOptions="Center"/> 
+                <Picker x:Name="clinicalPicker" Title="Select Clinical">
+                    <Picker.Items>
+                        <x:String>Adult Health</x:String>
+                        <x:String>Adult Health II</x:String>
+                        <x:String>Obstetric or Mental Health</x:String>
+                        <x:String>Pediatric or Geriatric</x:String>
+                        <x:String>Community health</x:String>
+                        <x:String>Cliical Synthesis</x:String>
+                    </Picker.Items>
+                </Picker>
+            </StackLayout>
+
+            <!-- Select Date -->
+            <StackLayout Orientation="Horizontal" Margin="20,10">
+                <Label Text="Select a Date:" FontSize="18" VerticalOptions="Center" />
+                <DatePicker x:Name="datePicker" Date="{Binding SelectedDate}" />
+            </StackLayout>
 
             <!-- Start Time Box -->
             <Frame BorderColor="Black" CornerRadius="5" Padding="10" Margin="20">

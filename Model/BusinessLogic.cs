@@ -194,9 +194,10 @@ namespace ClinicalCoordinationApplication.Model
             //db stuff
             return EditAccountError.NoError;
         }
-        public AddWorkedHoursError AddWorkedHours()
+        public AddWorkedHoursError AddWorkedHours(String clinical, DateTime date, TimeSpan startTime, TimeSpan endTime, String notes)
         {
-
+            TimeSpan duration = endTime - startTime;
+            database.AddHoursWorked(clinical, date, duration, notes);
             return AddWorkedHoursError.NoError;
         }
         public EditWorkedHoursError EditWorkedHours()
