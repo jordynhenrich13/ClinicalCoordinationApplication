@@ -71,7 +71,7 @@
 
 
                 <StackLayout Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="6">
-                    <SearchBar x:Name="searchBar" Placeholder="Search Students" SearchButtonPressed="OnStudentSearched" />
+                    <SearchBar x:Name="searchBar" Placeholder="Search Students" TextChanged="OnStudentSearched"/>
 
                     <ListView ItemsSource="{Binding Students}">
                         <ListView.ItemTemplate>

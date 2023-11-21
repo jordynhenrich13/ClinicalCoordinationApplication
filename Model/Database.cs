@@ -309,41 +309,23 @@ public class Database : IDatabase
 
         return students;
     }
-    public ObservableCollection<Student> FindStudent(string lastName, string firstName)
+    public ObservableCollection<Student> FindStudent(string search)
     {
         try
         {
             students.Clear();
             var conn = new NpgsqlConnection(GetConnectionString());
             conn.Open();
-            if (firstName.CompareTo("") == 0)
+            using var cmd = new NpgsqlCommand("SELECT firstname, lastname, email FROM Student WHERE firstname LIKE @search + '%' OR lastname LIKE @search + '%'", conn);
+            cmd.Parameters.AddWithValue("search", search);
+            using var reader = cmd.ExecuteReader();
+            while (reader.Read())
             {
-                using var cmd = new NpgsqlCommand("SELECT firstname, lastname, email FROM Student WHERE firstname LIKE @search% OR lastname LIKE @search%", conn);
-                cmd.Parameters.AddWithValue("search", lastName);
-                using var reader = cmd.ExecuteReader();
-                while (reader.Read())
-                {
-                    String dbfirstName = reader.GetString(0);
-                    String dblastName = reader.GetString(1);
-                    String email = reader.GetString(2);
-                    Student student = new Student(dbfirstName, dblastName, email);
-                    students.Add(student);
-                }
-            }
-            else
-            {
-                using var cmd = new NpgsqlCommand("SELECT firstname, lastname, email FROM Student WHERE firstname LIKE @first% AND lastname LIKE @last%", conn);
-                cmd.Parameters.AddWithValue("last", lastName);
-                cmd.Parameters.AddWithValue("first", firstName);
-                using var reader = cmd.ExecuteReader();
-                while (reader.Read())
-                {
-                    String dbfirstName = reader.GetString(0);
-                    String dblastName = reader.GetString(1);
-                    String email = reader.GetString(2);
-                    Student student = new Student(dbfirstName, dblastName, email);
-                    students.Add(student);
-                }
+                String firstName = reader.GetString(0);
+                String lastName = reader.GetString(1);
+                String email = reader.GetString(2);
+                Student student = new Student(firstName, lastName, email);
+                students.Add(student);
             }
         }
         catch (Npgsql.PostgresException ex)

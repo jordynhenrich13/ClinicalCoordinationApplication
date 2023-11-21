@@ -99,15 +99,7 @@ namespace ClinicalCoordinationApplication.Model
             {
                 return CreateAccountError.InvalidFirstName;
             }
-            if (firstName.Contains(','))
-            {
-                return CreateAccountError.InvalidFirstName;
-            }
             if (lastName.Length < 1 || lastName.Length > 50)
-            {
-                return CreateAccountError.InvalidLastName;
-            }
-            if (lastName.Contains(','))
             {
                 return CreateAccountError.InvalidLastName;
             }
@@ -136,15 +128,7 @@ namespace ClinicalCoordinationApplication.Model
             {
                 return CreateAccountError.InvalidFirstName;
             }
-            if (firstName.Contains(','))
-            {
-                return CreateAccountError.InvalidFirstName;
-            }
             if (lastName.Length < 1 || lastName.Length > 50)
-            {
-                return CreateAccountError.InvalidLastName;
-            }
-            if (lastName.Contains(','))
             {
                 return CreateAccountError.InvalidLastName;
             }
@@ -172,15 +156,7 @@ namespace ClinicalCoordinationApplication.Model
             {
                 return EditAccountError.InvalidFirstName;
             }
-            if (firstName.Contains(','))
-            {
-                return EditAccountError.InvalidFirstName;
-            }
             if (lastName.Length < 1 || lastName.Length > 50)
-            {
-                return EditAccountError.InvalidLastName;
-            }
-            if (lastName.Contains(','))
             {
                 return EditAccountError.InvalidLastName;
             }
@@ -238,33 +214,11 @@ namespace ClinicalCoordinationApplication.Model
         }
         public FindStudentError FindStudent(string search)
         {
-            if (search.Contains(','))
+            if (search.Length > 50)
             {
-                if (search.IndexOf(',', search.IndexOf(',') + 1) <= 0)
-                {
-                    return FindStudentError.InvalidFormat;
-                }
-                string[] temp = search.Split(',');
-                string lastName = temp[0];
-                string firstName = temp[1].Substring(1);
-                if (lastName.Length > 50)
-                {
-                    return FindStudentError.SearchTooLong;
-                }
-                if (firstName.Length > 50)
-                {
-                    return FindStudentError.SearchTooLong;
-                }
-                database.FindStudent(lastName, firstName);
+                return FindStudentError.SearchTooLong;
             }
-            else
-            {
-                if (search.Length > 50)
-                {
-                    return FindStudentError.SearchTooLong;
-                }
-                database.FindStudent(search, "");
-            }
+            database.FindStudent(search);
             return FindStudentError.NoError;
         }
     }
