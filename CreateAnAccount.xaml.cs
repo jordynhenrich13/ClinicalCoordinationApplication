@@ -36,7 +36,7 @@ public partial class CreateAnAccount : ContentPage
 
     public void SignInHere_Clicked(object sender, EventArgs e)
     {
-        Navigation.PushAsync(new SignIn());
+        Navigation.PopAsync();
     }
 
     private void Button_Clicked(object sender, EventArgs e)

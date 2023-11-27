@@ -405,6 +405,24 @@ public class Database : IDatabase
         return students;
     }
 
+    public Account GetAccount(string email)
+    {
+        var conn = new NpgsqlConnection(GetConnectionString());
+        conn.Open();
+        using var cmd = new NpgsqlCommand("SELECT email, password, firstname, lastname, role FROM Account WHERE email = @email", conn);
+        cmd.Parameters.AddWithValue("email", email);
+        using var reader = cmd.ExecuteReader();
+
+        if (reader.Read())
+        {
+            if (!reader.IsDBNull(0))
+            {
+                return new Account(reader.GetString(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetString(4));
+            }
+        }
+        return null;
+    }
+
     public event PropertyChangedEventHandler PropertyChanged;
 
     protected virtual void OnPropertyChanged(string propertyName)

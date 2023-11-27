@@ -82,7 +82,7 @@ namespace ClinicalCoordinationApplication.Model
         public CreateAccountError CreateStudentAccount(string email, string password, string firstName, string lastName)
         {
             //call db for account with email
-            Account account = null;
+            Account account = database.GetAccount(email);
             if (account != null)
             {
                 return CreateAccountError.EmailAlreadyUsed;
@@ -111,7 +111,7 @@ namespace ClinicalCoordinationApplication.Model
         public CreateAccountError CreateCoordinatorAccount(string email, string password, string firstName, string lastName)
         {
             //call db for account with email
-            Account account = null;
+            Account account = database.GetAccount(email);
             if (account != null)
             {
                 return CreateAccountError.EmailAlreadyUsed;
@@ -139,7 +139,7 @@ namespace ClinicalCoordinationApplication.Model
         public EditAccountError EditAccount(string email, string password, string firstName, string lastName)
         {
             //call db for account with email
-            Account account = null;
+            Account account = database.GetAccount(email);
             if (account != null)
             {
                 return EditAccountError.EmailAlreadyUsed;

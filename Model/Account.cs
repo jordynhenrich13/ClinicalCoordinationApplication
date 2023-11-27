@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ClinicalCoordinationApplication.Model
 {
-    internal class Account
+    public class Account
     {
         private string email;
         private string password;
