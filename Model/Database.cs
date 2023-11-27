@@ -24,6 +24,8 @@ public class Database : IDatabase
     public static string userId { get; set; }
     ObservableCollection<Student> students = new();
 
+    public string CurrentlySignedInStudentEmail { get; private set; }
+
     // This is for the binding context for the student's name to be binded in the coordinator dashboard and display their first and last name
     private string studentName;
     public Database()
@@ -88,6 +90,73 @@ public class Database : IDatabase
         }
         return null;
     }
+
+    public void SavePreceptorToDatabase(PreceptorViewModel preceptor)
+    {
+        try
+        {
+            using var conn = new NpgsqlConnection(connString);
+            conn.Open();
+
+            using var cmd = new NpgsqlCommand();
+            cmd.Connection = conn;
+            cmd.CommandText = "INSERT INTO Preceptor (Title, Name, Facility, Email, Phone) " +
+                              "VALUES (@Title, @Name, @Facility, @Email, @Phone)";
+
+            cmd.Parameters.AddWithValue("Title", preceptor.Title);
+            cmd.Parameters.AddWithValue("Name", preceptor.Name);
+            cmd.Parameters.AddWithValue("Facility", preceptor.Facility);
+            cmd.Parameters.AddWithValue("Email", preceptor.Email);
+            cmd.Parameters.AddWithValue("Phone", preceptor.Phone);
+
+            var numAffected = cmd.ExecuteNonQuery();
+
+            // You may want to check numAffected to ensure the data was successfully inserted
+            if (numAffected > 0)
+            {
+                Console.WriteLine("Preceptor information saved to the database");
+            }
+            else
+            {
+                Console.WriteLine("Failed to save preceptor information to the database");
+            }
+        }
+        catch (Exception ex)
+        {
+            // Handle exceptions, log errors, etc.
+            Console.WriteLine($"Error: {ex.Message}");
+        }
+    }
+
+    public PreceptorViewModel LoadPreceptorInformation(string studentEmail)
+    {
+        using var conn = new NpgsqlConnection(connString);
+        conn.Open();
+
+        using var cmd = new NpgsqlCommand();
+        cmd.Connection = conn;
+        cmd.CommandText = "SELECT Title, Name, Facility, Email, Phone FROM Preceptor WHERE StudentEmail = @StudentEmail";
+        cmd.Parameters.AddWithValue("StudentEmail", NpgsqlDbType.Varchar, studentEmail);
+
+        using var reader = cmd.ExecuteReader();
+
+        if (reader.Read())
+        {
+            // Assuming PreceptorViewModel has a constructor that takes these values
+            return new PreceptorViewModel
+            {
+                Title = reader.GetString(0),
+                Name = reader.GetString(1),
+                Facility = reader.GetString(2),
+                Email = reader.GetString(3),
+                Phone = reader.GetString(4)
+            };
+        }
+
+        // Return null if no preceptor information is found
+        return null;
+    }
+
 
     private Student QueryStudentData(string userId)
     {
