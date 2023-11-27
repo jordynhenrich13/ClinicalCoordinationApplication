@@ -10,10 +10,15 @@
                 <StackLayout>
                     <Label Text="Welcome to Student Dashboard!" FontSize="20" TextColor="Black" HorizontalOptions="CenterAndExpand" Margin="10"/>
                     <Label Text="Current Clinical" FontSize="16" TextColor="Black"/>
-                    <Label Text="Clinical Site: " FontSize="16" TextColor="Black"/>
-                    <Label Text="Logged Hours: " FontSize="16" TextColor="Black"/>
-                    <Label Text="Preceptor: " FontSize="16" TextColor="Black"/>
+                    <Label Text="{Binding CurrentClinical}" FontSize="16" TextColor="Black"/>
+                    <Label Text="Clinical Site: " FontSize="16" TextColor="Black" />
+                    <Label Text="{Binding ClinicalSite}" FontSize="16" TextColor="Black"/>
+                    <Label Text="Logged Hours: " FontSize="16" TextColor="Black" />
+                    <Label Text="{Binding LoggedHours}" FontSize="16" TextColor="Black"/>
+                    <Label Text="Preceptor: " FontSize="16" TextColor="Black" />
+                    <Label Text="{Binding Preceptor}" FontSize="16" TextColor="Black"/>
                 </StackLayout>
+
             </Frame>
             <Frame BorderColor="Black" CornerRadius="5" Padding="10" Margin="20">
                 <StackLayout Orientation="Horizontal">

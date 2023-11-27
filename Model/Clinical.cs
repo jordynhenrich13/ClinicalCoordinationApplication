@@ -14,6 +14,8 @@ namespace ClinicalCoordinationApplication
         private Clinic clinic;
         private bool hasPreceptor;
         private Preceptor preceptor;
+        private string studentEmail;
+        private string currentClinical;
 
         public int ClinicalNumber
         {
@@ -95,6 +97,16 @@ namespace ClinicalCoordinationApplication
             }
         }
 
+        public string StudentEmail
+        {
+            get { return studentEmail; }
+            set
+            {
+                studentEmail = value;
+                OnPropertyChanged(nameof(studentEmail));
+            }
+        }
+
         public Clinical(string clinicalName, int clinicalNumber, string description, int requiredHours, int durationInWeeks, Clinic clinic, bool hasPreceptor, Preceptor preceptor)
         {
             this.clinicalName = clinicalName;
@@ -105,6 +117,11 @@ namespace ClinicalCoordinationApplication
             this.clinic = clinic;
             this.hasPreceptor = hasPreceptor;
             this.preceptor = preceptor;
+        }
+
+        public Clinical(String StudentEmail)
+        {
+            this.studentEmail = StudentEmail;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
