@@ -87,7 +87,7 @@ namespace ClinicalCoordinationApplication.Model
             {
                 return CreateAccountError.EmailAlreadyUsed;
             }
-            if (!email.Contains("@uwosh.edu") || (email.Length < 10 || email.Length > 150))
+            if (!email.Contains("@uwosh.edu") || (email.Length < 10 || email.Length > 100))
             {
                 return CreateAccountError.InvalidEmail;
             }

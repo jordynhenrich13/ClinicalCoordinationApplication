@@ -409,7 +409,7 @@ public class Database : IDatabase
     {
         var conn = new NpgsqlConnection(GetConnectionString());
         conn.Open();
-        using var cmd = new NpgsqlCommand("SELECT email, password, firstname, lastname, role FROM Account WHERE email = @email", conn);
+        using var cmd = new NpgsqlCommand("SELECT email, password FROM Account WHERE email = @email", conn);
         cmd.Parameters.AddWithValue("email", email);
         using var reader = cmd.ExecuteReader();
 
@@ -417,7 +417,7 @@ public class Database : IDatabase
         {
             if (!reader.IsDBNull(0))
             {
-                return new Account(reader.GetString(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetString(4));
+                return new Account(reader.GetString(0), reader.GetString(1));
             }
         }
         return null;
