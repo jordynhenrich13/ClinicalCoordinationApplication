@@ -1,7 +1,5 @@
 ﻿using ClinicalCoordinationApplication.Model;
 using Microsoft.Maui.ApplicationModel.Communication;
-//using Intents;
-//using Intents;
 using Npgsql;
 using NpgsqlTypes;
 using System;
@@ -10,7 +8,6 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-//using Windows.Networking;
 
 
 namespace ClinicalCoordinationApplication;

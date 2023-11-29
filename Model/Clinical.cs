@@ -16,6 +16,7 @@ namespace ClinicalCoordinationApplication
         private Preceptor preceptor;
         private string studentEmail;
         private string currentClinical;
+        private string clinicalStatus;
 
         public int ClinicalNumber
         {
@@ -24,6 +25,16 @@ namespace ClinicalCoordinationApplication
             {
                 clinicalNumber = value;
                 OnPropertyChanged(nameof(clinicalNumber));
+            }
+        }
+
+        public string ClinicalStatus
+        {
+            get { return clinicalStatus; }
+            set
+            {
+                clinicalStatus = value;
+                OnPropertyChanged(nameof(clinicalStatus));
             }
         }
 
@@ -122,6 +133,7 @@ namespace ClinicalCoordinationApplication
         public Clinical(String StudentEmail)
         {
             this.studentEmail = StudentEmail;
+            clinicalStatus = "Not Started";
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

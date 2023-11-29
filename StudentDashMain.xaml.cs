@@ -9,7 +9,7 @@ public partial class StudentDashMain : ContentPage
 	{
 		InitializeComponent();
 
-		this.BindingContext = new Clinical(businessLogic.LoggedInUserName);
+		this.BindingContext = MauiProgram.BusinessLogic;
 	}
 
 	public void LogClinicalHours_Clicked(object sender, EventArgs e)
