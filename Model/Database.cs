@@ -11,6 +11,8 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BCrypt.Net;
+using System.Collections;
 //using Windows.Networking;
 
 
@@ -61,34 +63,20 @@ public class Database : IDatabase
         }
     }
 
+    public void SignIn(string email)
+    {
+        userId = email;
+    }
 
     public string GetUserType()
     {
-        if (userId != null)
+        string role = null;
+        Account account = GetAccount(userId);
+        if (account != null)
         {
-            Student studentFound = QueryStudentData(userId);
-            Coordinator coordinatorFound = QueryCoordinatorData(userId);
-
-            if (studentFound == null)
-            {
-                if (coordinatorFound == null)
-                {
-                    return "";
-                }
-
-                if (coordinatorFound.FirstName == "Erika")
-                {
-                    return "Director";
-                }
-
-                return "Coordinator";
-            }
-            else
-            {
-                return "Student";
-            }
+            role = account.Role;
         }
-        return null;
+        return role;
     }
 
     public void SavePreceptorToDatabase(PreceptorViewModel preceptor)
@@ -152,11 +140,9 @@ public class Database : IDatabase
                 Phone = reader.GetString(4)
             };
         }
-
         // Return null if no preceptor information is found
         return null;
     }
-
 
     private Student QueryStudentData(string userId)
     {
@@ -207,8 +193,6 @@ public class Database : IDatabase
         }
     }
 
-
-
     private Coordinator QueryCoordinatorData(string userId)
     {
         using var conn = new NpgsqlConnection(connString);
@@ -229,55 +213,6 @@ public class Database : IDatabase
         }
 
         return null;
-    }
-
-    public Student StudentSignIn(string email, string password)
-    {
-        var conn = new NpgsqlConnection(connString);
-        conn.Open();
-        using var cmd = new NpgsqlCommand();
-        cmd.Connection = conn;
-        cmd.CommandText = "SELECT firstname, lastname, email, password FROM Student WHERE Email = @email AND Password = @Password";
-        cmd.Parameters.AddWithValue("Email", email);
-        cmd.Parameters.AddWithValue("Password", password);
-
-        using var reader = cmd.ExecuteReader();
-        if (reader.Read())
-        {
-            userId = reader.GetString(2);
-            // Set the student name property
-            StudentName = $"{reader.GetString(0)} {reader.GetString(1)}";
-            return new Student(reader.GetString(0), reader.GetString(1), reader.GetString(2));
-        }
-        else
-        {
-            Student nullStudent = null;
-            return nullStudent;
-        }
-    }
-
-    public Coordinator CoordinatorSignIn(string email, string password)
-    {
-
-        var conn = new NpgsqlConnection(connString);
-        conn.Open();
-        using var cmd = new NpgsqlCommand();
-        cmd.Connection = conn;
-        cmd.CommandText = "SELECT FirstName, LastName, Email, Password FROM ClinicalCoordinator WHERE Email = @Email AND Password = @Password";
-        cmd.Parameters.AddWithValue("Email", email);
-        cmd.Parameters.AddWithValue("Password", password);
-
-        using var reader = cmd.ExecuteReader(); // used for SELECT statement, returns a forward-only traversable object
-        if (reader.Read())
-        { // there should be only one row, so we don't need a while loop TODO: Sanity check
-            userId = reader.GetString(2);
-            return new Coordinator(reader.GetString(0), reader.GetString(1), reader.GetString(2));
-        }
-        else
-        {
-            Coordinator nullCoordinator = null;
-            return nullCoordinator;
-        }
     }
 
     /// <summary>
@@ -304,12 +239,21 @@ public class Database : IDatabase
             conn.Open(); // open the connection ... now we are connected!
             var cmd = new NpgsqlCommand(); // create the sql commaned
             cmd.Connection = conn; // commands need a connection, an actual command to execute
-            cmd.CommandText = "INSERT INTO Student (FirstName, Lastname, Email, Password) VALUES (@FirstName, @Lastname, @Email, @Password)";
+            cmd.CommandText = "INSERT INTO Student (FirstName, Lastname, Email) VALUES (@FirstName, @Lastname, @Email)";
             cmd.Parameters.AddWithValue("FirstName", firstName);
             cmd.Parameters.AddWithValue("lastName", LastName);
             cmd.Parameters.AddWithValue("Email", email);
-            cmd.Parameters.AddWithValue("Password", password);
             cmd.ExecuteNonQuery(); // used for INSERT, UPDATE & DELETE statements - returns # of affected rows 
+
+            using var conn2 = new NpgsqlConnection(connString);
+            conn2.Open();
+            var cmd2 = new NpgsqlCommand();
+            cmd2.Connection = conn2;
+            cmd2.CommandText = "INSERT INTO Account (email, password, role) VALUES (@email, @password, @role)";
+            cmd2.Parameters.AddWithValue("email", email);
+            cmd2.Parameters.AddWithValue("password", password);
+            cmd2.Parameters.AddWithValue("role", "Student");
+            cmd2.ExecuteNonQuery();
         }
         catch (Npgsql.PostgresException pe)
         {
@@ -328,12 +272,21 @@ public class Database : IDatabase
             conn.Open(); // open the connection ... now we are connected!
             var cmd = new NpgsqlCommand(); // create the sql commaned
             cmd.Connection = conn; // commands need a connection, an actual command to execute
-            cmd.CommandText = "INSERT INTO ClinicalCoordinator (FirstName, Lastname, Email, Password) VALUES (@FirstName, @Lastname, @Email, @Password)";
+            cmd.CommandText = "INSERT INTO ClinicalCoordinator (FirstName, Lastname, Email) VALUES (@FirstName, @Lastname, @Email)";
             cmd.Parameters.AddWithValue("FirstName", firstName);
             cmd.Parameters.AddWithValue("lastName", LastName);
             cmd.Parameters.AddWithValue("Email", email);
-            cmd.Parameters.AddWithValue("Password", password);
             cmd.ExecuteNonQuery(); // used for INSERT, UPDATE & DELETE statements - returns # of affected rows 
+
+            using var conn2 = new NpgsqlConnection(connString);
+            conn2.Open();
+            var cmd2 = new NpgsqlCommand();
+            cmd2.Connection = conn2;
+            cmd2.CommandText = "INSERT INTO Account (email, password, role) VALUES (@email, @password, @role)";
+            cmd2.Parameters.AddWithValue("email", email);
+            cmd2.Parameters.AddWithValue("password", password);
+            cmd2.Parameters.AddWithValue("role", "Coordinator");
+            cmd2.ExecuteNonQuery();
         }
         catch (Npgsql.PostgresException pe)
         {
@@ -409,7 +362,7 @@ public class Database : IDatabase
     {
         var conn = new NpgsqlConnection(GetConnectionString());
         conn.Open();
-        using var cmd = new NpgsqlCommand("SELECT email, password FROM Account WHERE email = @email", conn);
+        using var cmd = new NpgsqlCommand("SELECT email, password, role FROM Account WHERE email = @email", conn);
         cmd.Parameters.AddWithValue("email", email);
         using var reader = cmd.ExecuteReader();
 
@@ -417,7 +370,7 @@ public class Database : IDatabase
         {
             if (!reader.IsDBNull(0))
             {
-                return new Account(reader.GetString(0), reader.GetString(1));
+                return new Account(reader.GetString(0), reader.GetString(1), reader.GetString(2));
             }
         }
         return null;

@@ -4,7 +4,7 @@ namespace ClinicalCoordinationApplication;
 
 public partial class CreateAnAccount : ContentPage
 {
-    private static string userType;
+    private static string userType = "Student";
 
 	public CreateAnAccount()
 	{

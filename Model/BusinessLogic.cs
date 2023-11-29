@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using BCrypt.Net;
 
 namespace ClinicalCoordinationApplication.Model
 {
@@ -40,54 +41,30 @@ namespace ClinicalCoordinationApplication.Model
             database.DeleteProfile();
         }
 
-        public SignInError StudentSignIn(string email, string password)
+        public SignInError SignIn(string email, string password)
         {
-            Student loggedInStudent = database.StudentSignIn(email, password);
-
-
-            if (loggedInStudent == null)
+            Account account = database.GetAccount(email);
+            if (account == null)
             {
                 return SignInError.InvalidEmailOrPassword;
             }
-
-            LoggedInUserType = "Student";
-            LoggedInUserName = loggedInStudent.FirstName + " " + loggedInStudent.LastName;
-
-            return SignInError.NoError;
-        }
-
-        public SignInError CoordinatorSignIn(string email, string password)
-        {
-            Coordinator loggedInCoordinator = database.CoordinatorSignIn(email, password);
-
-
-            if (loggedInCoordinator == null)
+            if (!BCrypt.Net.BCrypt.Verify(password, account.Password))
             {
                 return SignInError.InvalidEmailOrPassword;
             }
-
-            if (loggedInCoordinator.Email.CompareTo("jansse18@uwosh.edu") == 0 )
-            {
-                LoggedInUserType = "Director";
-            } else
-            {
-                LoggedInUserType = "Coordinator";
-            }
-
-            LoggedInUserName = loggedInCoordinator.FirstName + " " + loggedInCoordinator.LastName;
-
+            LoggedInUserType = account.Role;
+            database.SignIn(email);
             return SignInError.NoError;
         }
 
         public CreateAccountError CreateStudentAccount(string email, string password, string firstName, string lastName)
         {
-            //call db for account with email
             Account account = database.GetAccount(email);
             if (account != null)
             {
                 return CreateAccountError.EmailAlreadyUsed;
             }
-            if (!email.Contains("@uwosh.edu") || (email.Length < 10 || email.Length > 100))
+            if ((email.Length < 10 || email.Length > 100) || !email.Contains("@uwosh.edu"))
             {
                 return CreateAccountError.InvalidEmail;
             }
@@ -103,20 +80,19 @@ namespace ClinicalCoordinationApplication.Model
             {
                 return CreateAccountError.InvalidLastName;
             }
-            //makes an account
-            database.CreateStudentAccount(email, password, firstName, lastName);
+            string hashedPassword = BCrypt.Net.BCrypt.HashPassword(password);
+            database.CreateStudentAccount(email, hashedPassword, firstName, lastName);
             return CreateAccountError.NoError;
         }
 
         public CreateAccountError CreateCoordinatorAccount(string email, string password, string firstName, string lastName)
         {
-            //call db for account with email
             Account account = database.GetAccount(email);
             if (account != null)
             {
                 return CreateAccountError.EmailAlreadyUsed;
             }
-            if (!email.Contains("@uwosh.edu") || (email.Length < 10 || email.Length > 150))
+            if ((email.Length < 10 || email.Length > 150) || !email.Contains("@uwosh.edu"))
             {
                 return CreateAccountError.InvalidEmail;
             }
@@ -132,8 +108,8 @@ namespace ClinicalCoordinationApplication.Model
             {
                 return CreateAccountError.InvalidLastName;
             }
-            //makes an account
-            database.CreateCoordinatorAccount(email, password, firstName, lastName);
+            string hashedPassword = BCrypt.Net.BCrypt.HashPassword(password);
+            database.CreateCoordinatorAccount(email, hashedPassword, firstName, lastName);
             return CreateAccountError.NoError;
         }
         public EditAccountError EditAccount(string email, string password, string firstName, string lastName)
@@ -160,9 +136,8 @@ namespace ClinicalCoordinationApplication.Model
             {
                 return EditAccountError.InvalidLastName;
             }
-            //Account with edits
-            Account editedAccount = new(email, password, firstName, lastName, "Student");
             //db stuff
+            string hashedPassword = BCrypt.Net.BCrypt.HashPassword(password);
             return EditAccountError.NoError;
         }
         public AddWorkedHoursError AddWorkedHours(String clinical, DateTime date, TimeSpan startTime, TimeSpan endTime, String notes)

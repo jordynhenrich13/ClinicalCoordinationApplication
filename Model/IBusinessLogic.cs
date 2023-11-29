@@ -9,9 +9,7 @@ namespace ClinicalCoordinationApplication.Model
         public ObservableCollection<Clinic> Clinics { get; }
         public ObservableCollection<Clinical> Clinicals { get; }
         public ObservableCollection<AssignedPreceptor> Preceptors { get; }
-        SignInError StudentSignIn(string email, string password);
-
-        SignInError CoordinatorSignIn(string email, string password);
+        SignInError SignIn(string email, string password);
         CreateAccountError CreateStudentAccount(string email, string password, string firstName, string lastName);
         CreateAccountError CreateCoordinatorAccount(string email, string password, string firstName, string lastName);
         EditAccountError EditAccount(string email, string password, string firstName, string lastName);
@@ -26,7 +24,6 @@ namespace ClinicalCoordinationApplication.Model
         FindNewClinicError FindNewClinic();
         void DeleteProfile();
         FindStudentError FindStudent(string search);
-
     }
 }
 

@@ -22,24 +22,13 @@
             Placeholder="Password"
             IsPassword="True"
         />
-
-        <StackLayout
-    Orientation="Horizontal"
-    HorizontalOptions="CenterAndExpand"
-    Spacing="10">
-            <Button
-        Text="Coordinator Sign In"
-        WidthRequest="170"
-        CornerRadius="0"
-        Clicked="CoordinatorSignInClicked"
-    />
-            <Button
-        Text="Student Sign In"
-        WidthRequest="170"
-        CornerRadius="0"
-        Clicked="StudentSignInClicked"
-    />
-        </StackLayout>
+        <Button
+            Text="Sign In"
+            WidthRequest="320"
+            CornerRadius="0"
+            HorizontalOptions="CenterAndExpand"
+            Clicked="SignInClicked"
+        />
 
         <VerticalStackLayout
             Spacing="-10"
