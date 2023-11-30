@@ -2,10 +2,22 @@ namespace ClinicalCoordinationApplication;
 
 public partial class Clinical2 : ContentPage
 {
-	public Clinical2()
-	{
-		InitializeComponent();
-	}
+    public Database database;
+    private PreceptorViewModel preceptorViewModel;
+    public Clinical2()
+    {
+        InitializeComponent();
+
+        // Create an instance of PreceptorViewModel and set it as the BindingContext
+        preceptorViewModel = new PreceptorViewModel();
+        BindingContext = preceptorViewModel;
+
+        database = new Database();
+
+
+        // Load preceptor information when the page appears
+        this.Appearing += (sender, e) => LoadPreceptorInformation();
+    }
     private void SideMenuButton_Clicked(object sender, EventArgs e)
     {
         // Handle the side menu button click
@@ -17,57 +29,6 @@ public partial class Clinical2 : ContentPage
         // Handle the profile icon button click
         // You can add your code to navigate to the user's profile or perform any other action here
     }
-
-    //private void OnNewNoteButtonClicked(object sender, EventArgs e)
-    //{
-    //    var newNote = new Frame
-    //    {
-    //        CornerRadius = 10,
-    //        Padding = 5,
-    //    };
-
-    //    var editor = new Editor
-    //    {
-    //        Placeholder = "Enter your notes here...",
-    //        HorizontalOptions = LayoutOptions.FillAndExpand,
-    //        HeightRequest = 200,
-    //    };
-
-    //    newNote.Content = editor;
-
-    //    var deleteButton = new Button
-    //    {
-    //        Text = "Delete",
-    //        WidthRequest = 75,
-    //    };
-
-    //    var noteStackLayout = new StackLayout
-    //    {
-    //        Orientation = StackOrientation.Horizontal,
-    //    };
-
-    //    noteStackLayout.Children.Add(newNote);
-    //    noteStackLayout.Children.Add(deleteButton);
-
-    //    NotesContainer.Children.Add(noteStackLayout);
-    //}
-
-
-
-    //private void OnDeleteNoteButtonClicked(object sender, EventArgs e)
-    //{
-    //    // Get the button that was clicked
-    //    var deleteButton = (Button)sender;
-
-    //    // Find the parent StackLayout which contains the note and delete button
-    //    var noteStackLayout = (StackLayout)deleteButton.Parent;
-
-    //    if (noteStackLayout != null)
-    //    {
-    //        // Remove the parent StackLayout (the entire note with the delete button)
-    //        NotesContainer.Children.Remove(noteStackLayout);
-    //    }
-    //}
 
     private void OnBackButtonClicked(object sender, EventArgs e) // Dashboard button
     {
@@ -90,6 +51,48 @@ public partial class Clinical2 : ContentPage
         {
             // If the checkbox is not checked, hide the PreceptorInfo section
             PreceptorInfo.IsVisible = false;
+        }
+    }
+
+    private void LoadPreceptorInformation()
+    {
+        // Load preceptor information based on the currently signed-in student's email
+        var loadedPreceptor = database.LoadPreceptorInformation(database.CurrentlySignedInStudentEmail);
+
+        if (loadedPreceptor != null)
+        {
+            // Update the BindingContext with the loaded preceptor information
+            preceptorViewModel.Title = loadedPreceptor.Title;
+            preceptorViewModel.Name = loadedPreceptor.Name;
+            preceptorViewModel.Facility = loadedPreceptor.Facility;
+            preceptorViewModel.Email = loadedPreceptor.Email;
+            preceptorViewModel.Phone = loadedPreceptor.Phone;
+        }
+    }
+
+    private async void SavePreceptorInformation(object sender, EventArgs e)
+    {
+        if (PreceptorInfo.IsVisible)
+        {
+            // Assuming you have set the BindingContext of the page to a PreceptorViewModel instance
+            // var preceptorViewModel = (PreceptorViewModel)BindingContext;
+
+            // Validate if required fields are filled
+            if (string.IsNullOrWhiteSpace(preceptorViewModel.Title) || string.IsNullOrWhiteSpace(preceptorViewModel.Name))
+            {
+                // Handle validation error, show a message, etc.
+                return;
+            }
+
+            // Call the method in Database.cs to save preceptor information to the database
+            // Replace this with the actual method in your Database class
+            database.SavePreceptorToDatabase(preceptorViewModel);
+
+            // Update the LastUpdateLabel with the current timestamp
+            LastUpdateLabel.Text = $"Last Updated: {DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}";
+
+            // Display a success message
+            await DisplayAlert("Success", "Saved Preceptor", "OK");
         }
     }
 
