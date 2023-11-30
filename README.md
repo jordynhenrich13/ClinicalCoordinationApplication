@@ -25,5 +25,6 @@ Binded each clinical buttons for the coordinator dashboard to the respective stu
 Added a preceptor table to the database ✅
 Connected the preceptor information on the coordinator to update in the database when the preceptor information is saved and the datetime shows for the last entered information ✅
 *Need to have the information save on the application if it was filled out*
+Added a database for the file submissions through the clinical dashboard ✅
 
 
