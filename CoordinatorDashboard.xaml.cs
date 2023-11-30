@@ -4,12 +4,9 @@ using System.Collections.ObjectModel;
 namespace ClinicalCoordinationApplication;
 
 public partial class CoordinatorDashboard : ContentPage
-
 {
-
     private IDatabase Database = new Database();
     public ObservableCollection<ClinicalButton> ClinicalButtons { get; set; } = new ObservableCollection<ClinicalButton>();
-
     public ObservableCollection<Student> Students { get; set; } = new ObservableCollection<Student>();
 
     public CoordinatorDashboard()
@@ -40,36 +37,62 @@ public partial class CoordinatorDashboard : ContentPage
             Students.Add(student);
         }
     }
+
     private void ClinicalButtonClicked(object sender, EventArgs e)
     {
-        Button button = (Button)sender;
-
-        // Assuming you have a property in your Student class that indicates the clinical page
-        string clinicalPageNumber = button.Text;  // Assuming the Text property of the button is set to "1", "2", ..., "6"
-
-        // Now you can navigate to the corresponding clinical page based on the clinicalPageNumber
-        switch (clinicalPageNumber)
+        try
         {
-            case "1":
-                Navigation.PushAsync(new Clinical1());
-                break;
-            case "2":
-                Navigation.PushAsync(new Clinical2());
-                break;
-            case "3":
-                Navigation.PushAsync(new Clinical3());
-                break;
-            case "4":
-                Navigation.PushAsync(new Clinical4());
-                break;
-            case "5":
-                Navigation.PushAsync(new Clinical5());
-                break;
-            case "6":
-                Navigation.PushAsync(new Clinical6());
-                break;
+            if (sender is Button button && button.Text != null)
+            {
+                string clinicalPageNumber = button.Text;
+
+                switch (clinicalPageNumber)
+                {
+                    case "1":
+                        Navigation.PushAsync(new Clinical1());
+                        break;
+                    case "2":
+                        Navigation.PushAsync(new Clinical2());
+                        break;
+                    case "3":
+                        Navigation.PushAsync(new Clinical3());
+                        break;
+                    case "4":
+                        Navigation.PushAsync(new Clinical4());
+                        break;
+                    case "5":
+                        Navigation.PushAsync(new Clinical5());
+                        break;
+                    case "6":
+                        Navigation.PushAsync(new Clinical6());
+                        break;
+                    default:
+                        Console.WriteLine($"Unknown clinical page: {clinicalPageNumber}");
+                        break;
+                }
+
+                // Log the current navigation stack for debugging
+                var stack = Navigation?.NavigationStack;
+                if (stack != null)
+                {
+                    Console.WriteLine($"Current Navigation Stack: {string.Join(", ", stack.Select(page => page.GetType().Name))}");
+                }
+                else
+                {
+                    Console.WriteLine("Navigation stack is null.");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Invalid sender or button text is null.");
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Navigation error: {ex.Message}");
         }
     }
+
 
 
     private void OnStudentSearched(object sender, EventArgs e)

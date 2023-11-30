@@ -18,7 +18,6 @@
                 </Grid.ColumnDefinitions>
 
                 <Label Text="Dashboard" TextColor="White" VerticalOptions="Center" Grid.Column="2"/>
-
             </Grid>
         </Shell.TitleView>
 
@@ -46,14 +45,13 @@
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
-
                 </Grid.ColumnDefinitions>
 
                 <!-- Add your side menu button as an ImageButton -->
                 <ImageButton Source="menupopup.png" WidthRequest="40" HeightRequest="40" Clicked="SideMenuButton_Clicked" Grid.Column="0" Grid.Row="0" VerticalOptions="Start" Margin="-60,10,0,0"/>
 
-                <!-- Add a search bar above the selected cohort 
-                <SearchBar x:Name="studentSearchBar" Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" Grid.ColumnSpan="6" Placeholder="Search for a student" SearchButtonPressed="OnStudentSearched"/> -->
+                <!-- Add a search bar above the selected cohort -->
+                <SearchBar x:Name="searchBar" Placeholder="Search Students" TextChanged="OnStudentSearched" Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" Grid.ColumnSpan="6"/>
 
                 <Picker Title="Select Cohort" x:Name="cohortPicker" SelectedIndexChanged="CohortPicker_SelectedIndexChanged" Grid.Column="1" Grid.ColumnSpan="6">
                     <!-- Add your cohort options here -->
@@ -70,17 +68,13 @@
                 <Label Text="Selected Cohort:" FontAttributes="Bold" Grid.Row="0" VerticalOptions="Start" Margin="0,10,0,0"/>
 
                 <StackLayout Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="6">
-                    <SearchBar x:Name="searchBar" Placeholder="Search Students" TextChanged="OnStudentSearched"/>
-
                     <CollectionView ItemsSource="{Binding Students}">
                         <CollectionView.ItemTemplate>
                             <DataTemplate>
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto" />
-                                        <!-- First row for first name -->
                                         <RowDefinition Height="Auto" />
-                                        <!-- Second row for buttons -->
                                     </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto" />
@@ -89,7 +83,6 @@
                                         <ColumnDefinition Width="Auto" />
                                         <ColumnDefinition Width="Auto" />
                                         <ColumnDefinition Width="Auto" />
-
                                     </Grid.ColumnDefinitions>
 
                                     <!-- First Name -->
@@ -112,8 +105,6 @@
                         </CollectionView.ItemTemplate>
                     </CollectionView>
                 </StackLayout>
-
-
             </Grid>
         </ScrollView>
     </Grid>
