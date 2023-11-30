@@ -14,6 +14,8 @@ namespace ClinicalCoordinationApplication
         private Clinic clinic;
         private bool hasPreceptor;
         private Preceptor preceptor;
+        private string studentEmail;
+        private string clinicalStatus;
 
         public int ClinicalNumber
         {
@@ -106,6 +108,14 @@ namespace ClinicalCoordinationApplication
             this.hasPreceptor = hasPreceptor;
             this.preceptor = preceptor;
         }
+
+        public Clinical(string studentEmail)
+        {
+            this.studentEmail = studentEmail;
+            clinicalStatus = "Not Started";
+
+        }
+
 
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged(string propertyName)
