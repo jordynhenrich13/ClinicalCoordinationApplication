@@ -64,15 +64,39 @@ namespace ClinicalCoordinationApplication.Model
 
         NoError
     }
+
     public enum FindNewClinicError
     {
 
         NoError
     }
+
     public enum FindStudentError
     {
         SearchTooLong,
         NoStudentFound,
+        NoError
+    }
+
+    public enum AddReportError
+    {
+        CreateReportItemError,
+        CollectionAddError,
+        DBAddError,
+        NoError
+    }
+
+    public enum DeleteReportError
+    {
+        DBDeleteError,
+        NoError
+    }
+
+    public enum AddReportSubmissionError
+    {
+        CreateReportSubmissionError,
+        CollectionAddError,
+        DBAddError,
         NoError
     }
 }

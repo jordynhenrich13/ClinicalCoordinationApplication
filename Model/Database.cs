@@ -1,7 +1,6 @@
 ﻿using ClinicalCoordinationApplication.Model;
+using ClinicalCoordinationApplication.Model.Reports;
 using Microsoft.Maui.ApplicationModel.Communication;
-//using Intents;
-//using Intents;
 using Npgsql;
 using NpgsqlTypes;
 using System;
@@ -13,7 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BCrypt.Net;
 using System.Collections;
-//using Windows.Networking;
+using static Android.Provider.ContactsContract.CommonDataKinds;
 
 
 namespace ClinicalCoordinationApplication;
@@ -36,6 +35,7 @@ public class Database : IDatabase
         //CreateTables(connString);
         SelectAllStudents();
     }
+
     public ObservableCollection<Student> Students
     {
         get { return students; }
@@ -170,7 +170,7 @@ public class Database : IDatabase
     {
         try
         {
-            int primaryKey = 003; 
+            int primaryKey = 003;
             string studentEmail = "henrij13@uwosh.edu";
             using var conn = new NpgsqlConnection(connString); // conn, short for connection, is a connection to the database
             conn.Open(); // open the connection ... now we are connected!
@@ -297,6 +297,105 @@ public class Database : IDatabase
     }
 
 
+    public Coordinator GetCoordinatorInfo(string email)
+    {
+        try
+        {
+            using var conn = new NpgsqlConnection(connString);
+            conn.Open();
+
+            using var cmd = new NpgsqlCommand();
+            cmd.Connection = conn;
+
+            // Query Text with parameter
+            cmd.CommandText = @"SELECT *
+                                FROM ClinicalCoordinator
+                                WHERE email = @Email";
+
+            // Add parameter and set its value
+            cmd.Parameters.AddWithValue("@Email", email);
+
+            using (var reader = cmd.ExecuteReader())
+            {
+                // Check if data was found in DB
+                if (reader.HasRows)
+                {
+                    // Read in the data
+                    while (reader.Read())
+                    {
+                        string firstname = reader["firstname"].ToString();
+                        string lastname = reader["lastname"].ToString();
+                        //var phonenumber = reader["phonenumber"]; TODO: Uncomment when needed
+
+                        // Return a coordinator object
+                        return new Coordinator(firstname, lastname, email);
+                    }
+                }
+            }
+        }
+        catch (Npgsql.PostgresException pe)
+        {
+            // Catch errors
+            Console.WriteLine("Error occurred in the database: {0}", pe);
+
+        }
+
+        // Could not find coordinator, return null
+        Console.WriteLine("DB could not find specified coordinator in GetCoordinatorInfo(string email)");
+        return null;
+    }
+
+
+    public Student GetStudentInfo(string email)
+    {
+        try
+        {
+            using var conn = new NpgsqlConnection(connString);
+            conn.Open();
+
+            using var cmd = new NpgsqlCommand();
+            cmd.Connection = conn;
+
+            // Query Text with parameter
+            cmd.CommandText = @"SELECT *
+                                FROM Student
+                                WHERE email = @Email";
+
+            // Add parameter and set its value
+            cmd.Parameters.AddWithValue("@Email", email);
+
+            using (var reader = cmd.ExecuteReader())
+            {
+                // Check if data was found
+                if (reader.HasRows)
+                {
+                    // Read in data
+                    while (reader.Read())
+                    {
+                        string firstname = reader["firstname"].ToString();
+                        string lastname = reader["lastname"].ToString();
+                        //var phonenumber = reader["phonenumber"]; TODO: Uncomment when needed
+                        //var address = reader["address"]; TODO: Uncomment when needed
+
+                        // Return student object
+                        return new Student(firstname, lastname, email);
+                    }
+                }
+            }
+        }
+        catch (Npgsql.PostgresException pe)
+        {
+            // Catch any errors
+            Console.WriteLine("Error occurred in the database: {0}", pe);
+
+        }
+
+        // No student was found, return null
+        Console.WriteLine("DB could not find specified student in GetStudentInfo(string email)");
+        return null;
+    }
+
+
 
     // Builds a ConnectionString, which is used to connect to the database
     static String GetConnectionString()
@@ -383,6 +482,337 @@ public class Database : IDatabase
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 
+    /******************************
+    * REPORT PAGE VARS & METHODS *
+    *****************************/
+
+    /// <summary>
+    /// Adds report to the db
+    /// </summary>
+    /// <param name="report">The report to add</param>
+    /// <returns>Error representing add status</returns>
+    public AddReportError AddReport(ReportItem report)
+    {
+        // Add report to Reports table in the database
+        try
+        {
+            using var conn = new NpgsqlConnection(connString);
+            conn.Open();
+            var cmd = new NpgsqlCommand();
+            cmd.Connection = conn;
+
+            // Query Text
+            cmd.CommandText = @"INSERT INTO Reports (reportName, fileName, reportStream, uploadedBy, uploadDate, dueDate, coordinatorEmails)
+                                VALUES (@ReportName, @FileName, @ReportStream, @UploadedBy, @UploadDate, @DueDate, @CoordinatorEmails)";
+
+            // Add parameters
+            cmd.Parameters.AddWithValue("ReportName", report.ReportName);
+            cmd.Parameters.AddWithValue("FileName", report.FileName);
+            cmd.Parameters.AddWithValue("ReportStream", report.ReportStream);
+            cmd.Parameters.AddWithValue("UploadedBy", report.UploadedBy);
+            cmd.Parameters.AddWithValue("UploadDate", report.UploadDate);
+            cmd.Parameters.AddWithValue("DueDate", report.DueDate);
+            cmd.Parameters.AddWithValue("CoordinatorEmails", report.CoordinatorEmails);
+
+            // Execute query
+            cmd.ExecuteNonQuery();
+        }
+        catch (Npgsql.PostgresException pe)
+        {
+            Console.WriteLine("Error occured in database, {0}", pe);
+            return AddReportError.DBAddError;
+        }
+        return AddReportError.NoError;
+    }
+
+    /// <summary>
+    /// TODO: This has not yet been tested or implemented in the UI
+    /// </summary>
+    /// <param name="reportName">TODO</param>
+    /// <returns>TODO</returns>
+    public DeleteReportError DeleteReport(string reportName)
+    {
+        // Delete report from Reports table in the database
+        try
+        {
+            using var conn = new NpgsqlConnection(connString);
+            conn.Open();
+            var cmd = new NpgsqlCommand();
+            cmd.Connection = conn;
+
+            // Query Text
+            cmd.CommandText = @"DELETE *
+                                FROM Reports
+                                WHERE reportName = @ReportName";
+
+            // Add parameters
+            cmd.Parameters.AddWithValue("ReportName", reportName);
+
+            // Execute query
+            cmd.ExecuteNonQuery();
+        }
+        catch (Npgsql.PostgresException pe)
+        {
+            Console.WriteLine("Error occured in database, {0}", pe);
+            return DeleteReportError.DBDeleteError;
+        }
+        return DeleteReportError.NoError;
+    }
+
+    /// <summary>
+    /// TODO: This has not yet been tested or implemented in the UI
+    /// </summary>
+    /// <param name="reportSubmission">TODO</param>
+    /// <returns>TODO</returns>
+    public AddReportSubmissionError AddReportSubmission(ReportSubmission reportSubmission)
+    {
+        // Add report submission to the ReportSubmissions table in the database
+        try
+        {
+            using var conn = new NpgsqlConnection(connString);
+            conn.Open();
+            var cmd = new NpgsqlCommand();
+            cmd.Connection = conn;
+
+            // Query Text
+            cmd.CommandText = @"INSERT INTO ReportSubmission (fileName, submissionDate, reportName, uploadedBy, reportStream)
+                                VALUES (@FileName, @SubmissionDate, @ReportName, @UploadedBy, @ReportStream)";
+
+            // Add parameters
+            cmd.Parameters.AddWithValue("FileName", reportSubmission.FileName);
+            cmd.Parameters.AddWithValue("SubmissionDate", reportSubmission.SubmissionDate);
+            cmd.Parameters.AddWithValue("ReportName", reportSubmission.ReportName);
+            cmd.Parameters.AddWithValue("UploadedBy", reportSubmission.UploadedBy);
+            cmd.Parameters.AddWithValue("ReportStream", reportSubmission.ReportStream);
+
+            // Execute query
+            cmd.ExecuteNonQuery();
+        }
+        catch (Npgsql.PostgresException pe)
+        {
+            Console.WriteLine("Error occured in database, {0}", pe);
+            return AddReportSubmissionError.DBAddError;
+        }
+        return AddReportSubmissionError.NoError;
+    }
+
+    /// <summary>
+    /// Returns the reports view for the DirectorAddReportDashboard
+    /// </summary>
+    /// <returns>Collection of reports</returns>
+    public ObservableCollection<ReportItem> GetDirectorReports()
+    {
+        return GetAllReports();
+    }
+
+    /// <summary>
+    /// Returns all reports in the database
+    /// </summary>
+    /// <returns>All reports in the database</returns>
+    public ObservableCollection<ReportItem> GetAllReports()
+    {
+        ObservableCollection<ReportItem> reports = new();
+        try
+        {
+            using var conn = new NpgsqlConnection(connString);
+            conn.Open();
+            var cmd = new NpgsqlCommand();
+            cmd.Connection = conn;
+
+            // Query Text
+            cmd.CommandText = @"SELECT *
+                                FROM Reports";
+
+            // Execute query
+            cmd.ExecuteNonQuery();
+
+            using (var reader = cmd.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    // Read and contents of each line
+                    string reportName = reader["reportName"].ToString();
+                    string fileName = reader["fileName"].ToString();
+
+                    //Stream reportStream = (Stream)reader["reportStream"];
+                    byte[] reportStreamBytes = (byte[])reader["reportStream"];
+                    Stream reportStream = new MemoryStream(reportStreamBytes);
+
+                    string uploadedBy = reader["uploadedBy"].ToString();
+                    DateTime uploadDate = (DateTime)reader["uploadDate"];
+                    DateTime dueDate = (DateTime)reader["dueDate"];
+                    string[] coordinatorEmails = (string[])reader["coordinatorEmails"];
+
+                    // Get all submissions for the current report
+                    var submissions = GetReportSubmissions(reportName);
+
+                    // Create new report item and add to return collection
+                    ReportItem report = new(reportName, fileName, reportStream, uploadedBy, uploadDate, dueDate, coordinatorEmails, submissions);
+                    reports.Add(report);
+                }
+            }
+        }
+        catch (Npgsql.PostgresException pe)
+        {
+            Console.WriteLine("Error occured in database, {0}", pe);
+            return null;
+        }
+        return reports;
+    }
+
+    /// <summary>
+    /// Gets all reports assigned to the logged in coordinator
+    /// </summary>
+    /// <param name="userEmail">The logged in coordinator's email</param>
+    /// <returns></returns>
+    public ObservableCollection<ReportItem> GetCoordinatorReports(string userEmail)
+    {
+        // Collection of report items to be returned
+        ObservableCollection<ReportItem> reports = new();
+
+        // TODO: write description
+        try
+        {
+            using var conn = new NpgsqlConnection(connString);
+            conn.Open();
+            var cmd = new NpgsqlCommand();
+            cmd.Connection = conn;
+
+            // Query Text
+            cmd.CommandText = @"SELECT *
+                                FROM Reports
+                                WHERE ARRAY_CONTAINS(coordinatorEmails, @UserEmail)"; // coordinatorEmails (varchar(255)[]) contains string userEmail
+
+            // Add parameters
+            cmd.Parameters.AddWithValue("UserEmail", userEmail);
+
+            // Execute query
+            cmd.ExecuteNonQuery();
+
+            using (var reader = cmd.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    // Read and contents of each line
+                    string reportName = reader["reportName"].ToString();
+                    string fileName = reader["fileName"].ToString();
+                    Stream reportStream = (Stream)reader["reportStream"];
+                    string uploadedBy = reader["uploadedBy"].ToString();
+                    DateTime uploadDate = (DateTime)reader["uploadDate"];
+                    DateTime dueDate = (DateTime)reader["dueDate"];
+                    string[] coordinatorEmails = (string[])reader["coordinatorEmails"];
+
+                    var submissions = GetReportSubmissions(reportName);
+
+                    // Create new report item and add to return collection
+                    ReportItem report = new(reportName, fileName, reportStream, uploadedBy, uploadDate, dueDate, coordinatorEmails, submissions);
+                    reports.Add(report);
+                }
+            }
+        }
+        catch (Npgsql.PostgresException pe)
+        {
+            Console.WriteLine("Error occured in database, {0}", pe);
+            return null;
+        }
+        return reports;
+    }
+
+    /// <summary>
+    /// Gets the submissions for each report (this might be uneccesary code, need to refactor potentially)
+    /// </summary>
+    /// <param name="reportName">Name of the report to retrieve submissions for</param>
+    /// <returns>Collection of reports</returns>
+    public ObservableCollection<ReportSubmission> GetReportSubmissions(string reportName)
+    {
+        // Collection of report items to be returned
+        ObservableCollection<ReportSubmission> submissions = new();
+
+        try
+        {
+            using var conn = new NpgsqlConnection(connString);
+            conn.Open();
+            var cmd = new NpgsqlCommand();
+            cmd.Connection = conn;
+
+            // Query Text
+            cmd.CommandText = @"SELECT *
+                                FROM reportsubmission
+                                WHERE reportName = @ReportName";
+
+            // Execute query
+            cmd.ExecuteNonQuery();
+
+            using (var reader = cmd.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    // Read and contents of each line
+                    string fileName = reader["fileName"].ToString();
+                    Stream reportStream = (Stream)reader["reportStream"];
+                    string uploadedBy = reader["uploadedBy"].ToString();
+                    DateTime submissionDate = (DateTime)reader["submissionDate"];
+
+                    // Create new report item and add to return collection
+                    ReportSubmission submission = new(fileName, reportStream, uploadedBy, submissionDate, reportName);
+                    submissions.Add(submission);
+                }
+            }
+        }
+        catch (Npgsql.PostgresException pe)
+        {
+            Console.WriteLine("Error occured in database, {0}", pe);
+            return null;
+        }
+        return submissions;
+    }
+
+    /// <summary>
+    /// Searches for a coordinator in the DB using a given email
+    /// </summary>
+    /// <param name="email">The coordinator email to find</param>
+    /// <returns>boolean true if found, false otherwise</returns>
+    public bool FindCoordinatorByEmail(string email)
+    {
+        try
+        {
+            using var conn = new NpgsqlConnection(connString);
+            conn.Open();
+
+            using var cmd = new NpgsqlCommand();
+            cmd.Connection = conn;
+
+            // Query Text with parameter
+            cmd.CommandText = @"SELECT *
+                                FROM ClinicalCoordinator
+                                WHERE email = @Email";
+
+            // Add parameter and set its value
+            cmd.Parameters.AddWithValue("@Email", email);
+
+            using (var reader = cmd.ExecuteReader())
+            {
+                // Check if any rows are returned
+                if (reader.HasRows)
+                {
+                    // Coordinator found
+                    return true;
+                }
+            }
+        }
+        catch (Npgsql.PostgresException pe)
+        {
+            Console.WriteLine("Error occurred in the database: {0}", pe);
+            // Return false if there's an exception
+            return false;
+        }
+
+        // Return false if no coordinator was found
+        return false;
+    }
+
+
+
     //static void CreateTables(string connString)
     //{
     //    using var conn = new NpgsqlConnection(connString); // a conn represents a connection to the database
@@ -394,4 +824,3 @@ public class Database : IDatabase
 
     //}
 }
-

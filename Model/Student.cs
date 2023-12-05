@@ -36,7 +36,6 @@ namespace ClinicalCoordinationApplication.Model
             this.firstName = firstName;
             this.lastName = lastName;
             this.email = email;
-            //this.password = password;
         }
 
         public string FirstName {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using ClinicalCoordinationApplication.Model.Reports;
 
 namespace ClinicalCoordinationApplication.Model
 {
@@ -15,7 +16,16 @@ namespace ClinicalCoordinationApplication.Model
         public string GetUserType();
         public void DeleteProfile();
         AddWorkedHoursError AddHoursWorked(String clinical, DateTime dateTime, TimeSpan clinicalHoursWorked, string notes);
-
+        ObservableCollection<ReportItem> GetDirectorReports();
+        ObservableCollection<ReportSubmission> GetReportSubmissions(string reportName);
+        ObservableCollection<ReportItem> GetAllReports();
+        AddReportError AddReport(ReportItem reportItem);
+        DeleteReportError DeleteReport(string reportName);
+        AddReportSubmissionError AddReportSubmission(ReportSubmission reportSubmission);
+        bool FindCoordinatorByEmail(string email);
+        public ObservableCollection<ReportItem> GetCoordinatorReports(string userEmail);
+        Student GetStudentInfo(string email);
+        Coordinator GetCoordinatorInfo(string email);
     }
 }
 
