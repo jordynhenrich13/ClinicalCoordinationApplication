@@ -40,18 +40,11 @@
                 Placeholder="Password"
                 IsPassword="True"
             />
-            <StackLayout>
-                <Label Text="Status at UWO" />
-                <HorizontalStackLayout x:Name="UserType">
-                    <RadioButton x:Name="CoordinatorRadioButton" CheckedChanged="OnUserTypeButtonChanged" Content="Coordinator" />
-                    <RadioButton x:Name="StudentRadioButton" CheckedChanged="OnUserTypeButtonChanged" Content="Student" IsChecked="True"/>
-                </HorizontalStackLayout>
-            </StackLayout>
             <Button
                 Text="Create Account"
                 HorizontalOptions="Center"
                 CornerRadius="0"
-                Clicked="Button_Clicked"  
+                Clicked="CreateAccount_Clicked"  
             />
             <VerticalStackLayout
                 Spacing="-10"

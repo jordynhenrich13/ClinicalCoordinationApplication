@@ -10,47 +10,14 @@ public partial class CreateAnAccount : ContentPage
 	{
         InitializeComponent();
     }
-
-	public void Student_Button_Clicked()
-	{
-		MauiProgram.BusinessLogic.CreateStudentAccount(EmailENT.ToString(), PasswordEnt.ToString(), first_nameENT.ToString(), last_nameENT.ToString());
-
-		EmailENT.Text = "";
-		PasswordEnt.Text = "";
-		first_nameENT.Text = "";
-		last_nameENT.Text = "";
-
-	}
-
-    public void OnUserTypeButtonChanged(object sender, CheckedChangedEventArgs e)
-    {
-        if (sender == CoordinatorRadioButton && e.Value)
-        {
-            userType = "Coordinator";
-        }
-        else if (sender == StudentRadioButton && e.Value)
-        {
-            userType = "Student";
-        }
-    }
-
     public void SignInHere_Clicked(object sender, EventArgs e)
     {
         Navigation.PopAsync();
     }
-
-    private void Button_Clicked(object sender, EventArgs e)
+    private void CreateAccount_Clicked(object sender, EventArgs e)
     {
-        CreateAccountError result;
-        if (userType == "Student")
-        {
-            result = MauiProgram.BusinessLogic.CreateStudentAccount(EmailENT.Text, PasswordEnt.Text, first_nameENT.Text, last_nameENT.Text);
-        }
-        else 
-        {
-            result = MauiProgram.BusinessLogic.CreateCoordinatorAccount(EmailENT.Text, PasswordEnt.Text, first_nameENT.Text, last_nameENT.Text);
-        }
-
+        CreateAccountError result = MauiProgram.BusinessLogic.CreateStudentAccount(EmailENT.Text, PasswordEnt.Text, first_nameENT.Text, last_nameENT.Text);
+        
         if (result == CreateAccountError.NoError)
         {
             // Account creation was successful. Now, navigate to the sign-in page.
