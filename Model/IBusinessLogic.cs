@@ -11,7 +11,7 @@ namespace ClinicalCoordinationApplication.Model
         public ObservableCollection<AssignedPreceptor> Preceptors { get; }
         SignInError SignIn(string email, string password);
         CreateAccountError CreateStudentAccount(string email, string password, string firstName, string lastName);
-        CreateAccountError CreateCoordinatorAccount(string email, string password, string firstName, string lastName);
+        AddCoordinatorError AddCoordinator(string email);
         EditAccountError EditAccount(string email, string password, string firstName, string lastName);
         AddWorkedHoursError AddWorkedHours(String clinical, DateTime date, TimeSpan startTime, TimeSpan endTime, String notes);
         EditWorkedHoursError EditWorkedHours();

@@ -72,7 +72,12 @@ namespace ClinicalCoordinationApplication.Model
     public enum FindStudentError
     {
         SearchTooLong,
-        NoStudentFound,
+        InvalidChar,
+        NoError
+    }
+    public enum AddCoordinatorError
+    {
+        InvalidEmail,
         NoError
     }
 }
