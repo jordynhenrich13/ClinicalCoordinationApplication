@@ -16,11 +16,14 @@
         <Entry 
             x:Name="EmailENT"
             Placeholder="Email Address"
+            Text="jansse18@uwosh.edu"
+            
         />
         <Entry 
             x:Name="PasswordEnt"
             Placeholder="Password"
             IsPassword="True"
+            Text="password1234"
         />
         <Button
             Text="Sign In"

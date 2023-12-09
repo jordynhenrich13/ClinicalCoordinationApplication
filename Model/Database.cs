@@ -94,7 +94,7 @@ public class Database : IDatabase
             cmd.Parameters.AddWithValue("Title", preceptor.Title);
             cmd.Parameters.AddWithValue("Name", preceptor.Name);
             cmd.Parameters.AddWithValue("Facility", preceptor.Facility);
-            cmd.Parameters.AddWithValue("Email", preceptor.Email);
+            cmd.Parameters.AddWithValue("PreceptorEmail", preceptor.Email);
             cmd.Parameters.AddWithValue("Phone", preceptor.Phone);
 
             var numAffected = cmd.ExecuteNonQuery();
@@ -116,17 +116,40 @@ public class Database : IDatabase
         }
     }
 
-    public PreceptorViewModel LoadPreceptorInformation(string studentEmail)
+    public PreceptorViewModel LoadPreceptorInformation(string studentEmail, int clinicalPageNumber)
     {
         using var conn = new NpgsqlConnection(connString);
         conn.Open();
 
-        using var cmd = new NpgsqlCommand();
-        cmd.Connection = conn;
-        cmd.CommandText = "SELECT Title, Name, Facility, Email, Phone FROM Preceptor WHERE StudentEmail = @StudentEmail";
-        cmd.Parameters.AddWithValue("StudentEmail", NpgsqlDbType.Varchar, studentEmail);
+        using var cmdInsert = new NpgsqlCommand();
+        cmdInsert.Connection = conn;
 
-        using var reader = cmd.ExecuteReader();
+        // Modify the query to insert emails from Student table into Preceptor table
+        cmdInsert.CommandText = "INSERT INTO Preceptor (studentemail) SELECT email FROM Student";
+
+        // Execute the insertion query
+        var numInserted = cmdInsert.ExecuteNonQuery();
+
+        // Check if the insertion was successful
+        if (numInserted > 0)
+        {
+            Console.WriteLine($"Inserted {numInserted} student emails into the Preceptor table");
+        }
+        else
+        {
+            Console.WriteLine("Failed to insert student emails into the Preceptor table");
+        }
+
+        // Rest of your code to retrieve preceptor information...
+
+        using var cmdRetrieve = new NpgsqlCommand();
+        cmdRetrieve.Connection = conn;
+        cmdRetrieve.CommandText = "SELECT Title, Name, Facility, Phone, PreceptorEmail " +
+                                  "FROM Preceptor " +
+                                  "WHERE studentemail = @StudentEmail";
+        cmdRetrieve.Parameters.AddWithValue("StudentEmail", NpgsqlDbType.Varchar, studentEmail);
+
+        using var reader = cmdRetrieve.ExecuteReader();
 
         if (reader.Read())
         {
@@ -136,13 +159,16 @@ public class Database : IDatabase
                 Title = reader.GetString(0),
                 Name = reader.GetString(1),
                 Facility = reader.GetString(2),
-                Email = reader.GetString(3),
-                Phone = reader.GetString(4)
+                Phone = reader.GetString(3),
+                PreceptorEmail = reader.IsDBNull(4) ? null : reader.GetString(4),
+                ClinicalPageNumber = clinicalPageNumber
             };
         }
         // Return null if no preceptor information is found
         return null;
     }
+
+
 
     private Student QueryStudentData(string userId)
     {

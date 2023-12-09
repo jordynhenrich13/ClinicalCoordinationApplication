@@ -67,6 +67,20 @@ namespace ClinicalCoordinationApplication
             }
         }
 
+        private string _Preceptoremail;
+        public string PreceptorEmail
+        {
+            get { return _Preceptoremail; }
+            set
+            {
+                if (_Preceptoremail != value)
+                {
+                    _Preceptoremail = value;
+                    OnPropertyChanged(nameof(PreceptorEmail));
+                }
+            }
+        }
+
         private string _phone;
         public string Phone
         {
@@ -80,6 +94,8 @@ namespace ClinicalCoordinationApplication
                 }
             }
         }
+
+        public int ClinicalPageNumber { get; set; }
 
         protected virtual void OnPropertyChanged(string propertyName)
         {
