@@ -13,7 +13,7 @@ namespace ClinicalCoordinationApplication.Model
         CreateAccountError CreateStudentAccount(string email, string password, string firstName, string lastName);
         CreateAccountError CreateCoordinatorAccount(string email, string password, string firstName, string lastName);
         EditAccountError EditAccount(string email, string password, string firstName, string lastName);
-        AddWorkedHoursError AddWorkedHours(String clinical, DateTime date, TimeSpan startTime, TimeSpan endTime, String notes);
+        AddWorkedHoursError AddWorkedHours(String clinical, DateTime date, TimeSpan startTime, TimeSpan endTime, String notes, string email);
         EditWorkedHoursError EditWorkedHours();
         DeleteWorkedHoursError DeleteWorkedHours();
         UpdateClinicalInfoError UpdateClinicalInfo();
@@ -24,6 +24,8 @@ namespace ClinicalCoordinationApplication.Model
         FindNewClinicError FindNewClinic();
         void DeleteProfile();
         FindStudentError FindStudent(string search);
+        Clinical GetCLinicalInfo(string email);
+
     }
 }
 

@@ -68,7 +68,7 @@ public class Database : IDatabase
         userId = email;
     }
 
-    public string GetUserType()
+    public Account GetUserType()
     {
         string role = null;
         Account account = GetAccount(userId);
@@ -76,7 +76,7 @@ public class Database : IDatabase
         {
             role = account.Role;
         }
-        return role;
+        return account;
     }
 
     public void SavePreceptorToDatabase(PreceptorViewModel preceptor)
@@ -166,30 +166,65 @@ public class Database : IDatabase
         return null;
     }
 
-    public AddWorkedHoursError AddHoursWorked(String clinical, DateTime dateWorked, TimeSpan clinicalHoursWorked, string notes)
+    public AddWorkedHoursError AddHoursWorked(String clinical, DateTime dateWorked, TimeSpan clinicalHoursWorked, string notes, string studentEmail)
     {
         try
         {
-            int primaryKey = 003; 
-            string studentEmail = "henrij13@uwosh.edu";
-            using var conn = new NpgsqlConnection(connString); // conn, short for connection, is a connection to the database
-            conn.Open(); // open the connection ... now we are connected!
-            var cmd = new NpgsqlCommand(); // create the sql commaned
-            cmd.Connection = conn; // commands need a connection, an actual command to execute
-            cmd.CommandText = "INSERT INTO clinical (clinicalID, studentemail, clinicalname, dateWorked, hoursworked, notes) " +
-                " VALUES (@primaryKey, @studentEmail, @clinical, @dateWorked, @clinicalHoursWorked, @notes)";
-            cmd.Parameters.AddWithValue("primaryKey", primaryKey);
+            // string studentEmail = "henrij13@uwosh.edu";
+
+            // Retrieve the latest clinical ID from the database and increment it manually
+            int latestClinicalId = GetLatestClinicalIdFromDatabase();
+            int nextClinicalId = latestClinicalId + 1;
+
+            using var conn = new NpgsqlConnection(connString);
+            conn.Open();
+
+            var cmd = new NpgsqlCommand();
+            cmd.Connection = conn;
+            cmd.CommandText = "INSERT INTO clinical (clinicalid, studentemail, clinicalname, dateWorked, hoursworked, notes) " +
+                              "VALUES (@clinicalid, @studentEmail, @clinical, @dateWorked, @clinicalHoursWorked, @notes)";
+
+            cmd.Parameters.AddWithValue("clinicalid", nextClinicalId.ToString("D3"));  // Format as 3-digit string
             cmd.Parameters.AddWithValue("studentEmail", studentEmail);
             cmd.Parameters.AddWithValue("clinical", clinical);
             cmd.Parameters.AddWithValue("dateWorked", dateWorked.ToString("yyyy-MM-dd"));
             cmd.Parameters.AddWithValue("clinicalHoursWorked", (int)clinicalHoursWorked.TotalHours);
             cmd.Parameters.AddWithValue("notes", notes);
+
             var numAffected = cmd.ExecuteNonQuery();
 
             return AddWorkedHoursError.NoError;
-        } catch (Exception ex)
+        }
+        catch (Exception ex)
         {
+            // Handle the exception appropriately (log, throw, etc.)
             return AddWorkedHoursError.InvalidNumber;
+        }
+    }
+
+    // Helper method to get the latest clinical ID from the database
+    private int GetLatestClinicalIdFromDatabase()
+    {
+        try
+        {
+            using var conn = new NpgsqlConnection(connString);
+            conn.Open();
+
+            using var cmd = new NpgsqlCommand("SELECT MAX(clinicalid) FROM clinical", conn);
+            var result = cmd.ExecuteScalar();
+
+            if (result != null && int.TryParse(result.ToString(), out var maxId))
+            {
+                return maxId;
+            }
+
+            // If there are no records yet, start from 1
+            return 0;
+        }
+        catch (Exception ex)
+        {
+            // Handle the exception appropriately (log, throw, etc.)
+            return 0;
         }
     }
 
@@ -393,5 +428,32 @@ public class Database : IDatabase
     //    //new NpgsqlCommand("CREATE TABLE IF NOT EXISTS Clinic (ClinicID PRIMARY KEY, ClinicName  VARCHAR(100), PrimaryAddress VARCHAR(25), ContactPerson VARCHAR(50), ContactEmail VARCHAR(150), ContactPhone VARCHAR(50)", conn).ExecuteNonQuery();
 
     //}
+
+    public Clinical GetDashBoardClinicalInformation(string email)
+    {
+        try
+        {
+            var conn = new NpgsqlConnection(GetConnectionString());
+            conn.Open();
+            using var cmd = new NpgsqlCommand("WITH TotalHours AS (SELECT cnl.studentemail, cnl.clinicalname, SUM(cnl.hoursworked) as total_hours FROM  clinical as cnl GROUP BY cnl.studentemail, cnl.clinicalname)SELECT  cnl.clinicalname,prc.name as preceptor_name,cn.clinicname, cnl.hoursworked as individual_hours,  th.total_hours FROM   clinical as cnl JOIN   preceptor as prc ON cnl.preceptoremail = prc.preceptoremail JOIN    clinic as cn ON prc.preceptoremail = cn.preceptoremail JOIN   TotalHours as th ON cnl.studentemail = th.studentemail AND cnl.clinicalname = th.clinicalname WHERE   cnl.studentemail = @email GROUP BY  cnl.clinicalname, prc.name, cn.clinicname, cnl.hoursworked, th.total_hours;", conn);
+            cmd.Parameters.AddWithValue("email", email);
+            using var reader = cmd.ExecuteReader();
+
+            if (reader.Read())
+            {
+                if (!reader.IsDBNull(0))
+                {
+                    return new Clinical(reader.GetString(0), reader.GetString(1), reader.GetString(2), reader.GetInt32(3), reader.GetInt32(4));
+                }
+            }
+            return null;
+        }
+        catch (Exception ex)
+        {
+
+            throw;
+        }
+
+    }
 }
 
