@@ -8,11 +8,11 @@
     <ScrollView>
         <StackLayout Padding="20" Spacing="20">
             <!--<Frame BorderColor="MediumPurple" CornerRadius="20" BackgroundColor="White" HasShadow="True">-->
-                <StackLayout Spacing="10" Padding="20">
+                <StackLayout Spacing="10" Padding="0">
                     <Label Text="Welcome!" FontSize="24" TextColor="Black" FontAttributes="Bold" HorizontalOptions="Center"/>
                     <Label Text="" x:Name="_Email" FontSize="16" TextColor="DimGray" HorizontalOptions="Center"/>
                     <BoxView HeightRequest=".5" Color="MediumPurple" HorizontalOptions="FillAndExpand"/>
-                    <StackLayout Orientation="Horizontal" Spacing="9">
+                    <StackLayout Orientation="Horizontal">
                         <!--<Image Source="clinical_icon.png" WidthRequest="20" VerticalOptions="Center"/>-->
                         <Label FontSize="18" TextColor="#555" VerticalOptions="Center">
                             <Label.FormattedText>
