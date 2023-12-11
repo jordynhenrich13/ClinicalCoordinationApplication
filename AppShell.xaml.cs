@@ -37,11 +37,13 @@ namespace ClinicalCoordinationApplication
 
             if (userType == "Coordinator")
             {
+                Items.Add(new AddCoordinator());
                 Items.Add(new CoordinatorReportsDashboard());
             }
 
             if (userType == "Director")
             {
+                Items.Add(new AddCoordinator());
                 Items.Add(new CoordinatorReportsDashboard());
                 Items.Add(new DirectorReportsDashboard());
             }

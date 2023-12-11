@@ -13,6 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BCrypt.Net;
 using System.Collections;
+using System.Net.WebSockets;
 //using Windows.Networking;
 
 
@@ -94,7 +95,7 @@ public class Database : IDatabase
             cmd.Parameters.AddWithValue("Title", preceptor.Title);
             cmd.Parameters.AddWithValue("Name", preceptor.Name);
             cmd.Parameters.AddWithValue("Facility", preceptor.Facility);
-            cmd.Parameters.AddWithValue("Email", preceptor.Email);
+            cmd.Parameters.AddWithValue("PreceptorEmail", preceptor.Email);
             cmd.Parameters.AddWithValue("Phone", preceptor.Phone);
 
             var numAffected = cmd.ExecuteNonQuery();
@@ -116,17 +117,40 @@ public class Database : IDatabase
         }
     }
 
-    public PreceptorViewModel LoadPreceptorInformation(string studentEmail)
+    public PreceptorViewModel LoadPreceptorInformation(string studentEmail, int clinicalPageNumber)
     {
         using var conn = new NpgsqlConnection(connString);
         conn.Open();
 
-        using var cmd = new NpgsqlCommand();
-        cmd.Connection = conn;
-        cmd.CommandText = "SELECT Title, Name, Facility, Email, Phone FROM Preceptor WHERE StudentEmail = @StudentEmail";
-        cmd.Parameters.AddWithValue("StudentEmail", NpgsqlDbType.Varchar, studentEmail);
+        using var cmdInsert = new NpgsqlCommand();
+        cmdInsert.Connection = conn;
 
-        using var reader = cmd.ExecuteReader();
+        // Modify the query to insert emails from Student table into Preceptor table
+        cmdInsert.CommandText = "INSERT INTO Preceptor (studentemail) SELECT email FROM Student";
+
+        // Execute the insertion query
+        var numInserted = cmdInsert.ExecuteNonQuery();
+
+        // Check if the insertion was successful
+        if (numInserted > 0)
+        {
+            Console.WriteLine($"Inserted {numInserted} student emails into the Preceptor table");
+        }
+        else
+        {
+            Console.WriteLine("Failed to insert student emails into the Preceptor table");
+        }
+
+        // Rest of your code to retrieve preceptor information...
+
+        using var cmdRetrieve = new NpgsqlCommand();
+        cmdRetrieve.Connection = conn;
+        cmdRetrieve.CommandText = "SELECT Title, Name, Facility, Phone, PreceptorEmail " +
+                                  "FROM Preceptor " +
+                                  "WHERE studentemail = @StudentEmail";
+        cmdRetrieve.Parameters.AddWithValue("StudentEmail", NpgsqlDbType.Varchar, studentEmail);
+
+        using var reader = cmdRetrieve.ExecuteReader();
 
         if (reader.Read())
         {
@@ -136,13 +160,16 @@ public class Database : IDatabase
                 Title = reader.GetString(0),
                 Name = reader.GetString(1),
                 Facility = reader.GetString(2),
-                Email = reader.GetString(3),
-                Phone = reader.GetString(4)
+                Phone = reader.GetString(3),
+                PreceptorEmail = reader.IsDBNull(4) ? null : reader.GetString(4),
+                ClinicalPageNumber = clinicalPageNumber
             };
         }
         // Return null if no preceptor information is found
         return null;
     }
+
+
 
     private Student QueryStudentData(string userId)
     {
@@ -265,7 +292,7 @@ public class Database : IDatabase
     }
 
 
-    public CreateAccountError CreateStudentAccount(string email, string password, string firstName, string LastName)
+    public bool CreateStudentAccount(string email, string password, string firstName, string lastName)
     {
         try
         {
@@ -276,7 +303,7 @@ public class Database : IDatabase
             cmd.Connection = conn; // commands need a connection, an actual command to execute
             cmd.CommandText = "INSERT INTO Student (FirstName, Lastname, Email) VALUES (@FirstName, @Lastname, @Email)";
             cmd.Parameters.AddWithValue("FirstName", firstName);
-            cmd.Parameters.AddWithValue("lastName", LastName);
+            cmd.Parameters.AddWithValue("lastName", lastName);
             cmd.Parameters.AddWithValue("Email", email);
             cmd.ExecuteNonQuery(); // used for INSERT, UPDATE & DELETE statements - returns # of affected rows 
 
@@ -293,45 +320,61 @@ public class Database : IDatabase
         catch (Npgsql.PostgresException pe)
         {
             Console.WriteLine("Insert failed, {0}", pe);
-            return CreateAccountError.InvalidEmail;
+            return false;
         }
-        return CreateAccountError.NoError;
+        return true;
     }
 
-    public CreateAccountError CreateCoordinatorAccount(string email, string password, string firstName, string LastName)
+    public bool AddCoordinator(string email)
     {
         try
         {
-            using var conn = new NpgsqlConnection(connString); // conn, short for connection, is a connection to the database
+            var conn = new NpgsqlConnection(GetConnectionString());
+            conn.Open();
+            using var cmd = new NpgsqlCommand("SELECT firstname, lastname FROM Student WHERE email = @email", conn);
+            cmd.Parameters.AddWithValue("email", email);
+            using var reader = cmd.ExecuteReader();
 
-            conn.Open(); // open the connection ... now we are connected!
-            var cmd = new NpgsqlCommand(); // create the sql commaned
-            cmd.Connection = conn; // commands need a connection, an actual command to execute
-            cmd.CommandText = "INSERT INTO ClinicalCoordinator (FirstName, Lastname, Email) VALUES (@FirstName, @Lastname, @Email)";
-            cmd.Parameters.AddWithValue("FirstName", firstName);
-            cmd.Parameters.AddWithValue("lastName", LastName);
-            cmd.Parameters.AddWithValue("Email", email);
-            cmd.ExecuteNonQuery(); // used for INSERT, UPDATE & DELETE statements - returns # of affected rows 
+            if (reader.Read())
+            {
+                if (!reader.IsDBNull(0))
+                { 
+                    string firstName = reader.GetString(0);
+                    string lastName = reader.GetString(1);
 
-            using var conn2 = new NpgsqlConnection(connString);
-            conn2.Open();
-            var cmd2 = new NpgsqlCommand();
-            cmd2.Connection = conn2;
-            cmd2.CommandText = "INSERT INTO Account (email, password, role) VALUES (@email, @password, @role)";
-            cmd2.Parameters.AddWithValue("email", email);
-            cmd2.Parameters.AddWithValue("password", password);
-            cmd2.Parameters.AddWithValue("role", "Coordinator");
-            cmd2.ExecuteNonQuery();
+                    var conn2 = new NpgsqlConnection(GetConnectionString());
+                    conn2.Open();
+                    using var cmd2 = new NpgsqlCommand("DELETE FROM student WHERE email = @email", conn2);
+                    cmd2.Parameters.AddWithValue("email", email);
+                    cmd2.ExecuteNonQuery();
+                    conn2.Close();
+
+                    var conn3 = new NpgsqlConnection(GetConnectionString());
+                    conn3.Open();
+                    using var cmd3 = new NpgsqlCommand("UPDATE account SET role = @role WHERE email = @email", conn3);
+                    cmd3.Parameters.AddWithValue("role", "Coordinator");
+                    cmd3.Parameters.AddWithValue("email", email);
+                    cmd3.ExecuteNonQuery();
+                    conn3.Close();
+
+                    var conn4 = new NpgsqlConnection(GetConnectionString());
+                    conn4.Open();
+                    using var cmd4 = new NpgsqlCommand("INSERT INTO ClinicalCoordinator (FirstName, Lastname, Email) VALUES (@FirstName, @Lastname, @Email)", conn4);
+                    cmd4.Parameters.AddWithValue("FirstName", firstName);
+                    cmd4.Parameters.AddWithValue("lastName", lastName);
+                    cmd4.Parameters.AddWithValue("Email", email);
+                    cmd4.ExecuteNonQuery();
+                    return true;
+                }
+            }
         }
-        catch (Npgsql.PostgresException pe)
+        catch (Npgsql.PostgresException ex)
         {
-            Console.WriteLine("Insert failed, {0}", pe);
-            return CreateAccountError.InvalidEmail;
+            Console.WriteLine(ex);
+            return false;
         }
-        return CreateAccountError.NoError;
+        return false;
     }
-
-
 
     // Builds a ConnectionString, which is used to connect to the database
     static String GetConnectionString()
@@ -373,8 +416,8 @@ public class Database : IDatabase
             students.Clear();
             var conn = new NpgsqlConnection(GetConnectionString());
             conn.Open();
-            using var cmd = new NpgsqlCommand("SELECT firstname, lastname, email FROM Student WHERE firstname LIKE @search + '%' OR lastname LIKE @search + '%'", conn);
-            cmd.Parameters.AddWithValue("search", search);
+            using var cmd = new NpgsqlCommand("SELECT firstname, lastname, email FROM Student WHERE firstname LIKE @search OR lastname LIKE @search", conn);
+            cmd.Parameters.AddWithValue("search", search + "%");
             using var reader = cmd.ExecuteReader();
             while (reader.Read())
             {

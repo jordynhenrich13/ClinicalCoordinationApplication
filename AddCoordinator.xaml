@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ClinicalCoordinationApplication.AddCoordinator"
+             Title="Add Coordinator">
+    <VerticalStackLayout Spacing="40" Padding="20, 100">
+        <Grid RowDefinitions="*, *">
+            <Label 
+                Text="Enter account email"
+                FontSize="Large"
+                VerticalOptions="Center" 
+                HorizontalOptions="Center" 
+                Grid.Row="0"
+            />
+            <Label 
+                Text="to make them a coordinator"  
+                FontSize="Large" 
+                VerticalOptions="Center" 
+                HorizontalOptions="Center"
+                Grid.Row="1"
+            />  
+        </Grid>
+        <Entry 
+            x:Name="EmailENT"
+            Placeholder="Email Address"
+            WidthRequest="325"
+        />
+        <Button
+            Text="Add Coordinator"
+            WidthRequest="320"
+            HorizontalOptions="CenterAndExpand"
+            Clicked="AddCoordinatorClicked"
+        />
+
+    </VerticalStackLayout>
+</ContentPage>

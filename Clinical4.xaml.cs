@@ -4,6 +4,7 @@ public partial class Clinical4 : ContentPage
 {
     public Database database;
     private PreceptorViewModel preceptorViewModel;
+    public int clinicalPageNumber;
     public Clinical4()
     {
         InitializeComponent();
@@ -56,8 +57,9 @@ public partial class Clinical4 : ContentPage
 
     private void LoadPreceptorInformation()
     {
+        clinicalPageNumber = 4;
         // Load preceptor information based on the currently signed-in student's email
-        var loadedPreceptor = database.LoadPreceptorInformation(database.CurrentlySignedInStudentEmail);
+        var loadedPreceptor = database.LoadPreceptorInformation(database.CurrentlySignedInStudentEmail, clinicalPageNumber);
 
         if (loadedPreceptor != null)
         {
@@ -65,7 +67,7 @@ public partial class Clinical4 : ContentPage
             preceptorViewModel.Title = loadedPreceptor.Title;
             preceptorViewModel.Name = loadedPreceptor.Name;
             preceptorViewModel.Facility = loadedPreceptor.Facility;
-            preceptorViewModel.Email = loadedPreceptor.Email;
+            preceptorViewModel.PreceptorEmail = loadedPreceptor.PreceptorEmail;
             preceptorViewModel.Phone = loadedPreceptor.Phone;
         }
     }

@@ -68,6 +68,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="AddCoordinator.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Clinical1.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

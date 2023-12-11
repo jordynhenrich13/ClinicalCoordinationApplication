@@ -6,8 +6,8 @@ namespace ClinicalCoordinationApplication.Model
     public interface IDatabase
     {
         void SignIn(string email);
-        CreateAccountError CreateStudentAccount(string email, string password, string firstName, string LastName);
-        CreateAccountError CreateCoordinatorAccount(string email, string password, string firstName, string LastName);
+        bool CreateStudentAccount(string email, string password, string firstName, string lastName);
+        bool AddCoordinator(string email);
         Account GetAccount(string email);
         Clinical GetDashBoardClinicalInformation(string email);
         ObservableCollection<Student> SelectAllStudents();

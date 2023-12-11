@@ -85,32 +85,15 @@ namespace ClinicalCoordinationApplication.Model
             return CreateAccountError.NoError;
         }
 
-        public CreateAccountError CreateCoordinatorAccount(string email, string password, string firstName, string lastName)
+        public AddCoordinatorError AddCoordinator(string email)
         {
             Account account = database.GetAccount(email);
-            if (account != null)
+            if (account == null)
             {
-                return CreateAccountError.EmailAlreadyUsed;
+                return AddCoordinatorError.InvalidEmail;
             }
-            if ((email.Length < 10 || email.Length > 150) || !email.Contains("@uwosh.edu"))
-            {
-                return CreateAccountError.InvalidEmail;
-            }
-            if (password.Length < 8 || password.Length > 50)
-            {
-                return CreateAccountError.InvalidPassword;
-            }
-            if (firstName.Length < 1 || firstName.Length > 50)
-            {
-                return CreateAccountError.InvalidFirstName;
-            }
-            if (lastName.Length < 1 || lastName.Length > 50)
-            {
-                return CreateAccountError.InvalidLastName;
-            }
-            string hashedPassword = BCrypt.Net.BCrypt.HashPassword(password);
-            database.CreateCoordinatorAccount(email, hashedPassword, firstName, lastName);
-            return CreateAccountError.NoError;
+            database.AddCoordinator(email);
+            return AddCoordinatorError.NoError;
         }
         public EditAccountError EditAccount(string email, string password, string firstName, string lastName)
         {
@@ -192,6 +175,10 @@ namespace ClinicalCoordinationApplication.Model
             if (search.Length > 50)
             {
                 return FindStudentError.SearchTooLong;
+            }
+            if (search.Contains("%") || search.Contains("_"))
+            {
+                return FindStudentError.InvalidChar;
             }
             database.FindStudent(search);
             return FindStudentError.NoError;
