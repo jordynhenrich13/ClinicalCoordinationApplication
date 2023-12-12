@@ -1,27 +1,31 @@
 ﻿using ClinicalCoordinationApplication.Model;
+using Microsoft.Maui.ApplicationModel.Communication;
 
 namespace ClinicalCoordinationApplication
 {
     public partial class AppShell : Shell
     {
-        string userType = "";
+        Account obj = new Account(null, null, null);
         BusinessLogic bl;
-
+        string userType = "";
         public AppShell()
         {
             InitializeComponent();
 
             bl = new();
 
-            userType = bl.GetUserType();
+            obj = bl.GetUserType();
+            userType = obj.Role;
 
             // Displays the correct dashboard based on user type
             if (userType == "Coordinator" || userType == "Director")
             {
                 dynamicShellContent.ContentTemplate = new DataTemplate(typeof(CoordinatorDashboard));
-            } else
+            }
+            else
             {
                 dynamicShellContent.ContentTemplate = new DataTemplate(typeof(StudentDashMain));
+
             }
 
 

@@ -14,13 +14,13 @@ public partial class CoordinatorDashboard : ContentPage
         BindingContext = this;
 
         // Populate clinical buttons with corresponding clinical pages
-        ClinicalButtons.Add(new ClinicalButton("Clinical 1", typeof(Clinical1)));
-        ClinicalButtons.Add(new ClinicalButton("Clinical 2", typeof(Clinical2)));
-        ClinicalButtons.Add(new ClinicalButton("Clinical 3", typeof(Clinical3)));
-        ClinicalButtons.Add(new ClinicalButton("Clinical 4", typeof(Clinical4)));
-        ClinicalButtons.Add(new ClinicalButton("Clinical 5", typeof(Clinical5)));
-        ClinicalButtons.Add(new ClinicalButton("Clinical 6", typeof(Clinical6)));
-
+        ClinicalButtons.Add(new ClinicalButton("Clinical1", typeof(Clinical1)));
+        ClinicalButtons.Add(new ClinicalButton("Clinical2", typeof(Clinical2)));
+        ClinicalButtons.Add(new ClinicalButton("Clinical3", typeof(Clinical3)));
+        ClinicalButtons.Add(new ClinicalButton("Clinical4", typeof(Clinical4)));
+        ClinicalButtons.Add(new ClinicalButton("Clinical5", typeof(Clinical5)));
+        ClinicalButtons.Add(new ClinicalButton("Clinical6", typeof(Clinical6)));
+        
         UpdateStudentList();
     }
 
@@ -36,59 +36,47 @@ public partial class CoordinatorDashboard : ContentPage
             Students.Add(student);
         }
     }
-
-    private void ClinicalButtonClicked(object sender, EventArgs e)
+    private async void ClinicalButtonClicked(object sender, EventArgs e)
     {
-        try
+        // Cast sender to Button to access its properties
+        if (sender is Button button)
         {
-            if (sender is Button button && button.Text != null)
+            Console.WriteLine($"Button clicked! CommandParameter: {button.CommandParameter}");
+
+            // Attempt to convert the CommandParameter to an integer
+            if (int.TryParse(button.CommandParameter?.ToString(), out int clinicalPageNumber))
             {
-                string clinicalPageNumber = button.Text;
+                Console.WriteLine($"Clinical page number: {clinicalPageNumber}");
 
                 switch (clinicalPageNumber)
                 {
-                    case "1":
-                        Navigation.PushAsync(new Clinical1());
+                    case 1:
+                        await Navigation.PushAsync(new Clinical1());
                         break;
-                    case "2":
-                        Navigation.PushAsync(new Clinical2());
+                    case 2:
+                        await Navigation.PushAsync(new Clinical2());
                         break;
-                    case "3":
-                        Navigation.PushAsync(new Clinical3());
+                    case 3:
+                        await Navigation.PushAsync(new Clinical3());
                         break;
-                    case "4":
-                        Navigation.PushAsync(new Clinical4());
+                    case 4:
+                        await Navigation.PushAsync(new Clinical4());
                         break;
-                    case "5":
-                        Navigation.PushAsync(new Clinical5());
+                    case 5:
+                        await Navigation.PushAsync(new Clinical5());
                         break;
-                    case "6":
-                        Navigation.PushAsync(new Clinical6());
+                    case 6:
+                        await Navigation.PushAsync(new Clinical6());
                         break;
                     default:
                         Console.WriteLine($"Unknown clinical page: {clinicalPageNumber}");
                         break;
                 }
-
-                // Log the current navigation stack for debugging
-                var stack = Navigation?.NavigationStack;
-                if (stack != null)
-                {
-                    Console.WriteLine($"Current Navigation Stack: {string.Join(", ", stack.Select(page => page.GetType().Name))}");
-                }
-                else
-                {
-                    Console.WriteLine("Navigation stack is null.");
-                }
             }
             else
             {
-                Console.WriteLine("Invalid sender or button text is null.");
+                Console.WriteLine($"Invalid CommandParameter: {button.CommandParameter}");
             }
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Navigation error: {ex.Message}");
         }
     }
 
@@ -157,31 +145,7 @@ public partial class CoordinatorDashboard : ContentPage
     }
 
     // Navigate to clinical 1 when the button text '1' is pressed
-    private void Clinical1(object sender, EventArgs e)
-    {
-        Navigation.PushAsync(new Clinical1());
-    }
-    private void Clinical2(object sender, EventArgs e)
-    {
-        Navigation.PushAsync(new Clinical2());
-    }
-    private void Clinical3(object sender, EventArgs e)
-    {
-        Navigation.PushAsync(new Clinical3());
-    }
-    private void Clinical4(object sender, EventArgs e)
-    {
-        Navigation.PushAsync(new Clinical4());
-    }
-    private void Clinical5(object sender, EventArgs e)
-    {
-        Navigation.PushAsync(new Clinical5());
-    }
-    private void Clinical6(object sender, EventArgs e)
-    {
-        Navigation.PushAsync(new Clinical6());
-    }
-
+    
 
 
 

@@ -53,7 +53,7 @@
                 <!-- Add a search bar above the selected cohort -->
                 <SearchBar x:Name="searchBar" Placeholder="Search Students" TextChanged="OnStudentSearched" Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" Grid.ColumnSpan="6"/>
 
-                <Picker Title="Select Cohort" x:Name="cohortPicker" SelectedIndexChanged="CohortPicker_SelectedIndexChanged" Grid.Column="1" Grid.ColumnSpan="6">
+                <Picker Title="Select Cohort" x:Name="cohortPicker" Grid.Row="1" SelectedIndexChanged="CohortPicker_SelectedIndexChanged" Grid.Column="1" Grid.ColumnSpan="6">
                     <!-- Add your cohort options here -->
                     <Picker.ItemsSource>
                         <x:Array Type="{x:Type x:String}">
@@ -65,9 +65,9 @@
                 </Picker>
 
                 <!-- Display the selected cohort -->
-                <Label Text="Selected Cohort:" FontAttributes="Bold" Grid.Row="0" VerticalOptions="Start" Margin="0,10,0,0"/>
+                <Label Text="Selected Cohort:" FontAttributes="Bold" Grid.Row="1" VerticalOptions="Start" Margin="0,10,0,0"/>
 
-                <StackLayout Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="6">
+                <StackLayout Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="6">
                     <CollectionView ItemsSource="{Binding Students}">
                         <CollectionView.ItemTemplate>
                             <DataTemplate>
@@ -93,12 +93,12 @@
 
                                     <!-- Buttons for clinical pages -->
                                     <StackLayout Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="6" Orientation="Horizontal" Margin="10,10,0,30" Spacing="20">
-                                        <Button Text="1" WidthRequest="40" Clicked="ClinicalButtonClicked" CommandParameter="{Binding}" />
-                                        <Button Text="2" WidthRequest="40" Clicked="ClinicalButtonClicked" CommandParameter="{Binding}" />
-                                        <Button Text="3" WidthRequest="40" Clicked="ClinicalButtonClicked" CommandParameter="{Binding}" />
-                                        <Button Text="4" WidthRequest="40" Clicked="ClinicalButtonClicked" CommandParameter="{Binding}" />
-                                        <Button Text="5" WidthRequest="40" Clicked="ClinicalButtonClicked" CommandParameter="{Binding}" />
-                                        <Button Text="6" WidthRequest="40" Clicked="ClinicalButtonClicked" CommandParameter="{Binding}" />
+                                        <Button Text="1" WidthRequest="40" Clicked="ClinicalButtonClicked" CommandParameter="1" />
+                                        <Button Text="2" WidthRequest="40" Clicked="ClinicalButtonClicked" CommandParameter="2" />
+                                        <Button Text="3" WidthRequest="40" Clicked="ClinicalButtonClicked" CommandParameter="3" />
+                                        <Button Text="4" WidthRequest="40" Clicked="ClinicalButtonClicked" CommandParameter="4" />
+                                        <Button Text="5" WidthRequest="40" Clicked="ClinicalButtonClicked" CommandParameter="5" />
+                                        <Button Text="6" WidthRequest="40" Clicked="ClinicalButtonClicked" CommandParameter="6" />
                                     </StackLayout>
                                 </Grid>
                             </DataTemplate>

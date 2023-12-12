@@ -31,7 +31,7 @@ namespace ClinicalCoordinationApplication.Model
             database = new Database();
         }
 
-        public string GetUserType()
+        public Account GetUserType()
         {
             return database.GetUserType();
         }
@@ -123,10 +123,10 @@ namespace ClinicalCoordinationApplication.Model
             string hashedPassword = BCrypt.Net.BCrypt.HashPassword(password);
             return EditAccountError.NoError;
         }
-        public AddWorkedHoursError AddWorkedHours(String clinical, DateTime date, TimeSpan startTime, TimeSpan endTime, String notes)
+        public AddWorkedHoursError AddWorkedHours(String clinical, DateTime date, TimeSpan startTime, TimeSpan endTime, String notes, string email)
         {
             TimeSpan duration = endTime - startTime;
-            database.AddHoursWorked(clinical, date, duration, notes);
+            database.AddHoursWorked(clinical, date, duration, notes, email);
             return AddWorkedHoursError.NoError;
         }
         public EditWorkedHoursError EditWorkedHours()
@@ -188,6 +188,13 @@ namespace ClinicalCoordinationApplication.Model
             }
             database.FindStudent(search);
             return FindStudentError.NoError;
+        }
+
+
+        public Clinical GetCLinicalInfo(string email)
+        {
+            Clinical clinical = database.GetDashBoardClinicalInformation(email);
+            return clinical;
         }
     }
 }

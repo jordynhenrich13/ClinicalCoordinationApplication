@@ -3,6 +3,7 @@ namespace ClinicalCoordinationApplication;
 public partial class Clinical5 : ContentPage
 {
     public Database database;
+    public int clinicalPageNumber;
     private PreceptorViewModel preceptorViewModel;
     public Clinical5()
     {
@@ -56,8 +57,9 @@ public partial class Clinical5 : ContentPage
 
     private void LoadPreceptorInformation()
     {
+        clinicalPageNumber = 5;
         // Load preceptor information based on the currently signed-in student's email
-        var loadedPreceptor = database.LoadPreceptorInformation(database.CurrentlySignedInStudentEmail);
+        var loadedPreceptor = database.LoadPreceptorInformation(database.CurrentlySignedInStudentEmail, clinicalPageNumber);
 
         if (loadedPreceptor != null)
         {
@@ -65,7 +67,7 @@ public partial class Clinical5 : ContentPage
             preceptorViewModel.Title = loadedPreceptor.Title;
             preceptorViewModel.Name = loadedPreceptor.Name;
             preceptorViewModel.Facility = loadedPreceptor.Facility;
-            preceptorViewModel.Email = loadedPreceptor.Email;
+            preceptorViewModel.PreceptorEmail = loadedPreceptor.PreceptorEmail;
             preceptorViewModel.Phone = loadedPreceptor.Phone;
         }
     }
