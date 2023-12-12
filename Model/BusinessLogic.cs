@@ -170,6 +170,12 @@ namespace ClinicalCoordinationApplication.Model
             
             return FindNewClinicError.NoError;
         }
+
+        public void GetAllStudents()
+        {
+            database.SelectAllStudents();
+        }
+
         public FindStudentError FindStudent(string search)
         {
             if (search.Length > 50)

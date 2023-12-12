@@ -5,7 +5,6 @@ namespace ClinicalCoordinationApplication;
 
 public partial class CoordinatorDashboard : ContentPage
 {
-    private IDatabase Database = new Database();
     public ObservableCollection<ClinicalButton> ClinicalButtons { get; set; } = new ObservableCollection<ClinicalButton>();
     public ObservableCollection<Student> Students { get; set; } = new ObservableCollection<Student>();
 
@@ -29,7 +28,7 @@ public partial class CoordinatorDashboard : ContentPage
     {
         // Fetch the list of students from the database
         Students.Clear();
-        ObservableCollection<Student> studentsFromDatabase = Database.SelectAllStudents();
+        ObservableCollection<Student> studentsFromDatabase = MauiProgram.BusinessLogic.Students;
 
         // Add fetched students to the observable collection
         foreach (var student in studentsFromDatabase)
@@ -98,9 +97,15 @@ public partial class CoordinatorDashboard : ContentPage
     private void OnStudentSearched(object sender, EventArgs e)
     {
         SearchBar searchBar = (SearchBar)sender;
-        if (searchBar.Text.CompareTo("") != 0)
+        if (searchBar.Text.CompareTo("") == 0)
+        {
+            MauiProgram.BusinessLogic.GetAllStudents();
+            UpdateStudentList();
+        }
+        else
         {
             MauiProgram.BusinessLogic.FindStudent(searchBar.Text);
+            UpdateStudentList();
         }
     }
 

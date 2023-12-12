@@ -23,6 +23,7 @@ namespace ClinicalCoordinationApplication.Model
         FindPreviousClinicsError FindPreviousClinics();
         FindNewClinicError FindNewClinic();
         void DeleteProfile();
+        void GetAllStudents();
         FindStudentError FindStudent(string search);
     }
 }
