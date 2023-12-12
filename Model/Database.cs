@@ -416,7 +416,7 @@ public class Database : IDatabase
             students.Clear();
             var conn = new NpgsqlConnection(GetConnectionString());
             conn.Open();
-            using var cmd = new NpgsqlCommand("SELECT firstname, lastname, email FROM Student WHERE firstname LIKE @search OR lastname LIKE @search", conn);
+            using var cmd = new NpgsqlCommand("SELECT firstname, lastname, email FROM Student WHERE firstname ILIKE @search OR lastname ILIKE @search", conn);
             cmd.Parameters.AddWithValue("search", search + "%");
             using var reader = cmd.ExecuteReader();
             while (reader.Read())
