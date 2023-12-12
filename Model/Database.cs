@@ -148,7 +148,7 @@ public class Database : IDatabase
         cmdRetrieve.CommandText = "SELECT Title, Name, Facility, Phone, PreceptorEmail " +
                                   "FROM Preceptor " +
                                   "WHERE studentemail = @StudentEmail";
-        cmdRetrieve.Parameters.AddWithValue("StudentEmail", NpgsqlDbType.Varchar, studentEmail);
+        cmdRetrieve.Parameters.AddWithValue("StudentEmail", NpgsqlDbType.Varchar, studentEmail != null ? (object)studentEmail : DBNull.Value);
 
         using var reader = cmdRetrieve.ExecuteReader();
 
