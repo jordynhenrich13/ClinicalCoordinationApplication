@@ -9,6 +9,10 @@ namespace ClinicalCoordinationApplication
         private string clinicalName;
         private int clinicalNumber;
         private string description;
+        public string name;
+        public int hourseworked;
+        public int total;
+        public string clinicalsite;
         private int requiredHours;
         private int durationInWeeks;
         private Clinic clinic;
@@ -16,6 +20,7 @@ namespace ClinicalCoordinationApplication
         private Preceptor preceptor;
         private string studentEmail;
         private string clinicalStatus;
+        private string bindname;
 
         public int ClinicalNumber
         {
@@ -113,8 +118,19 @@ namespace ClinicalCoordinationApplication
         {
             this.studentEmail = studentEmail;
             clinicalStatus = "Not Started";
+            bindname = "Adult Health";
 
         }
+        public Clinical(string clinicalName, string name, string clinicalsite, int loghours, int total)
+        {
+            this.clinicalName = clinicalName;
+            this.name = name;
+            this.clinicalsite = clinicalsite;
+            this.hourseworked = loghours;
+            this.total = total;
+        }
+
+
 
 
         public event PropertyChangedEventHandler PropertyChanged;
