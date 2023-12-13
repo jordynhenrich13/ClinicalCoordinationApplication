@@ -1,23 +1,23 @@
 namespace ClinicalCoordinationApplication;
+using ClinicalCoordinationApplication.Model;
+
 
 public partial class Clinical4 : ContentPage
 {
     public Database database;
     private PreceptorViewModel preceptorViewModel;
     public int clinicalPageNumber;
-    public Clinical4()
+    public Clinical4(Student selectedStudent)
     {
         InitializeComponent();
 
-        // Create an instance of PreceptorViewModel and set it as the BindingContext
         preceptorViewModel = new PreceptorViewModel();
+        preceptorViewModel.SelectedStudent = selectedStudent;
         BindingContext = preceptorViewModel;
 
         database = new Database();
 
-
-        // Load preceptor information when the page appears
-        this.Appearing += (sender, e) => LoadPreceptorInformation();
+        this.Appearing += (sender, e) => LoadPreceptorInformation(selectedStudent);
     }
     private void SideMenuButton_Clicked(object sender, EventArgs e)
     {
@@ -55,11 +55,11 @@ public partial class Clinical4 : ContentPage
         }
     }
 
-    private void LoadPreceptorInformation()
+    private void LoadPreceptorInformation(Student selectedStudent)
     {
         clinicalPageNumber = 4;
         // Load preceptor information based on the currently signed-in student's email
-        var loadedPreceptor = database.LoadPreceptorInformation(database.CurrentlySignedInStudentEmail, clinicalPageNumber);
+        var loadedPreceptor = database.LoadPreceptorInformation(selectedStudent.Email, clinicalPageNumber);
 
         if (loadedPreceptor != null)
         {

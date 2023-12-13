@@ -71,40 +71,30 @@
                     <CollectionView ItemsSource="{Binding Students}">
                         <CollectionView.ItemTemplate>
                             <DataTemplate>
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition Height="Auto" />
-                                    </Grid.RowDefinitions>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="Auto" />
-                                    </Grid.ColumnDefinitions>
+                                <Frame BorderColor="MediumPurple" CornerRadius="10" BackgroundColor="#F5F5F5" HasShadow="True" Margin="10,10,10,30">
+                                    <StackLayout>
+                                        <!-- First Name -->
+                                        <Label Text="{Binding FirstName}" FontAttributes="Bold" VerticalOptions="Center" FontSize="28" Margin="10,10,0,0"/>
 
-                                    <!-- First Name -->
-                                    <Label Grid.Row="0" Grid.Column="0" Text="{Binding FirstName}" FontAttributes="Bold" VerticalOptions="Center" FontSize="28" Margin="20,10,0,0"/>
+                                        <!-- Last Name -->
+                                        <Label Text="{Binding LastName}" FontAttributes="Bold" VerticalOptions="Center" FontSize="28" Margin="10,10,0,0"/>
 
-                                    <!-- Last Name -->
-                                    <Label Grid.Row="0" Grid.Column="1" Text="{Binding LastName}" FontAttributes="Bold" VerticalOptions="Center" FontSize="28" Margin="10,10,0,0"/>
-
-                                    <!-- Buttons for clinical pages -->
-                                    <StackLayout Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="6" Orientation="Horizontal" Margin="10,10,0,30" Spacing="20">
-                                        <Button Text="1" WidthRequest="40" Clicked="ClinicalButtonClicked" CommandParameter="1" />
-                                        <Button Text="2" WidthRequest="40" Clicked="ClinicalButtonClicked" CommandParameter="2" />
-                                        <Button Text="3" WidthRequest="40" Clicked="ClinicalButtonClicked" CommandParameter="3" />
-                                        <Button Text="4" WidthRequest="40" Clicked="ClinicalButtonClicked" CommandParameter="4" />
-                                        <Button Text="5" WidthRequest="40" Clicked="ClinicalButtonClicked" CommandParameter="5" />
-                                        <Button Text="6" WidthRequest="40" Clicked="ClinicalButtonClicked" CommandParameter="6" />
+                                        <!-- Buttons for clinical pages -->
+                                        <StackLayout Orientation="Horizontal" Margin="10,10,0,0" Spacing="20">
+                                            <Button Text="1" WidthRequest="40" Clicked="ClinicalButtonClicked" CommandParameter="1" />
+                                            <Button Text="2" WidthRequest="40" Clicked="ClinicalButtonClicked" CommandParameter="2" />
+                                            <Button Text="3" WidthRequest="40" Clicked="ClinicalButtonClicked" CommandParameter="3" />
+                                            <Button Text="4" WidthRequest="40" Clicked="ClinicalButtonClicked" CommandParameter="4" />
+                                            <Button Text="5" WidthRequest="40" Clicked="ClinicalButtonClicked" CommandParameter="5" />
+                                            <Button Text="6" WidthRequest="40" Clicked="ClinicalButtonClicked" CommandParameter="6" />
+                                        </StackLayout>
                                     </StackLayout>
-                                </Grid>
+                                </Frame>
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
                     </CollectionView>
                 </StackLayout>
+
             </Grid>
         </ScrollView>
     </Grid>

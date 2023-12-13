@@ -16,7 +16,7 @@ namespace ClinicalCoordinationApplication.Model
         private string email;
         private string phoneNumber;
 
-        private string address;
+        private string address; 
         private List<Clinical> clinicals;
         //private string password;
 

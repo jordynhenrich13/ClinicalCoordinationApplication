@@ -85,6 +85,8 @@ public class Database : IDatabase
         try
         {
             using var conn = new NpgsqlConnection(connString);
+            using var transaction = conn.BeginTransaction();
+
             conn.Open();
 
             using var cmd = new NpgsqlCommand();
@@ -99,6 +101,8 @@ public class Database : IDatabase
             cmd.Parameters.AddWithValue("Phone", preceptor.Phone);
 
             var numAffected = cmd.ExecuteNonQuery();
+            transaction.Commit();
+
 
             // You may want to check numAffected to ensure the data was successfully inserted
             if (numAffected > 0)
@@ -107,6 +111,8 @@ public class Database : IDatabase
             }
             else
             {
+                transaction.Rollback();
+
                 Console.WriteLine("Failed to save preceptor information to the database");
             }
         }
@@ -122,27 +128,6 @@ public class Database : IDatabase
         using var conn = new NpgsqlConnection(connString);
         conn.Open();
 
-        using var cmdInsert = new NpgsqlCommand();
-        cmdInsert.Connection = conn;
-
-        // Modify the query to insert emails from Student table into Preceptor table
-        cmdInsert.CommandText = "INSERT INTO Preceptor (studentemail) SELECT email FROM Student";
-
-        // Execute the insertion query
-        var numInserted = cmdInsert.ExecuteNonQuery();
-
-        // Check if the insertion was successful
-        if (numInserted > 0)
-        {
-            Console.WriteLine($"Inserted {numInserted} student emails into the Preceptor table");
-        }
-        else
-        {
-            Console.WriteLine("Failed to insert student emails into the Preceptor table");
-        }
-
-        // Rest of your code to retrieve preceptor information...
-
         using var cmdRetrieve = new NpgsqlCommand();
         cmdRetrieve.Connection = conn;
         cmdRetrieve.CommandText = "SELECT Title, Name, Facility, Phone, PreceptorEmail " +
@@ -157,10 +142,10 @@ public class Database : IDatabase
             // Assuming PreceptorViewModel has a constructor that takes these values
             return new PreceptorViewModel
             {
-                Title = reader.GetString(0),
-                Name = reader.GetString(1),
-                Facility = reader.GetString(2),
-                Phone = reader.GetString(3),
+                Title = reader.IsDBNull(0) ? null : reader.GetString(0),
+                Name = reader.IsDBNull(1) ? null : reader.GetString(1),
+                Facility = reader.IsDBNull(2) ? null : reader.GetString(2),
+                Phone = reader.IsDBNull(3) ? null : reader.GetString(3),
                 PreceptorEmail = reader.IsDBNull(4) ? null : reader.GetString(4),
                 ClinicalPageNumber = clinicalPageNumber
             };

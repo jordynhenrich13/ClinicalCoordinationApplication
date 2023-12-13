@@ -48,25 +48,28 @@ public partial class CoordinatorDashboard : ContentPage
             {
                 Console.WriteLine($"Clinical page number: {clinicalPageNumber}");
 
+                // Get the selected student
+                var selectedStudent = (Student)button.BindingContext;
+
                 switch (clinicalPageNumber)
                 {
                     case 1:
-                        await Navigation.PushAsync(new Clinical1());
+                        await Navigation.PushAsync(new Clinical1(selectedStudent));
                         break;
                     case 2:
-                        await Navigation.PushAsync(new Clinical2());
+                        await Navigation.PushAsync(new Clinical2(selectedStudent));
                         break;
                     case 3:
-                        await Navigation.PushAsync(new Clinical3());
+                        await Navigation.PushAsync(new Clinical3(selectedStudent));
                         break;
                     case 4:
-                        await Navigation.PushAsync(new Clinical4());
+                        await Navigation.PushAsync(new Clinical4(selectedStudent));
                         break;
                     case 5:
-                        await Navigation.PushAsync(new Clinical5());
+                        await Navigation.PushAsync(new Clinical5(selectedStudent));
                         break;
                     case 6:
-                        await Navigation.PushAsync(new Clinical6());
+                        await Navigation.PushAsync(new Clinical6(selectedStudent));
                         break;
                     default:
                         Console.WriteLine($"Unknown clinical page: {clinicalPageNumber}");
