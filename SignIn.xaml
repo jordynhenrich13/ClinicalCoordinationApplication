@@ -51,13 +51,13 @@
             />
 
         </VerticalStackLayout>
-        <Button
+        <!--<Button
             x:Name="SkipSignInButton"
             Text="Continue without signing in"
             Clicked="SkipSignIn"
             BackgroundColor="Transparent"
             HorizontalOptions="Center"
             TextColor="Gray"
-        />
+        />-->
     </VerticalStackLayout>
 </ContentPage>

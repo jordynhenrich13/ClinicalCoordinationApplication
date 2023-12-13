@@ -6,11 +6,11 @@ namespace ClinicalCoordinationApplication
     [Serializable()]
     public class Clinical : INotifyPropertyChanged
     {
-        private string clinicalName;
+        public string clinicalName;
         private int clinicalNumber;
         private string description;
         public string name;
-        public int hourseworked;
+        public double hoursworked;
         public int total;
         public string clinicalsite;
         private int requiredHours;
@@ -21,6 +21,8 @@ namespace ClinicalCoordinationApplication
         private string studentEmail;
         private string clinicalStatus;
         private string bindname;
+        public string dateWorked;
+        public string notes;
 
         public int ClinicalNumber
         {
@@ -39,6 +41,16 @@ namespace ClinicalCoordinationApplication
             {
                 clinicalName = value;
                 OnPropertyChanged(nameof(clinicalName));
+            }
+        }
+
+        public string DateWorked
+        {
+            get { return dateWorked; }
+            set
+            {
+                dateWorked = value;
+                OnPropertyChanged(nameof(dateWorked));
             }
         }
 
@@ -121,13 +133,29 @@ namespace ClinicalCoordinationApplication
             bindname = "Adult Health";
 
         }
-        public Clinical(string clinicalName, string name, string clinicalsite, int loghours, int total)
+        public Clinical(string clinicalName, string name, string clinicalsite, double loghours, int total)
         {
             this.clinicalName = clinicalName;
             this.name = name;
             this.clinicalsite = clinicalsite;
-            this.hourseworked = loghours;
+            this.hoursworked = loghours;
             this.total = total;
+        }
+
+        public Clinical(string studentEmail, string clinicalName, double loghours)
+        {
+            this.studentEmail = studentEmail;
+            this.clinicalName = clinicalName;
+            this.hoursworked = loghours;
+        }
+
+        public Clinical(string studentEmail, string clinicalName, double loghours, string dateWorked, string notes)
+        {
+            this.studentEmail = studentEmail;
+            this.clinicalName = clinicalName;
+            this.hoursworked = loghours;
+            this.dateWorked = dateWorked;
+            this.notes = notes;
         }
 
 
@@ -140,4 +168,3 @@ namespace ClinicalCoordinationApplication
         }
     }
 }
-

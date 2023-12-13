@@ -12,4 +12,9 @@ public partial class StudentDashSuccess : ContentPage
         Page studentDashMain = new StudentDashMain();
         Application.Current.MainPage = new NavigationPage(studentDashMain);
     }
+
+    private void ViewSubmission_Clicked(object sender, EventArgs e)
+    {
+        Navigation.PushAsync(new StudentDashConfirmHours());
+    }
 }

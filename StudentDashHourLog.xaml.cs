@@ -24,7 +24,7 @@ public partial class StudentDashHourLog : ContentPage
     private void ConfirmHours_Clicked(object sender, EventArgs e)
     {
 
-        businessLogic.AddWorkedHours(clinicalPicker.SelectedItem?.ToString(), SelectedDate, startTimePicker.Time, endTimePicker.Time, commentsEditor.Text, obja.Email);
+        businessLogic.AddWorkedHours(clinicalPicker.SelectedItem?.ToString(), SelectedDate, startTimePicker.Time, endTimePicker.Time, commentsEditor.Text, obja.Email, DateTime.Now);
         Navigation.PushAsync(new StudentDashSuccess());
     }
 }

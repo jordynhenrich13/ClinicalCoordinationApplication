@@ -178,7 +178,7 @@ public class Database : IDatabase
         return null;
     }
 
-    public AddWorkedHoursError AddHoursWorked(String clinical, DateTime dateWorked, TimeSpan clinicalHoursWorked, string notes, string studentEmail)
+    public AddWorkedHoursError AddHoursWorked(String clinical, DateTime dateWorked, double clinicalHoursWorked, string notes, string studentEmail, DateTime recordInsertedDTM)
     {
         try
         {
@@ -193,15 +193,16 @@ public class Database : IDatabase
 
             var cmd = new NpgsqlCommand();
             cmd.Connection = conn;
-            cmd.CommandText = "INSERT INTO clinical (clinicalid, studentemail, clinicalname, dateWorked, hoursworked, notes) " +
-                              "VALUES (@clinicalid, @studentEmail, @clinical, @dateWorked, @clinicalHoursWorked, @notes)";
+            cmd.CommandText = "INSERT INTO clinical (clinicalid, studentemail, clinicalname, dateWorked, hoursworked, notes, recordinserteddtm) " +
+                              "VALUES (@clinicalid, @studentEmail, @clinical, @dateWorked, @clinicalHoursWorked, @notes, @recordInsertedDTM)";
 
             cmd.Parameters.AddWithValue("clinicalid", nextClinicalId.ToString("D3"));  // Format as 3-digit string
             cmd.Parameters.AddWithValue("studentEmail", studentEmail);
             cmd.Parameters.AddWithValue("clinical", clinical);
             cmd.Parameters.AddWithValue("dateWorked", dateWorked.ToString("yyyy-MM-dd"));
-            cmd.Parameters.AddWithValue("clinicalHoursWorked", (int)clinicalHoursWorked.TotalHours);
+            cmd.Parameters.AddWithValue("clinicalHoursWorked", clinicalHoursWorked);
             cmd.Parameters.AddWithValue("notes", notes);
+            cmd.Parameters.AddWithValue("recordInsertedDTM", recordInsertedDTM.ToString("yyyy-MM-ddTHH:mm:ss"));
 
             var numAffected = cmd.ExecuteNonQuery();
 
@@ -323,7 +324,7 @@ public class Database : IDatabase
             if (reader.Read())
             {
                 if (!reader.IsDBNull(0))
-                { 
+                {
                     string firstName = reader.GetString(0);
                     string lastName = reader.GetString(1);
 
@@ -457,13 +458,42 @@ public class Database : IDatabase
 
     //}
 
+    //public Clinical GetDashBoardClinicalInformation(string email)
+    //{
+    //    try
+    //    {
+    //        var conn = new NpgsqlConnection(GetConnectionString());
+    //        conn.Open();
+    //        using var cmd = new NpgsqlCommand("WITH TotalHours AS (SELECT cnl.studentemail, cnl.clinicalname, SUM(cnl.hoursworked) as total_hours FROM  clinical as cnl GROUP BY cnl.studentemail, cnl.clinicalname)SELECT  cnl.clinicalname,prc.name as preceptor_name,cn.clinicname, cnl.hoursworked as individual_hours,  th.total_hours FROM   clinical as cnl JOIN   preceptor as prc ON cnl.preceptoremail = prc.preceptoremail JOIN    clinic as cn ON prc.preceptoremail = cn.preceptoremail JOIN   TotalHours as th ON cnl.studentemail = th.studentemail AND cnl.clinicalname = th.clinicalname WHERE   cnl.studentemail = @email GROUP BY  cnl.clinicalname, prc.name, cn.clinicname, cnl.hoursworked, th.total_hours;", conn);
+    //        cmd.Parameters.AddWithValue("email", email);
+    //        using var reader = cmd.ExecuteReader();
+
+    //        if (reader.Read())
+    //        {
+    //            if (!reader.IsDBNull(0))
+    //            {
+    //                return new Clinical(reader.GetString(0), reader.GetString(1), reader.GetString(2), reader.GetInt32(3), reader.GetInt32(4));
+    //            }
+    //        }
+    //        return null;
+    //    }
+    //    catch (Exception ex)
+    //    {
+
+    //        throw;
+    //    }
+
+    //}
+
+
+
     public Clinical GetDashBoardClinicalInformation(string email)
     {
         try
         {
             var conn = new NpgsqlConnection(GetConnectionString());
             conn.Open();
-            using var cmd = new NpgsqlCommand("WITH TotalHours AS (SELECT cnl.studentemail, cnl.clinicalname, SUM(cnl.hoursworked) as total_hours FROM  clinical as cnl GROUP BY cnl.studentemail, cnl.clinicalname)SELECT  cnl.clinicalname,prc.name as preceptor_name,cn.clinicname, cnl.hoursworked as individual_hours,  th.total_hours FROM   clinical as cnl JOIN   preceptor as prc ON cnl.preceptoremail = prc.preceptoremail JOIN    clinic as cn ON prc.preceptoremail = cn.preceptoremail JOIN   TotalHours as th ON cnl.studentemail = th.studentemail AND cnl.clinicalname = th.clinicalname WHERE   cnl.studentemail = @email GROUP BY  cnl.clinicalname, prc.name, cn.clinicname, cnl.hoursworked, th.total_hours;", conn);
+            using var cmd = new NpgsqlCommand("SELECT studentemail, clinicalname, SUM(hoursworked) as total_hours FROM  clinical WHERE studentemail = @email GROUP BY studentemail, clinicalname", conn);
             cmd.Parameters.AddWithValue("email", email);
             using var reader = cmd.ExecuteReader();
 
@@ -471,7 +501,7 @@ public class Database : IDatabase
             {
                 if (!reader.IsDBNull(0))
                 {
-                    return new Clinical(reader.GetString(0), reader.GetString(1), reader.GetString(2), reader.GetInt32(3), reader.GetInt32(4));
+                    return new Clinical(reader.GetString(0), reader.GetString(1), reader.GetDouble(2));
                 }
             }
             return null;
@@ -481,7 +511,35 @@ public class Database : IDatabase
 
             throw;
         }
-
     }
+
+    public Clinical GetLatestClinicalSubmission(string email)
+    {
+        try
+        {
+            var conn = new NpgsqlConnection(GetConnectionString());
+            conn.Open();
+            using var cmd = new NpgsqlCommand("SELECT studentemail, clinicalname, hoursworked, dateworked, notes FROM  clinical WHERE studentemail = @email and clinicalid = (SELECT MAX(clinicalid) from Clinical) GROUP BY studentemail, clinicalname, hoursworked, dateworked, notes", conn);
+            cmd.Parameters.AddWithValue("email", email);
+            using var reader = cmd.ExecuteReader();
+
+            if (reader.Read())
+            {
+                if (!reader.IsDBNull(0))
+                {
+                    DateTime dateTimeValue = reader.GetDateTime(3);
+                    string dateString = dateTimeValue.ToString("yyyy-MM-dd");
+                    return new Clinical(reader.GetString(0), reader.GetString(1), reader.GetDouble(2), dateString, reader.GetString(4));
+                }
+            }
+            return null;
+        }
+        catch (Exception ex)
+        {
+
+            throw;
+        }
+    }
+
 }
 

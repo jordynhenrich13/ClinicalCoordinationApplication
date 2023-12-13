@@ -47,7 +47,7 @@
             <Editor x:Name="commentsEditor" Text="{Binding Comments}" Margin="20,0,20,20" Placeholder="Enter your notes or comments here" />
 
             <!-- Next Button -->
-            <Button x:Name="nextButton" Clicked="ConfirmHours_Clicked" Text="Confirm Hours" TextColor="White" HorizontalOptions="FillAndExpand" Margin="70, 60, 70, 0" />
+            <Button x:Name="nextButton" Clicked="ConfirmHours_Clicked" Text="Submit Hours" TextColor="White" HorizontalOptions="FillAndExpand" Margin="70, 60, 70, 0" />
         </StackLayout>
     </ScrollView>
 </ContentPage>

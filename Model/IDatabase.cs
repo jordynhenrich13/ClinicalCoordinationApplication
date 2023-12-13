@@ -15,8 +15,8 @@ namespace ClinicalCoordinationApplication.Model
         ObservableCollection<Student> Students { get; }
         public Account GetUserType();
         public void DeleteProfile();
-        AddWorkedHoursError AddHoursWorked(String clinical, DateTime dateTime, TimeSpan clinicalHoursWorked, string notes, string studentEmail);
-
+        AddWorkedHoursError AddHoursWorked(String clinical, DateTime dateTime, double clinicalHoursWorked, string notes, string studentEmail, DateTime insertRecordDTM);
+        Clinical GetLatestClinicalSubmission(string email);
     }
 }
 
