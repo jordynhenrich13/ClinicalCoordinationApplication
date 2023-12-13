@@ -31,7 +31,7 @@ namespace ClinicalCoordinationApplication.Model
             database = new Database();
         }
 
-        public Account GetUserType()
+        public string GetUserType()
         {
             return database.GetUserType();
         }
@@ -95,21 +95,24 @@ namespace ClinicalCoordinationApplication.Model
             database.AddCoordinator(email);
             return AddCoordinatorError.NoError;
         }
-        public EditAccountError EditAccount(string email, string password, string firstName, string lastName)
+        public EditAccountError EditAccount(string email, string firstName, string lastName)
         {
-            //call db for account with email
-            Account account = database.GetAccount(email);
-            if (account != null)
+            Account accountToEdit = database.GetAccount(database.UserId);
+            if (email.Length != 0)
             {
-                return EditAccountError.EmailAlreadyUsed;
+                Account account = database.GetAccount(email);
+                if (account != null)
+                {
+                    return EditAccountError.EmailAlreadyUsed;
+                }
+                if (!email.Contains("@uwosh.edu") || (email.Length < 10 || email.Length > 150))
+                {
+                    return EditAccountError.InvalidEmail;
+                }
             }
-            if (!email.Contains("@uwosh.edu") || (email.Length < 10 || email.Length > 150))
+            else
             {
-                return EditAccountError.InvalidEmail;
-            }
-            if (password.Length < 8 || password.Length > 50)
-            {
-                return EditAccountError.InvalidPassword;
+                email = database.UserId;
             }
             if (firstName.Length < 1 || firstName.Length > 50)
             {
@@ -119,10 +122,18 @@ namespace ClinicalCoordinationApplication.Model
             {
                 return EditAccountError.InvalidLastName;
             }
-            //db stuff
-            string hashedPassword = BCrypt.Net.BCrypt.HashPassword(password);
+            if (accountToEdit.Role == "Coordinator" || accountToEdit.Role == "Director")
+            {
+                database.EditCoordinatorAccount(email, firstName, lastName);
+            }
+            else
+            {
+                database.EditStudentAccount(email, firstName, lastName);
+            }
             return EditAccountError.NoError;
         }
+
+
         public AddWorkedHoursError AddWorkedHours(String clinical, DateTime date, TimeSpan startTime, TimeSpan endTime, String notes, string email)
         {
             TimeSpan duration = endTime - startTime;

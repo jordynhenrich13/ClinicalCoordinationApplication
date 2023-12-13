@@ -21,7 +21,6 @@ namespace ClinicalCoordinationApplication.Model
         InvalidLastName,
         EmailAlreadyUsed,
         InvalidEmail,
-        InvalidPassword,
         NoError
     }
     public enum AddWorkedHoursError

@@ -24,7 +24,7 @@ public class Database : IDatabase
     // Constructor initializes and sets up the database.
     // It also ensures that the file exists or creates it if not.
 
-    public static string userId { get; set; }
+    public string UserId { get; set; }
     ObservableCollection<Student> students = new();
 
     public string CurrentlySignedInStudentEmail { get; private set; }
@@ -66,18 +66,18 @@ public class Database : IDatabase
 
     public void SignIn(string email)
     {
-        userId = email;
+        UserId = email;
     }
 
-    public Account GetUserType()
+    public string GetUserType()
     {
         string role = null;
-        Account account = GetAccount(userId);
+        Account account = GetAccount(UserId);
         if (account != null)
         {
             role = account.Role;
         }
-        return account;
+        return role;
     }
 
     public void SavePreceptorToDatabase(PreceptorViewModel preceptor)
@@ -364,7 +364,6 @@ public class Database : IDatabase
                     cmd4.Parameters.AddWithValue("lastName", lastName);
                     cmd4.Parameters.AddWithValue("Email", email);
                     cmd4.ExecuteNonQuery();
-                    return true;
                 }
             }
         }
@@ -373,7 +372,35 @@ public class Database : IDatabase
             Console.WriteLine(ex);
             return false;
         }
-        return false;
+        return true;
+    }
+
+    public bool EditStudentAccount(string email, string firstName, string lastName)
+    {
+        try
+        {
+
+        }
+        catch (Npgsql.PostgresException ex)
+        {
+            Console.WriteLine(ex);
+            return false;
+        }
+        return true;
+    }
+
+    public bool EditCoordinatorAccount(string email, string firstName, string lastName)
+    {
+        try
+        {
+
+        }
+        catch (Npgsql.PostgresException ex)
+        {
+            Console.WriteLine(ex);
+            return false;
+        }
+        return true;
     }
 
     // Builds a ConnectionString, which is used to connect to the database

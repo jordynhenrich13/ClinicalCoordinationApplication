@@ -14,8 +14,7 @@ namespace ClinicalCoordinationApplication
 
             bl = new();
 
-            obj = bl.GetUserType();
-            userType = obj.Role;
+            userType = bl.GetUserType();
 
             // Displays the correct dashboard based on user type
             if (userType == "Coordinator" || userType == "Director")
