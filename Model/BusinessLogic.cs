@@ -199,6 +199,13 @@ namespace ClinicalCoordinationApplication.Model
             Clinical clinical = database.GetDashBoardClinicalInformation(email);
             return clinical;
         }
+
+        public Clinical GetLatestCLinicalSubmission(string email)
+        {
+            Clinical clinical = database.GetLatestClinicalSubmission(email);
+            return clinical;
+        }
+
     }
 }
 

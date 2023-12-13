@@ -527,5 +527,34 @@ public class Database : IDatabase
             throw;
         }
     }
+
+    public Clinical GetLatestClinicalSubmission(string email)
+    {
+        try
+        {
+            var conn = new NpgsqlConnection(GetConnectionString());
+            conn.Open();
+            using var cmd = new NpgsqlCommand("SELECT studentemail, clinicalname, hoursworked, dateworked, notes FROM  clinical WHERE studentemail = @email and clinicalid = (SELECT MAX(clinicalid) from Clinical) GROUP BY studentemail, clinicalname, hoursworked, dateworked, notes", conn);
+            cmd.Parameters.AddWithValue("email", email);
+            using var reader = cmd.ExecuteReader();
+
+            if (reader.Read())
+            {
+                if (!reader.IsDBNull(0))
+                {
+                    DateTime dateTimeValue = reader.GetDateTime(3);
+                    string dateString = dateTimeValue.ToString("yyyy-MM-dd");
+                    return new Clinical(reader.GetString(0), reader.GetString(1), reader.GetDouble(2), dateString, reader.GetString(4));
+                }
+            }
+            return null;
+        }
+        catch (Exception ex)
+        {
+
+            throw;
+        }
+    }
+
 }
 

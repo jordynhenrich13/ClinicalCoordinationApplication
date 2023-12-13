@@ -26,6 +26,8 @@ namespace ClinicalCoordinationApplication.Model
         void GetAllStudents();
         FindStudentError FindStudent(string search);
         Clinical GetCLinicalInfo(string email);
+        Clinical GetLatestCLinicalSubmission(string email);
+
 
     }
 }

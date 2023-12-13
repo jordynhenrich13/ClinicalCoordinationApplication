@@ -6,7 +6,7 @@ namespace ClinicalCoordinationApplication
     [Serializable()]
     public class Clinical : INotifyPropertyChanged
     {
-        private string clinicalName;
+        public string clinicalName;
         private int clinicalNumber;
         private string description;
         public string name;
@@ -21,6 +21,8 @@ namespace ClinicalCoordinationApplication
         private string studentEmail;
         private string clinicalStatus;
         private string bindname;
+        public string dateWorked;
+        public string notes;
 
         public int ClinicalNumber
         {
@@ -39,6 +41,16 @@ namespace ClinicalCoordinationApplication
             {
                 clinicalName = value;
                 OnPropertyChanged(nameof(clinicalName));
+            }
+        }
+
+        public string DateWorked
+        {
+            get { return dateWorked; }
+            set
+            {
+                dateWorked = value;
+                OnPropertyChanged(nameof(dateWorked));
             }
         }
 
@@ -137,6 +149,15 @@ namespace ClinicalCoordinationApplication
             this.hoursworked = loghours;
         }
 
+        public Clinical(string studentEmail, string clinicalName, double loghours, string dateWorked, string notes)
+        {
+            this.studentEmail = studentEmail;
+            this.clinicalName = clinicalName;
+            this.hoursworked = loghours;
+            this.dateWorked = dateWorked;
+            this.notes = notes;
+        }
+
 
 
 
@@ -147,4 +168,3 @@ namespace ClinicalCoordinationApplication
         }
     }
 }
-

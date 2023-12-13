@@ -5,36 +5,59 @@
              BackgroundColor="White">
 
     <ScrollView>
-        <StackLayout Padding="20" Spacing="20">
-
-            <!-- Clinical Label with Icon -->
-            <Frame BorderColor="DarkGray" CornerRadius="10" Padding="10" BackgroundColor="#F5F5F5">
-                <StackLayout Orientation="Horizontal">
-                    <Label Text="Clinical:" FontSize="18" TextColor="Black" VerticalOptions="CenterAndExpand"/>
+        <StackLayout>
+            <Frame BorderColor="Black" CornerRadius="5" Padding="10" Margin="20">
+                <StackLayout>
+                    <Label FontSize="18" TextColor="#555" VerticalOptions="Center">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="Clinical: " />
+                                <Span  x:Name="ClinicalName"  Text="" FontAttributes="Bold"  />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
                 </StackLayout>
             </Frame>
 
-            <!-- Date Label with Icon -->
-            <Frame BorderColor="DarkGray" CornerRadius="10" Padding="10" BackgroundColor="#F5F5F5">
-                <StackLayout Orientation="Horizontal">
-                    <Label Text="Date:" FontSize="18" TextColor="Black" VerticalOptions="CenterAndExpand"/>
+            <Frame BorderColor="Black" CornerRadius="5" Padding="10" Margin="20">
+                <StackLayout>
+                    <Label FontSize="18" TextColor="#555" VerticalOptions="Center">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="Hours Logged: " />
+                                <Span  x:Name="HoursWorked" Text="" FontAttributes="Bold"  />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
                 </StackLayout>
             </Frame>
 
-            <!-- Time Label with Icon -->
-            <Frame BorderColor="DarkGray" CornerRadius="10" Padding="10" BackgroundColor="#F5F5F5">
-                <StackLayout Orientation="Horizontal">
-                    <Label Text="Time:" FontSize="18" TextColor="Black" VerticalOptions="CenterAndExpand"/>
+            <Frame BorderColor="Black" CornerRadius="5" Padding="10" Margin="20">
+                <StackLayout>
+                    <Label FontSize="18" TextColor="#555" VerticalOptions="Center">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="Date Worked: " />
+                                <Span  x:Name="DateWorked"  Text="" FontAttributes="Bold"  />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
                 </StackLayout>
             </Frame>
 
-            <!-- Notes Label with Icon -->
-            <Frame BorderColor="DarkGray" CornerRadius="10" Padding="10" BackgroundColor="#F5F5F5" HeightRequest="200">
-                <StackLayout Orientation="Vertical">
-                    <Label Text="Notes / Comments:" FontSize="18" TextColor="Black"/>
-                    <Label Text="Notes will be shown from the database here :)" FontSize="16" TextColor="Black"/>
+            <Frame BorderColor="Black" CornerRadius="5" Padding="10" Margin="20" HeightRequest="200">
+                <StackLayout>
+                    <Label FontSize="18" TextColor="#555" VerticalOptions="Center">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="Notes: " />
+                                <Span  x:Name="Notes"  Text="" FontAttributes="Bold"  />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
                 </StackLayout>
             </Frame>
         </StackLayout>
     </ScrollView>
+
 </ContentPage>
