@@ -193,7 +193,7 @@ public class Database : IDatabase
         return null;
     }
 
-    public AddWorkedHoursError AddHoursWorked(String clinical, DateTime dateWorked, TimeSpan clinicalHoursWorked, string notes, string studentEmail)
+    public AddWorkedHoursError AddHoursWorked(String clinical, DateTime dateWorked, double clinicalHoursWorked, string notes, string studentEmail, DateTime recordInsertedDTM)
     {
         try
         {
@@ -208,15 +208,16 @@ public class Database : IDatabase
 
             var cmd = new NpgsqlCommand();
             cmd.Connection = conn;
-            cmd.CommandText = "INSERT INTO clinical (clinicalid, studentemail, clinicalname, dateWorked, hoursworked, notes) " +
-                              "VALUES (@clinicalid, @studentEmail, @clinical, @dateWorked, @clinicalHoursWorked, @notes)";
+            cmd.CommandText = "INSERT INTO clinical (clinicalid, studentemail, clinicalname, dateWorked, hoursworked, notes, recordinserteddtm) " +
+                              "VALUES (@clinicalid, @studentEmail, @clinical, @dateWorked, @clinicalHoursWorked, @notes, @recordInsertedDTM)";
 
             cmd.Parameters.AddWithValue("clinicalid", nextClinicalId.ToString("D3"));  // Format as 3-digit string
             cmd.Parameters.AddWithValue("studentEmail", studentEmail);
             cmd.Parameters.AddWithValue("clinical", clinical);
             cmd.Parameters.AddWithValue("dateWorked", dateWorked.ToString("yyyy-MM-dd"));
-            cmd.Parameters.AddWithValue("clinicalHoursWorked", (int)clinicalHoursWorked.TotalHours);
+            cmd.Parameters.AddWithValue("clinicalHoursWorked", clinicalHoursWorked);
             cmd.Parameters.AddWithValue("notes", notes);
+            cmd.Parameters.AddWithValue("recordInsertedDTM", recordInsertedDTM.ToString("yyyy-MM-ddTHH:mm:ss"));
 
             var numAffected = cmd.ExecuteNonQuery();
 
@@ -515,7 +516,7 @@ public class Database : IDatabase
             {
                 if (!reader.IsDBNull(0))
                 {
-                    return new Clinical(reader.GetString(0), reader.GetString(1), reader.GetInt32(2));
+                    return new Clinical(reader.GetString(0), reader.GetString(1), reader.GetDouble(2));
                 }
             }
             return null;

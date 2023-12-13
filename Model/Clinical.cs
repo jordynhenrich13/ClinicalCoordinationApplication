@@ -10,7 +10,7 @@ namespace ClinicalCoordinationApplication
         private int clinicalNumber;
         private string description;
         public string name;
-        public int hourseworked;
+        public double hoursworked;
         public int total;
         public string clinicalsite;
         private int requiredHours;
@@ -121,20 +121,20 @@ namespace ClinicalCoordinationApplication
             bindname = "Adult Health";
 
         }
-        public Clinical(string clinicalName, string name, string clinicalsite, int loghours, int total)
+        public Clinical(string clinicalName, string name, string clinicalsite, double loghours, int total)
         {
             this.clinicalName = clinicalName;
             this.name = name;
             this.clinicalsite = clinicalsite;
-            this.hourseworked = loghours;
+            this.hoursworked = loghours;
             this.total = total;
         }
 
-        public Clinical(string studentEmail, string clinicalName, int loghours)
+        public Clinical(string studentEmail, string clinicalName, double loghours)
         {
             this.studentEmail = studentEmail;
             this.clinicalName = clinicalName;
-            this.hourseworked = loghours;
+            this.hoursworked = loghours;
         }
 
 

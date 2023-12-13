@@ -18,7 +18,7 @@ public partial class StudentDashMain : ContentPage
         {
             _Lable.Text = obj.ClinicalName;
            // _Lable1.Text = obj.clinicalsite;
-            _Lable2.Text = obj.hourseworked.ToString();
+            _Lable2.Text = obj.hoursworked.ToString();
            // _Lable3.Text = obj.name;
             //_Lable4.Text = obj.total.ToString();
             _Email.Text = obja.Email;
