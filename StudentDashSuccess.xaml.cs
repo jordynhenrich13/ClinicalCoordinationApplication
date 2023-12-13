@@ -15,7 +15,6 @@ public partial class StudentDashSuccess : ContentPage
 
     private void ViewSubmission_Clicked(object sender, EventArgs e)
     {
-        Page studentDashMain = new StudentDashMain();
-        Application.Current.MainPage = new NavigationPage(studentDashMain);
+        Navigation.PushAsync(new StudentDashConfirmHours());
     }
 }

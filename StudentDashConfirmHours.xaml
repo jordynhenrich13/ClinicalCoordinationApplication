@@ -1,33 +1,40 @@
-<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ClinicalCoordinationApplication.StudentDashConfirmHours"
-             Title="Confirm Clinical Hours">
+             Title="View Submission"
+             BackgroundColor="White">
+
     <ScrollView>
-        <StackLayout>
-            <Label Text="Confirm and Submit Time" FontSize="18" />
+        <StackLayout Padding="20" Spacing="20">
 
-            <Frame BorderColor="Black" CornerRadius="5" Padding="10" Margin="20">
-                <StackLayout>
-                    <Label Text="Date:" FontSize="18" TextColor="Blue" />
-                    <Label Text="DD/MM/YYY" FontSize="16" />
+            <!-- Clinical Label with Icon -->
+            <Frame BorderColor="DarkGray" CornerRadius="10" Padding="10" BackgroundColor="#F5F5F5">
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="Clinical:" FontSize="18" TextColor="Black" VerticalOptions="CenterAndExpand"/>
                 </StackLayout>
             </Frame>
 
-            <Frame BorderColor="Black" CornerRadius="5" Padding="10" Margin="20">
-                <StackLayout>
-                    <Label Text="Time:" FontSize="18" TextColor="Blue" />
-                    <Label Text="hh:mm-hh:mm" FontSize="16" />
+            <!-- Date Label with Icon -->
+            <Frame BorderColor="DarkGray" CornerRadius="10" Padding="10" BackgroundColor="#F5F5F5">
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="Date:" FontSize="18" TextColor="Black" VerticalOptions="CenterAndExpand"/>
                 </StackLayout>
             </Frame>
 
-            <Frame BorderColor="Black" CornerRadius="5" Padding="10" Margin="20" HeightRequest="200">
-                <StackLayout>
-                    <Label Text="Notes / Comments:" FontSize="18" TextColor="Blue" />
-                    <Label Text="Notes will be shown from database here :)" FontSize="16" />
+            <!-- Time Label with Icon -->
+            <Frame BorderColor="DarkGray" CornerRadius="10" Padding="10" BackgroundColor="#F5F5F5">
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="Time:" FontSize="18" TextColor="Black" VerticalOptions="CenterAndExpand"/>
                 </StackLayout>
             </Frame>
-            <Button Text="Submit Hours" TextColor="White" HorizontalOptions="FillAndExpand" Margin="70, 80, 70, 0" Clicked="SubmitHours_Clicked" />
+
+            <!-- Notes Label with Icon -->
+            <Frame BorderColor="DarkGray" CornerRadius="10" Padding="10" BackgroundColor="#F5F5F5" HeightRequest="200">
+                <StackLayout Orientation="Vertical">
+                    <Label Text="Notes / Comments:" FontSize="18" TextColor="Black"/>
+                    <Label Text="Notes will be shown from the database here :)" FontSize="16" TextColor="Black"/>
+                </StackLayout>
+            </Frame>
         </StackLayout>
     </ScrollView>
 </ContentPage>
