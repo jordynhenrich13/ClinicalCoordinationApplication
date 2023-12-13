@@ -23,8 +23,8 @@
                             </Label.FormattedText>
                         </Label>
                     </StackLayout>
-                    <StackLayout Orientation="Horizontal" Spacing="10">
-                        <!--<Image Source="site_icon.png" WidthRequest="20" VerticalOptions="Center"/>-->
+                    <!--<StackLayout Orientation="Horizontal" Spacing="10">
+                        --><!--<Image Source="site_icon.png" WidthRequest="20" VerticalOptions="Center"/>--><!--
                         <Label FontSize="18" TextColor="#555" VerticalOptions="Center">
                             <Label.FormattedText>
                                 <FormattedString>
@@ -33,7 +33,7 @@
                                 </FormattedString>
                             </Label.FormattedText>
                         </Label>
-                    </StackLayout>
+                    </StackLayout>-->
                     <StackLayout Orientation="Horizontal" Spacing="10">
                         <!--<Image Source="hours_icon.png" WidthRequest="20" VerticalOptions="Center"/>-->
                         <Label FontSize="18" TextColor="#555" VerticalOptions="Center">
@@ -45,8 +45,8 @@
                             </Label.FormattedText>
                         </Label>
                     </StackLayout>
-                    <StackLayout Orientation="Horizontal" Spacing="10">
-                        <!--<Image Source="preceptor_icon.png" WidthRequest="20" VerticalOptions="Center"/>-->
+                    <!--<StackLayout Orientation="Horizontal" Spacing="10">
+                        --><!--<Image Source="preceptor_icon.png" WidthRequest="20" VerticalOptions="Center"/>--><!--
                         <Label FontSize="18" TextColor="#555" VerticalOptions="Center">
                             <Label.FormattedText>
                                 <FormattedString>
@@ -66,8 +66,12 @@
                                 </FormattedString>
                             </Label.FormattedText>
                         </Label>
-                    </StackLayout>
-                </StackLayout>
+                    </StackLayout>-->
+                <Button Text="View Clinical Hours" FontSize="18" TextColor="White" Margin="20,20,20,0" Clicked="ViewClinicalHours_Clicked" />
+
+                <BoxView HeightRequest=".5" Color="MediumPurple" HorizontalOptions="FillAndExpand"/>
+
+            </StackLayout>
             <!--</Frame>-->
 
             <!-- Sample Clinical Entry -->

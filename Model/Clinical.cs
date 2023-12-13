@@ -130,6 +130,13 @@ namespace ClinicalCoordinationApplication
             this.total = total;
         }
 
+        public Clinical(string studentEmail, string clinicalName, int loghours)
+        {
+            this.studentEmail = studentEmail;
+            this.clinicalName = clinicalName;
+            this.hourseworked = loghours;
+        }
+
 
 
 

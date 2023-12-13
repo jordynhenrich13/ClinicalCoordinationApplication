@@ -338,7 +338,7 @@ public class Database : IDatabase
             if (reader.Read())
             {
                 if (!reader.IsDBNull(0))
-                { 
+                {
                     string firstName = reader.GetString(0);
                     string lastName = reader.GetString(1);
 
@@ -472,13 +472,42 @@ public class Database : IDatabase
 
     //}
 
+    //public Clinical GetDashBoardClinicalInformation(string email)
+    //{
+    //    try
+    //    {
+    //        var conn = new NpgsqlConnection(GetConnectionString());
+    //        conn.Open();
+    //        using var cmd = new NpgsqlCommand("WITH TotalHours AS (SELECT cnl.studentemail, cnl.clinicalname, SUM(cnl.hoursworked) as total_hours FROM  clinical as cnl GROUP BY cnl.studentemail, cnl.clinicalname)SELECT  cnl.clinicalname,prc.name as preceptor_name,cn.clinicname, cnl.hoursworked as individual_hours,  th.total_hours FROM   clinical as cnl JOIN   preceptor as prc ON cnl.preceptoremail = prc.preceptoremail JOIN    clinic as cn ON prc.preceptoremail = cn.preceptoremail JOIN   TotalHours as th ON cnl.studentemail = th.studentemail AND cnl.clinicalname = th.clinicalname WHERE   cnl.studentemail = @email GROUP BY  cnl.clinicalname, prc.name, cn.clinicname, cnl.hoursworked, th.total_hours;", conn);
+    //        cmd.Parameters.AddWithValue("email", email);
+    //        using var reader = cmd.ExecuteReader();
+
+    //        if (reader.Read())
+    //        {
+    //            if (!reader.IsDBNull(0))
+    //            {
+    //                return new Clinical(reader.GetString(0), reader.GetString(1), reader.GetString(2), reader.GetInt32(3), reader.GetInt32(4));
+    //            }
+    //        }
+    //        return null;
+    //    }
+    //    catch (Exception ex)
+    //    {
+
+    //        throw;
+    //    }
+
+    //}
+
+
+
     public Clinical GetDashBoardClinicalInformation(string email)
     {
         try
         {
             var conn = new NpgsqlConnection(GetConnectionString());
             conn.Open();
-            using var cmd = new NpgsqlCommand("WITH TotalHours AS (SELECT cnl.studentemail, cnl.clinicalname, SUM(cnl.hoursworked) as total_hours FROM  clinical as cnl GROUP BY cnl.studentemail, cnl.clinicalname)SELECT  cnl.clinicalname,prc.name as preceptor_name,cn.clinicname, cnl.hoursworked as individual_hours,  th.total_hours FROM   clinical as cnl JOIN   preceptor as prc ON cnl.preceptoremail = prc.preceptoremail JOIN    clinic as cn ON prc.preceptoremail = cn.preceptoremail JOIN   TotalHours as th ON cnl.studentemail = th.studentemail AND cnl.clinicalname = th.clinicalname WHERE   cnl.studentemail = @email GROUP BY  cnl.clinicalname, prc.name, cn.clinicname, cnl.hoursworked, th.total_hours;", conn);
+            using var cmd = new NpgsqlCommand("SELECT studentemail, clinicalname, SUM(hoursworked) as total_hours FROM  clinical WHERE studentemail = @email GROUP BY studentemail, clinicalname", conn);
             cmd.Parameters.AddWithValue("email", email);
             using var reader = cmd.ExecuteReader();
 
@@ -486,7 +515,7 @@ public class Database : IDatabase
             {
                 if (!reader.IsDBNull(0))
                 {
-                    return new Clinical(reader.GetString(0), reader.GetString(1), reader.GetString(2), reader.GetInt32(3), reader.GetInt32(4));
+                    return new Clinical(reader.GetString(0), reader.GetString(1), reader.GetInt32(2));
                 }
             }
             return null;
@@ -496,7 +525,6 @@ public class Database : IDatabase
 
             throw;
         }
-
     }
 }
 
