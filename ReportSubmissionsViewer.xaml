@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ClinicalCoordinationApplication.ReportSubmissionsViewer"
+             x:Name="Viewer"
+             Padding="14"
+             >
+
+    <!-- Reports in Collection View -->
+    
+
+        <!-- Headers -->
+        <VerticalStackLayout BindingContext="Submissions">
+             <Grid RowDefinitions="1*, 1*" ColumnDefinitions="3*, 2*, 3*">
+                <Label Grid.Row="0" Grid.Column="0" HorizontalOptions="Start" Text="File Name" FontSize="Subtitle"/>
+                <Label Grid.Row="0" Grid.Column="1" HorizontalOptions="Center" Text="Date" FontSize="Subtitle"/>
+                <Label Grid.Row="0" Grid.Column="2" HorizontalOptions="End" Text="Coordinator" FontSize="Subtitle" />
+                <Label Grid.Row="0" Grid.Column="3" Text=""/>
+                <BoxView Grid.Row="1" HeightRequest="1"
+                 Color="MediumPurple"
+                 WidthRequest="800"
+                 Margin="0, 7, 0, 14"/>
+            </Grid>
+
+            <!-- Submission Content -->
+       
+            <CollectionView ItemsSource="{Binding Submissions}" EmptyView="No submissions yet!">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                     <Frame CornerRadius="8" BorderColor="MediumPurple" Margin="14" HasShadow="true">
+                        <Grid ColumnDefinitions="3*, 1*, 2*, 4*">
+                            <!-- Report Details -->
+                            <Label Grid.Column="0" HorizontalOptions="Start" Text="{Binding FileName}" />
+                            <Label Grid.Column="1" HorizontalOptions="Center" Text="{Binding SubmissionDate}" />
+                            <Label Grid.Column="2" HorizontalOptions="End" Text="{Binding UploadedBy}"/>
+
+                            <!-- Download Report Button -->
+                            <Button Grid.Column="3" Clicked="DownloadReportButtonTapped" Text="Download Submission"/>
+                        </Grid>
+                        </Frame>
+                    </DataTemplate>
+
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            
+        </VerticalStackLayout>
+</ContentPage>

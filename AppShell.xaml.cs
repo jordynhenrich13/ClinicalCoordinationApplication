@@ -5,17 +5,19 @@ namespace ClinicalCoordinationApplication
 {
     public partial class AppShell : Shell
     {
-        Account obj = new Account(null, null, null);
-        BusinessLogic bl;
-        string userType = "";
+        //Account obj = new Account(null, null, null);
+        //BusinessLogic bl;
+        //string userType = "";
         public AppShell()
         {
             InitializeComponent();
 
-            bl = new();
+            //bl = new();
 
-            obj = bl.GetUserType();
-            userType = obj.Role;
+            //obj = bl.GetUserType();
+            //userType = obj.Role;
+
+            string userType = Preferences.Get("user_type", "Unknown");
 
             // Displays the correct dashboard based on user type
             if (userType == "Coordinator" || userType == "Director")

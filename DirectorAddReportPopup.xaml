@@ -2,8 +2,9 @@
 <toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                 xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-                x:Class="ClinicalCoordinationApplication.DirectorAddReportPopup" Color="Transparent">
-    <Frame BackgroundColor="White" CornerRadius="16">
+                x:Class="ClinicalCoordinationApplication.DirectorAddReportPopup"
+                Color="Transparent">
+    <Frame BackgroundColor="White" CornerRadius="16" HasShadow="True">
     <VerticalStackLayout HeightRequest="600" WidthRequest="300">
         <Label 
             Text="Add New Report"
@@ -11,14 +12,15 @@
             HorizontalOptions="Center"
             FontSize="Large"/>
 
-        
         <Border StrokeThickness="3"
                 StrokeDashArray="1, 1"
                 StrokeDashOffset="2"
                 Margin="0, 32"
                 BackgroundColor="WhiteSmoke">
             <Button
+                x:Name="uploadButton"
                 Text="Upload File"
+                Clicked="UploadFileButtonClicked"
                 FontSize="Medium"
                 TextColor="Black"
                 HorizontalOptions="Center"
@@ -28,22 +30,22 @@
                 />
         </Border>
 
-        <Label Text="Report Name:"
-               FontSize="Small"
+        <Label FontSize="Small"
                FontAttributes="Bold" />
-        <Entry Placeholder="Report Name" />
+        <Entry x:Name="ReportName" Placeholder="Report Name" />
 
         <Label Text="Due Date:"
+               x:Name="dueDate"
                FontSize="Small"
                FontAttributes="Bold"
                Margin="0, 10, 0, 0" />
-        <Entry Placeholder="MM/dd/yyyy" />
+        <DatePicker x:Name="DueDate"/>
 
         <Label Text="Send Report To:"
                FontSize="Small"
                FontAttributes="Bold"
                Margin="0, 10, 0, 0" />
-        <Entry Placeholder="Person 1, Person 2..." />
+        <Entry x:Name="SendTo" Placeholder="Person 1, Person 2..." />
 
         <Button
             Text="Upload and Send Report"
