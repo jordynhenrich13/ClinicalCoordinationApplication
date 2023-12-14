@@ -50,8 +50,8 @@
                     <!-- Clinical Information -->
                     <StackLayout Orientation="Vertical" WidthRequest="270">
                         <Button Text="Adult Health" FontSize="18" TextColor="Black" BackgroundColor="Transparent"/>
-                        <Label Text="56 Hours | 2 weeks" FontSize="14" TextColor="Gray"/>
-                        <Label Text="Description: Need to bind to notes section in clinical class" FontSize="14"  TextColor="Gray" LineBreakMode="WordWrap"/>
+                        <Label Text="56 Hours | 2 weeks" FontSize="14" TextColor="DarkGray"/>
+                        <Label Text="Description: Explore comprehensive health assessments and interventions for adult patients. Focus on common health issues and preventive care." FontSize="14"  TextColor="Gray" LineBreakMode="WordWrap"/>
                     </StackLayout>
                     <ImageButton Clicked="NavigateToStudentClinical1" Source="grayforwardarrow.png" WidthRequest="30" HeightRequest="30" Margin="15,0,0,0" VerticalOptions="Center"/>
                 </StackLayout>
@@ -63,8 +63,8 @@
                     <!-- Clinical Information -->
                     <StackLayout Orientation="Vertical" WidthRequest="270">
                         <Button Text="Adult Health II" FontSize="18" TextColor="Black" BackgroundColor="Transparent"/>
-                        <Label Text="112 Hours | 5 weeks" FontSize="14" TextColor="Gray"/>
-                        <Label Text="Description: Need to bind to notes section in clinical class" FontSize="14"  TextColor="Gray" LineBreakMode="WordWrap"/>
+                        <Label Text="112 Hours | 5 weeks" FontSize="14" TextColor="DarkGray"/>
+                        <Label Text="Description: Delve deeper into advanced adult health topics, including chronic illnesses, complex care coordination, and specialized treatment plans." FontSize="14"  TextColor="Gray" LineBreakMode="WordWrap"/>
                     </StackLayout>
                     <ImageButton Clicked="NavigateToStudentClinical2" Source="grayforwardarrow.png" WidthRequest="30" HeightRequest="30" Margin="15,0,0,0" VerticalOptions="Center"/>
                 </StackLayout>
@@ -76,8 +76,8 @@
                     <!-- Clinical Information -->
                     <StackLayout Orientation="Vertical" WidthRequest="270">
                         <Button Text="Obstetric or Mental Health" FontSize="18" TextColor="Black" BackgroundColor="Transparent"/>
-                        <Label Text="112 Hours | 4 weeks" FontSize="14" TextColor="Gray"/>
-                        <Label Text="Description: Need to bind to notes section in clinical class" FontSize="14"  TextColor="Gray" LineBreakMode="WordWrap"/>
+                        <Label Text="112 Hours | 4 weeks" FontSize="14" TextColor="DarkGray"/>
+                        <Label Text="Description: Gain insights into the intersection of obstetric care and mental health. Address the unique challenges and considerations in supporting expectant mothers' mental well-being." FontSize="14"  TextColor="Gray" LineBreakMode="WordWrap"/>
                     </StackLayout>
                     <ImageButton Clicked="NavigateToStudentClinical3" Source="grayforwardarrow.png" WidthRequest="30" HeightRequest="30" Margin="15,0,0,0" VerticalOptions="Center"/>
                 </StackLayout>
@@ -89,8 +89,8 @@
                     <!-- Clinical Information -->
                     <StackLayout Orientation="Vertical" WidthRequest="270">
                         <Button Text="Pediatric or Geriatric" FontSize="18" TextColor="Black" BackgroundColor="Transparent"/>
-                        <Label Text="112 Hours | 4 weeks" FontSize="14" TextColor="Gray"/>
-                        <Label Text="Description: Need to bind to notes section in clinical class" FontSize="14"  TextColor="Gray" LineBreakMode="WordWrap"/>
+                        <Label Text="112 Hours | 4 weeks" FontSize="14" TextColor="DarkGray"/>
+                        <Label Text="Description: Learn the intricacies of healthcare for diverse age groups. Focus on either pediatrics, addressing the unique needs of children, or geriatrics, specializing in the health concerns of the elderly." FontSize="14"  TextColor="Gray" LineBreakMode="WordWrap"/>
                     </StackLayout>
                     <ImageButton Clicked="NavigateToStudentClinical4" Source="grayforwardarrow.png" WidthRequest="30" HeightRequest="30" Margin="15,0,0,0" VerticalOptions="Center"/>
                 </StackLayout>
@@ -102,8 +102,8 @@
                     <!-- Clinical Information -->
                     <StackLayout Orientation="Vertical" WidthRequest="270">
                         <Button Text="Community Health" FontSize="18" TextColor="Black" BackgroundColor="Transparent"/>
-                        <Label Text="168 Hours | 6 weeks" FontSize="14" TextColor="Gray"/>
-                        <Label Text="Description: Need to bind to notes section in clinical class" FontSize="14"  TextColor="Gray" LineBreakMode="WordWrap"/>
+                        <Label Text="168 Hours | 6 weeks" FontSize="14" TextColor="DarkGray"/>
+                        <Label Text="Description: Engage with the community and understand the impact of healthcare at a population level. Address public health challenges and implement preventive strategies." FontSize="14"  TextColor="Gray" LineBreakMode="WordWrap"/>
                     </StackLayout>
                     <ImageButton Clicked="NavigateToStudentClinical5" Source="grayforwardarrow.png" WidthRequest="30" HeightRequest="30" Margin="15,0,0,0" VerticalOptions="Center"/>
                 </StackLayout>
@@ -115,8 +115,8 @@
                     <!-- Clinical Information -->
                     <StackLayout Orientation="Vertical" WidthRequest="270">
                         <Button Text="Clinical Synthesis" FontSize="18" TextColor="Black" BackgroundColor="Transparent"/>
-                        <Label Text="168 Hours | 5 weeks" FontSize="14" TextColor="Gray"/>
-                        <Label Text="Description: Need to bind to notes section in clinical class" FontSize="14"  TextColor="Gray" LineBreakMode="WordWrap"/>
+                        <Label Text="168 Hours | 5 weeks" FontSize="14" TextColor="DarkGray"/>
+                        <Label Text="Description: Integrate and synthesize knowledge from various clinical areas. Apply critical thinking to solve complex healthcare scenarios, emphasizing holistic patient care and interdisciplinary collaboration." FontSize="14"  TextColor="Gray" LineBreakMode="WordWrap"/>
                     </StackLayout>
                     <ImageButton Source="grayforwardarrow.png" WidthRequest="30" HeightRequest="30" Margin="15,0,0,0" VerticalOptions="Center" Clicked="NavigateToStudentClinical6"/>
                 </StackLayout>
