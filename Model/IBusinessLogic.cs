@@ -28,6 +28,8 @@ namespace ClinicalCoordinationApplication.Model
         Clinical GetCLinicalInfo(string email);
         Clinical GetLatestCLinicalSubmission(string email);
         ObservableCollection<Clinical> GetStudentClinicalHours(string email);
+        void UpdateCurrentClinical(string email, string currentClinical);
+
     }
 }
 

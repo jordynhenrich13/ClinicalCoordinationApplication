@@ -29,6 +29,8 @@ namespace ClinicalCoordinationApplication.Model
         bool FindCoordinatorByEmail(string email);
         public ObservableCollection<ReportItem> GetCoordinatorReports(string userEmail);
         ObservableCollection<Clinical> GetStudentClinicalHours(string email);
+        void UpdateCurrentClinical(string email, string currentClinical);
+
     }
 }
 

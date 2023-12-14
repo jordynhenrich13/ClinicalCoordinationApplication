@@ -26,6 +26,10 @@ public partial class StudentDashMain : ContentPage
     }
 
     // Add this code within the StudentDashMain class in StudentDashMain.xaml.cs
+    public void UpdateClinical_Clicked(object sender, EventArgs e)
+    {
+        businessLogic.UpdateCurrentClinical(obja.Email, _Lable.Text);
+    }
     private void NavigateToStudentClinical1(object sender, EventArgs e)
     {
         Navigation.PushAsync(new StudentClinical1());

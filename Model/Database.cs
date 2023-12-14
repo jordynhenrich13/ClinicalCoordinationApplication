@@ -13,8 +13,6 @@ using System.Threading.Tasks;
 using BCrypt.Net;
 using System.Collections;
 using System.Net.WebSockets;
-//using Windows.Networking;
-using static Android.Provider.ContactsContract.CommonDataKinds;
 using System.Data;
 
 namespace ClinicalCoordinationApplication;
@@ -966,7 +964,7 @@ public class Database : IDatabase
         {
             var conn = new NpgsqlConnection(GetConnectionString());
             conn.Open();
-            using var cmd = new NpgsqlCommand("SELECT studentemail, clinicalname, SUM(hoursworked) as total_hours FROM  clinical WHERE studentemail = @email GROUP BY studentemail, clinicalname", conn);
+            using var cmd = new NpgsqlCommand("SELECT studentemail, clinicalname, SUM(hoursworked) as total_hours FROM  clinical WHERE studentemail = @email and currentclinical = 'Y' GROUP BY studentemail, clinicalname", conn);
             cmd.Parameters.AddWithValue("email", email);
             using var reader = cmd.ExecuteReader();
 
@@ -1045,6 +1043,30 @@ public class Database : IDatabase
             }
 
             return clinicalList;
+        }
+        catch (Exception ex)
+        {
+            // Handle exceptions
+            throw;
+        }
+    }
+
+    public void UpdateCurrentClinical(string email, string currentClinical)
+    {
+        ObservableCollection<Clinical> clinicalList = new ObservableCollection<Clinical>();
+
+        try
+        {
+            var conn = new NpgsqlConnection(GetConnectionString());
+            conn.Open();
+            using var cmd = new NpgsqlCommand("UPDATE clinical SET currentclinical = CASE WHEN studentemail = @email AND clinicalname = @currentclinical THEN 'Y' ELSE 'N' END WHERE studentemail = @email", conn);
+
+            cmd.Parameters.AddWithValue("email", email);
+            cmd.Parameters.AddWithValue("currentclinical", currentClinical);
+
+            using var reader = cmd.ExecuteReader();
+
+            
         }
         catch (Exception ex)
         {

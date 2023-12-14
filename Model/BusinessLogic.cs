@@ -266,6 +266,11 @@ namespace ClinicalCoordinationApplication.Model
             return database.GetStudentClinicalHours(email);
         }
 
+        public void UpdateCurrentClinical(string email, string currentClinical)
+        {
+            database.UpdateCurrentClinical(email, currentClinical);
+        }
+
 
         /******************************
          * REPORT PAGE VARS & METHODS *
