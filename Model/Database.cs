@@ -618,11 +618,11 @@ public class Database : IDatabase
         {
             using var conn = new NpgsqlConnection(connString);
             conn.Open();
-            var cmd = new NpgsqlCommand();
+            using var cmd = new NpgsqlCommand();
             cmd.Connection = conn;
 
             // DELETE REPORT FROM ~~ REPORTS TABLE ~~
-            cmd.CommandText = @"DELETE *
+            cmd.CommandText = @"DELETE
                                 FROM Reports
                                 WHERE reportName = @ReportName";
 
@@ -643,7 +643,7 @@ public class Database : IDatabase
 
             // Execute query
             cmd.ExecuteNonQuery();
-
+            
         }
         catch (Npgsql.PostgresException pe)
         {

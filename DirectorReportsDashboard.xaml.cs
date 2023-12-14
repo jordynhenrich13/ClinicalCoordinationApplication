@@ -3,6 +3,7 @@ using System.Text;
 using ClinicalCoordinationApplication.Model;
 using ClinicalCoordinationApplication.Model.Reports;
 using CommunityToolkit.Maui.Alerts;
+using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Maui.Storage;
 using CommunityToolkit.Maui.Views;
 
@@ -35,7 +36,17 @@ public partial class DirectorReportsDashboard : ContentPage
     public void AddReportClicked(object sender, EventArgs e)
     {
         var popup = new DirectorAddReportPopup();
+        popup.Closed += Popup_Closed;
         this.ShowPopup(popup);
+    }
+
+    /// <summary>
+    /// Refreshes the viewmodel after report 
+    /// </summary>
+    /// <exception cref="NotImplementedException"></exception>
+    private void Popup_Closed(object sender, PopupClosedEventArgs e)
+    {
+        AllReports.ReportItems = bl.GetDirectorReports();
     }
 
     /// <summary>

@@ -108,6 +108,8 @@ public partial class DirectorAddReportPopup : Popup
             _ = bl.ShowDuplicateReportNameToast(reportName);
             return; // Prevent the popup from closing
         }
+
+        this.Close();
     }
 
     public bool validateSendTo(string[] recipients)
