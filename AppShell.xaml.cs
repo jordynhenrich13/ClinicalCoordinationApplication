@@ -31,13 +31,18 @@ namespace ClinicalCoordinationApplication
             // Displays the relavent flyout menu items based on user type
             if (userType == "Student")
             {
-                // No additional items needed in the flyout menu (at the moment)
+                SignIn signInItem = new SignIn();
+                signInItem.Title = "Log Out";
+                Items.Add(signInItem);
             }
 
             if (userType == "Coordinator")
             {
                 Items.Add(new AddCoordinator());
                 Items.Add(new CoordinatorReportsDashboard());
+                SignIn signInItem = new SignIn();
+                signInItem.Title = "Log Out";
+                Items.Add(signInItem);
             }
 
             if (userType == "Director")
@@ -45,6 +50,9 @@ namespace ClinicalCoordinationApplication
                 Items.Add(new AddCoordinator());
                 Items.Add(new CoordinatorReportsDashboard());
                 Items.Add(new DirectorReportsDashboard());
+                SignIn signInItem = new SignIn();
+                signInItem.Title = "Log Out";
+                Items.Add(signInItem);
             }
 
             if (string.IsNullOrEmpty(userType))

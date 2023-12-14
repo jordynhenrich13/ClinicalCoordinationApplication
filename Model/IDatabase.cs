@@ -18,7 +18,7 @@ namespace ClinicalCoordinationApplication.Model
         string UserId { get; set; }
         public string GetUserType();
         public void DeleteProfile();
-        AddWorkedHoursError AddHoursWorked(String clinical, DateTime dateTime, TimeSpan clinicalHoursWorked, string notes, string studentEmail);
+        AddWorkedHoursError AddHoursWorked(String clinical, DateTime dateTime, double clinicalHoursWorked, string notes, string studentEmail, DateTime insertRecordDTM);
 
     }
 }

@@ -10,7 +10,7 @@
             <Label Text="Time entry was" HorizontalOptions="CenterAndExpand" FontSize="16" Margin="1"/>
             <Label Text="submitted successfully." HorizontalOptions="CenterAndExpand" FontSize="16" Margin="1"/>
             <!--Need to change to navigate to view submission page-->
-            <Label Text="View Submission" HorizontalOptions="CenterAndExpand" FontSize="14" Margin="15" TextDecorations="Underline" TextColor="Blue" />
+            <Button Text="View Submission" Clicked="ViewSubmission_Clicked" HorizontalOptions="CenterAndExpand" FontSize="14" Margin="0,30,0,0" BackgroundColor="Transparent" TextColor="Blue" />
             <!--Will need to diret user back to home page-->
             <Button TextColor="White" Text="Return to Dashboard" WidthRequest="350" Clicked="ReturnToDashboard_Clicked"/>
         </VerticalStackLayout>
