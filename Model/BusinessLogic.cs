@@ -81,7 +81,10 @@ namespace ClinicalCoordinationApplication.Model
                 return CreateAccountError.InvalidLastName;
             }
             string hashedPassword = BCrypt.Net.BCrypt.HashPassword(password);
-            database.CreateStudentAccount(email, hashedPassword, firstName, lastName);
+            if (!database.CreateStudentAccount(email, hashedPassword, firstName, lastName))
+            {
+                return CreateAccountError.DBError;
+            }
             return CreateAccountError.NoError;
         }
 
@@ -92,7 +95,10 @@ namespace ClinicalCoordinationApplication.Model
             {
                 return AddCoordinatorError.InvalidEmail;
             }
-            database.AddCoordinator(email);
+            if (!database.AddCoordinator(email))
+            {
+                return AddCoordinatorError.DBError;
+            }
             return AddCoordinatorError.NoError;
         }
         public EditAccountError EditAccount(string email, string firstName, string lastName)
@@ -114,21 +120,41 @@ namespace ClinicalCoordinationApplication.Model
             {
                 email = database.UserId;
             }
-            if (firstName.Length < 1 || firstName.Length > 50)
+            if (firstName.Length != 0)
             {
-                return EditAccountError.InvalidFirstName;
+                if (firstName.Length < 1 || firstName.Length > 50)
+                {
+                    return EditAccountError.InvalidFirstName;
+                }
             }
-            if (lastName.Length < 1 || lastName.Length > 50)
+           else
             {
-                return EditAccountError.InvalidLastName;
+                firstName = "";
             }
-            if (accountToEdit.Role == "Coordinator" || accountToEdit.Role == "Director")
+            if (lastName.Length != 0)
             {
-                database.EditCoordinatorAccount(email, firstName, lastName);
+                if (lastName.Length < 1 || lastName.Length > 50)
+                {
+                    return EditAccountError.InvalidLastName;
+                }
             }
             else
             {
-                database.EditStudentAccount(email, firstName, lastName);
+                lastName = "";
+            }
+            if (accountToEdit.Role == "Coordinator" || accountToEdit.Role == "Director")
+            {
+                if (!database.EditCoordinatorAccount(email, firstName, lastName)) 
+                {
+                    return EditAccountError.DBError;
+                }
+            }
+            else
+            {
+                if (!database.EditStudentAccount(email, firstName, lastName))
+                {
+                    return EditAccountError.DBError;
+                }
             }
             return EditAccountError.NoError;
         }

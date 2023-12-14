@@ -95,6 +95,9 @@
 	  <MauiXaml Update="AssignClinicalInformation.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="EditAccount.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="PreceptorInformation.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
