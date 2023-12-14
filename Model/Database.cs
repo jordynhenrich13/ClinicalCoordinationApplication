@@ -541,5 +541,46 @@ public class Database : IDatabase
         }
     }
 
+    public ObservableCollection<Clinical> GetStudentClinicalHours(string email)
+    {
+        ObservableCollection<Clinical> clinicalList = new ObservableCollection<Clinical>();
+
+        try
+        {
+            var conn = new NpgsqlConnection(GetConnectionString());
+            conn.Open();
+            using var cmd = new NpgsqlCommand("SELECT studentemail, clinicalname, hoursworked, dateworked, notes FROM clinical WHERE studentemail = @email GROUP BY studentemail, clinicalname, dateworked, hoursworked, notes", conn);
+            cmd.Parameters.AddWithValue("email", email);
+            using var reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                if (!reader.IsDBNull(0))
+                {
+                    DateTime dateTimeValue = reader.GetDateTime(3);
+                    string dateString = dateTimeValue.ToString("yyyy-MM-dd");
+
+                    Clinical clinicalInstance = new Clinical(
+                        reader.GetString(0),
+                        reader.GetString(1),
+                        reader.GetDouble(2),
+                        dateString,
+                        reader.GetString(4)
+                    );
+
+                    clinicalList.Add(clinicalInstance);
+                }
+            }
+
+            return clinicalList;
+        }
+        catch (Exception ex)
+        {
+            // Handle exceptions
+            throw;
+        }
+    }
+
+
 }
 

@@ -32,6 +32,6 @@ public partial class StudentDashMain : ContentPage
 
     public void ViewClinicalHours_Clicked(object sender, EventArgs e)
     {
-        Navigation.PushAsync(new StudentDashConfirmHours());
+        Navigation.PushAsync(new StudentClinicalHours());
     }
 }

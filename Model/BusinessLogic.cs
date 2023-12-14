@@ -9,6 +9,8 @@ namespace ClinicalCoordinationApplication.Model
         private IDatabase database { get; set; }
 
         public ObservableCollection<Student> Students { get { return database.Students; } }
+
+        public ObservableCollection<Clinical> clinicalList;
         /*
         public ObservableCollection<Clinic> Clinics { get { return database.} }
 
@@ -204,6 +206,11 @@ namespace ClinicalCoordinationApplication.Model
         {
             Clinical clinical = database.GetLatestClinicalSubmission(email);
             return clinical;
+        }
+
+        public ObservableCollection<Clinical> GetStudentClinicalHours(string email)
+        {
+            return database.GetStudentClinicalHours(email);
         }
 
     }

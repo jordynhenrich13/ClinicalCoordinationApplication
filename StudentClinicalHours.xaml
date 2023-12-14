@@ -1,0 +1,27 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ClinicalCoordinationApplication.StudentClinicalHours"
+             Title="Clinical Hours">
+
+    <ScrollView>
+        <StackLayout>
+            <CollectionView ItemsSource="{Binding ClinicalList}" x:Name="clinicalCollectionView">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical" />
+                </CollectionView.ItemsLayout>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame BorderColor="LightGray" CornerRadius="10" Padding="15" Margin="10,0,10,10">
+                            <StackLayout>
+                                <Label Text="{Binding ClinicalName}" FontSize="18" FontAttributes="Bold" />
+                                <Label Text="{Binding DateWorked}" FontSize="16" TextColor="Gray" Margin="0,5,0,5" />
+                                <Label Text="{Binding HoursWorked, StringFormat='{0:F2} hours'}" FontSize="16" TextColor="MediumPurple" />
+                            </StackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </StackLayout>
+    </ScrollView>
+</ContentPage>
