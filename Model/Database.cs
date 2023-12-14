@@ -84,36 +84,43 @@ public class Database : IDatabase
     {
         try
         {
-            using var conn = new NpgsqlConnection(connString);
-            using var transaction = conn.BeginTransaction();
-
-            conn.Open();
-
-            using var cmd = new NpgsqlCommand();
-            cmd.Connection = conn;
-            cmd.CommandText = "INSERT INTO Preceptor (Title, Name, Facility, Email, Phone) " +
-                              "VALUES (@Title, @Name, @Facility, @Email, @Phone)";
-
-            cmd.Parameters.AddWithValue("Title", preceptor.Title);
-            cmd.Parameters.AddWithValue("Name", preceptor.Name);
-            cmd.Parameters.AddWithValue("Facility", preceptor.Facility);
-            cmd.Parameters.AddWithValue("PreceptorEmail", preceptor.Email);
-            cmd.Parameters.AddWithValue("Phone", preceptor.Phone);
-
-            var numAffected = cmd.ExecuteNonQuery();
-            transaction.Commit();
-
-
-            // You may want to check numAffected to ensure the data was successfully inserted
-            if (numAffected > 0)
+            using (var conn = new NpgsqlConnection(connString))
             {
-                Console.WriteLine("Preceptor information saved to the database");
-            }
-            else
-            {
-                transaction.Rollback();
+                conn.Open();
 
-                Console.WriteLine("Failed to save preceptor information to the database");
+                using (var transaction = conn.BeginTransaction())
+                {
+                    using (var cmd = new NpgsqlCommand())
+                    {
+                        cmd.Connection = conn;
+                        cmd.Transaction = transaction;
+
+                        cmd.CommandText = "INSERT INTO Preceptor (Title, Name, Facility, PreceptorEmail, Phone) " +
+                  "VALUES (@Title, @Name, @Facility, @Email, @Phone)";
+
+
+                        cmd.Parameters.AddWithValue("@Title", preceptor.Title ?? (object)DBNull.Value);
+                        cmd.Parameters.AddWithValue("@Name", preceptor.Name ?? (object)DBNull.Value);
+                        cmd.Parameters.AddWithValue("@Facility", preceptor.Facility ?? (object)DBNull.Value);
+                        cmd.Parameters.AddWithValue("@Email", NpgsqlDbType.Varchar, string.IsNullOrEmpty(preceptor.PreceptorEmail) ? (object)DBNull.Value : preceptor.PreceptorEmail);
+                        cmd.Parameters.AddWithValue("@Phone", preceptor.Phone ?? (object)DBNull.Value);
+
+
+                        var numAffected = cmd.ExecuteNonQuery();
+                        transaction.Commit();
+
+                        // You may want to check numAffected to ensure the data was successfully inserted
+                        if (numAffected > 0)
+                        {
+                            Console.WriteLine("Preceptor information saved to the database");
+                        }
+                        else
+                        {
+                            transaction.Rollback();
+                            Console.WriteLine("Failed to save preceptor information to the database");
+                        }
+                    }
+                }
             }
         }
         catch (Exception ex)
@@ -122,6 +129,7 @@ public class Database : IDatabase
             Console.WriteLine($"Error: {ex.Message}");
         }
     }
+
 
     public PreceptorViewModel LoadPreceptorInformation(string studentEmail, int clinicalPageNumber)
     {

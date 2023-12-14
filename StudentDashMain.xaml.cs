@@ -25,10 +25,39 @@ public partial class StudentDashMain : ContentPage
         }
     }
 
-    public void LogClinicalHours_Clicked(object sender, EventArgs e)
+    // Add this code within the StudentDashMain class in StudentDashMain.xaml.cs
+    private void NavigateToStudentClinical1(object sender, EventArgs e)
     {
-        Navigation.PushAsync(new StudentDashHourLog());
+        Navigation.PushAsync(new StudentClinical1());
     }
+
+    private void NavigateToStudentClinical2(object sender, EventArgs e)
+    {
+        Navigation.PushAsync(new StudentClinical2());
+    }
+
+    // Add this code within the StudentDashMain class in StudentDashMain.xaml.cs
+    private void NavigateToStudentClinical3(object sender, EventArgs e)
+    {
+        Navigation.PushAsync(new StudentClinical3());
+    }
+
+    private void NavigateToStudentClinical4(object sender, EventArgs e)
+    {
+        Navigation.PushAsync(new StudentClinical4());
+    }
+
+    // Add this code within the StudentDashMain class in StudentDashMain.xaml.cs
+    private void NavigateToStudentClinical5(object sender, EventArgs e)
+    {
+        Navigation.PushAsync(new StudentClinical5());
+    }
+    // Add this code within the StudentDashMain class in StudentDashMain.xaml.cs
+    private void NavigateToStudentClinical6(object sender, EventArgs e)
+    {
+        Navigation.PushAsync(new StudentClinical5());
+    }
+
 
     public void ViewClinicalHours_Clicked(object sender, EventArgs e)
     {
