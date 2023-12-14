@@ -2,276 +2,99 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-             xmlns:clinicalcoordinationapplication="clr-namespace:ClinicalCoordinationApplication"
-             x:DataType="clinicalcoordinationapplication:App"
+             xmlns:clinicalcoordinationapplication="clr-namespace:ClinicalCoordinationApplication.Model.Reports"
              x:Class="ClinicalCoordinationApplication.DirectorReportsDashboard"
-             Title="Request Reports">
-    <VerticalStackLayout>
-        <Border
-            StrokeShape="RoundRectangle 8,8,8,8"
-            Margin="{OnPlatform Default='8,8,8,8'}"
-            Stroke="#CAC4D0"
-            StrokeThickness="{OnPlatform MacCatalyst=2,Default=1}">
+             Title="Request Reports" Padding="14">
+    <ScrollView>
+        <VerticalStackLayout>
+            <Button Text="Create New Report"
+                Clicked="AddReportClicked"
+                FontAttributes="Bold"
+                FontSize="Subtitle"
+                Margin="0, 0, 0, 14"
+                Padding="0" />
+            <CollectionView ItemsSource="{Binding ReportItems}" EmptyView="No Reports">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame HasShadow="True" CornerRadius="8" BorderColor="MediumPurple" Margin="0, 7">
+                            <toolkit:Expander>
 
-            <toolkit:Expander>
-                <toolkit:Expander.Header>
+                                <!-- Expander Header -->
+                                <toolkit:Expander.Header>
+                                    <Grid Padding="0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="6*" />
+                                            <ColumnDefinition Width="1.5*" />
+                                            <ColumnDefinition Width="2*" />
+                                        </Grid.ColumnDefinitions>
 
-                    <!--begin:: Expanding Menu Grid Layout-->
-                    <Grid Padding="14, 0">
+                                        <!-- Report Name -->
+                                        <Label Grid.Column="0"
+                                               Text="{Binding ReportName}"
+                                               FontSize="Medium"
+                                               TextColor="Black"
+                                               VerticalTextAlignment="Center"
+                                               HorizontalOptions="Start"
+                                               HeightRequest="35"
+                                               />
 
-                        <!--Grid Definitions-->
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="6*" />
-                            <ColumnDefinition Width="1.5*" />
-                            <ColumnDefinition Width="2*" />
-                        </Grid.ColumnDefinitions>
+                                        <!-- Delete Report Button -->
+                                        <Button Text="Delete"
+                                                CommandParameter="{Binding ReportName}"
+                                                Clicked="OnDeleteButtonClicked"
+                                                FontSize="Subtitle"
+                                                TextColor="Black"
+                                                BackgroundColor="Lavender"
+                                                Grid.Column="2"
+                                                HeightRequest="30"
+                                                WidthRequest="80"
+                                                VerticalOptions="Center"
+                                                HorizontalOptions="End"
+                                                Padding="0" />
+                                    </Grid>
+                                </toolkit:Expander.Header>
 
-                        <!--Header Text-->
-                        <Label
-                            Grid.Column="0"
-                            Text="May Cohort '23"
-                            TextColor="Black"
-                            VerticalTextAlignment="Center"
-                            HorizontalOptions="Start"
-                            HeightRequest="35"
-                            Margin="5"/>
+                                <!-- Expander Content -->
+                                <toolkit:Expander.Content>
+                                    <VerticalStackLayout Padding="0">
+                                        <Grid ColumnDefinitions="2*, 5*">
+                                            <Label Grid.Column="0" Text="Due Date:"
+                                               FontAttributes="Italic"
+                                               Margin="4, 0, 0, 0"/>
+                                        <Label Grid.Column="1" Text="{Binding DueDate, StringFormat='{0:MM/dd/yyyy}'}"
+                                               TextColor="MediumPurple"
+                                               Margin="4, 0, 0, 0"/>
+                                        </Grid>
+                              
+                                        <!-- View Submissions Button -->
+                                        <Button
+                                            x:Name="OpenSubmissionsButton"
+                                            Clicked="OpenSubmissionsButtonTapped"
+                                            Text="View Submissions"
+                                            FontSize="Subtitle"
+                                            BackgroundColor="Transparent"
+                                            TextColor="Black"
+                                            Padding="0 "
+                                            Margin="0, 14, 0, 0"
+                                            HeightRequest="30"
+                                            CommandParameter="{Binding ReportName}"
+                                            />
 
-                        <!--Edit Report Button-->
-                        <Button
-                                Grid.Column="1"
-                                Text="Edit"
-                                HeightRequest="30"
-                                WidthRequest="50"
-                                VerticalOptions="Center"
-                                HorizontalOptions="End"
-                                Padding="0"
-                                FontAttributes="Bold" />
-                        <!--Delete Report Button-->
-                        <Button
-                                Text="Delete"
-                                Grid.Column="2"
-                                HeightRequest="30"
-                                WidthRequest="60"
-                                VerticalOptions="Center"
-                                HorizontalOptions="End"
-                                Padding="0"/>
-                    </Grid>
-                    <!--end:: Expanding Menu Grid Layout-->
-                </toolkit:Expander.Header>
-
-                <!--begin:: Expanding Menu Content-->
-                <VerticalStackLayout Padding="10, 0">
-
-                    <!--General Report Information-->
-                    <Label
-                        Text="Uploaded on 2/03/2023 by Erika Janssen"
-                        FontAttributes="Italic"
-                        Margin="4, 0, 0, 0"/>
-
-                    <!--Report Due Date-->
-                    <Label
-                        Text="Due by 08/01/2023"
-                        TextColor="Red"
-                        Margin="4, 0, 0, 0"/>
-
-                    <!--begin:: Previous Submissions Viewer-->
-                    <Frame BorderColor="#CAC4D0"
-                           CornerRadius="5"
-                           Margin="0, 14, 0, 0" Padding="0">
-                        <VerticalStackLayout Spacing="5">
-                            <!--Previous Submissions: Grid Definitions-->
-                            <FlexLayout
-                                JustifyContent="SpaceBetween"
-                                AlignContent="End"
-                                Margin="10,5 ,10, 0">
-                                <Label
-                                    Grid.Column="0"
-                                    HorizontalOptions="Start"
-                                    FontAttributes="Bold"
-                                    Text="File Name" />
-                                <Label
-                                    HorizontalOptions="End"
-                                    FontAttributes="Bold"
-                                    Text="Submission Date" />
-                            </FlexLayout>
-
-                            <Border
-                                Padding="0"
-                                Margin="0"
-                                Stroke="LightGray"
-                                StrokeThickness="1"/>
-
-                            <!--begin:: Previous Submissions ListView-->
-                            <VerticalStackLayout Spacing="5">
-
-                                <!--TO-DO: Convert to ListItem in ListView-->
-                                <FlexLayout
-                                    JustifyContent="SpaceBetween"
-                                    AlignContent="End"
-                                    Margin="10, 5">
-                                    <Label
-                                        HorizontalOptions="Start"
-                                        TextColor="Red"
-                                        Text="No Submissions" />
-                                    <Label
-                                        Grid.Column="1"
-                                        HorizontalOptions="End"
-                                        TextColor="Red"
-                                        Text="N/A" />
-                                </FlexLayout>
-                            </VerticalStackLayout>
-                            <!--end:: Previous Submissions ListView-->
-                        </VerticalStackLayout>
-                    </Frame>
-
-                    <Button
-                        Text="Download Submissions"
-                        Padding="0 "
-                        Margin="0, 14, 0, 10"
-                        HeightRequest="30"
-                        WidthRequest="200"
-                        FontAttributes="Bold"
-                        BackgroundColor="LightGray"
-                        />
-                </VerticalStackLayout>
-            </toolkit:Expander>
-            <!--end:: Expanding Menu Content-->
-        </Border>
-
-        <Border
-            StrokeShape="RoundRectangle 8,8,8,8"
-            Margin="{OnPlatform Default='8,8,8,8'}"
-            Stroke="#CAC4D0"
-            StrokeThickness="{OnPlatform MacCatalyst=2,Default=1}">
-
-            <toolkit:Expander>
-                <toolkit:Expander.Header>
-
-                    <!--begin:: Expanding Menu Grid Layout-->
-                    <Grid Padding="14, 0">
-
-                        <!--Grid Definitions-->
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="6*" />
-                            <ColumnDefinition Width="1.5*" />
-                            <ColumnDefinition Width="2*" />
-                        </Grid.ColumnDefinitions>
-
-                        <!--Header Text-->
-                        <Label
-                            Grid.Column="0"
-                            Text="May Cohort '23"
-                            TextColor="Black"
-                            VerticalTextAlignment="Center"
-                            HorizontalOptions="Start"
-                            HeightRequest="35"
-                            Margin="5"/>
-
-                        <!--Edit Report Button-->
-                        <Button
-                                Grid.Column="1"
-                                Text="Edit"
-                                HeightRequest="30"
-                                WidthRequest="50"
-                                VerticalOptions="Center"
-                                HorizontalOptions="End"
-                                Padding="0"
-                                FontAttributes="Bold" />
-                        <!--Delete Report Button-->
-                        <Button
-                                Text="Delete"
-                                Grid.Column="2"
-                                HeightRequest="30"
-                                WidthRequest="60"
-                                VerticalOptions="Center"
-                                HorizontalOptions="End"
-                                Padding="0" />
-                    </Grid>
-                    <!--end:: Expanding Menu Grid Layout-->
-                </toolkit:Expander.Header>
-
-                <!--begin:: Expanding Menu Content-->
-                <VerticalStackLayout Padding="10, 0">
-
-                    <!--General Report Information-->
-                    <Label
-                        Text="Uploaded on 2/03/2023 by Erika Janssen"
-                        FontAttributes="Italic"
-                        Margin="4, 0, 0, 0"/>
-
-                    <!--Report Due Date-->
-                    <Label
-                        Text="Due by 08/01/2023"
-                        TextColor="Red"
-                        Margin="4, 0, 0, 0"/>
-
-                    <!--begin:: Previous Submissions Viewer-->
-                    <Frame BorderColor="#CAC4D0"
-                           CornerRadius="5"
-                           Margin="0, 14, 0, 0" Padding="0">
-                        <VerticalStackLayout Spacing="5">
-                            <!--Previous Submissions: Grid Definitions-->
-                            <FlexLayout
-                                JustifyContent="SpaceBetween"
-                                AlignContent="End"
-                                Margin="10,5 ,10, 0">
-                                <Label
-                                    Grid.Column="0"
-                                    HorizontalOptions="Start"
-                                    FontAttributes="Bold"
-                                    Text="File Name" />
-                                <Label
-                                    HorizontalOptions="End"
-                                    FontAttributes="Bold"
-                                    Text="Submission Date" />
-                            </FlexLayout>
-
-                            <Border
-                                Padding="0"
-                                Margin="0"
-                                Stroke="LightGray"
-                                StrokeThickness="1"/>
-
-                            <!--begin:: Previous Submissions ListView-->
-                            <VerticalStackLayout Spacing="5">
-
-                                <!--TO-DO: Convert to ListItem in ListView-->
-                                <FlexLayout
-                                    JustifyContent="SpaceBetween"
-                                    AlignContent="End"
-                                    Margin="10, 5">
-                                    <Label
-                                        Text="May-2023-Report.docx"
-                                        />
-                                    <Label
-                                    Text="07/13/2023" />
-                                </FlexLayout>
-
-                            </VerticalStackLayout>
-                            <!--end:: Previous Submissions ListView-->
-                        </VerticalStackLayout>
-                    </Frame>
-
-                    <Button
-                        Text="Download Submissions"
-                        Padding="0 "
-                        Margin="0, 14, 0, 10"
-                        HeightRequest="30"
-                        WidthRequest="200"
-                        FontAttributes="Bold" />
-                </VerticalStackLayout>
-            </toolkit:Expander>
-            <!--end:: Expanding Menu Content-->
-        </Border>
-
-        <Button
-            Text="Create New Report"
-            Clicked="AddReportClicked"
-            FontAttributes="Bold"
-            FontSize="Default"
-            WidthRequest="250"
-            Margin="0, 14, 0, 0"
-            Padding="0" />
-
-    </VerticalStackLayout>
+                                        <!-- Download Submissions -->
+                                        <Button Text="Download Submissions"
+                                                FontSize="Subtitle"
+                                                Clicked="DownloadSubmissionsButtonClicked"
+                                                CommandParameter="{Binding ReportName}"
+                                                Padding="0 "
+                                                Margin="0, 4, 0, 0"
+                                                FontAttributes="Bold"/>
+                                    </VerticalStackLayout>
+                                </toolkit:Expander.Content>
+                            </toolkit:Expander>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

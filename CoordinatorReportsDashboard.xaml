@@ -1,221 +1,90 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="ClinicalCoordinationApplication.CoordinatorReportsDashboard"
-             Title="Reports Dashboard">
-    <VerticalStackLayout>
-        <Border
-            StrokeShape="RoundRectangle 8,8,8,8"
-            Margin="{OnPlatform Default='8,8,8,8'}"
-            Stroke="#CAC4D0"
-            StrokeThickness="{OnPlatform MacCatalyst=2,Default=1}">
+             Title="Reports Dashboard"
+             Padding="14">
+    <ScrollView>
+        <!-- All Reports CollectionView -->
+        <CollectionView
+            ItemsSource="{Binding ReportItems}"
+            EmptyView="No reports were assigned to you" >
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame HasShadow="True" CornerRadius="8" BorderColor="MediumPurple" Margin="0, 0, 0,14">
+                   
+                        <!-- Expanding Card Body -->
+                        <toolkit:Expander>
 
-            <toolkit:Expander>
+                            <!-- Header -->
+                            <toolkit:Expander.Header>
+                                <Label x:Name="reportName"
+                                       Text="{Binding ReportName}"
+                                       TextColor="Black"
+                                       VerticalTextAlignment="Center"
+                                       FontSize="Medium"/>
+                            </toolkit:Expander.Header>
 
-                <toolkit:Expander.Header>
-                    <Grid Padding="14, 0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="5*" />
-                            <ColumnDefinition Width="4*" />
-                        </Grid.ColumnDefinitions>
- 
-                        <Label
-                            Grid.Column="0"
-                            Text="October Cohort '23"
-                            TextColor="Black"
-                            VerticalTextAlignment="Center"
-                            HorizontalOptions="Start"
-                            HeightRequest="35"
-                            Margin="5"/>
-                            <Button
-                                Grid.Column="1"
-                                x:Name="DownloadReportButton"
-                                Text="Download"
-                                HeightRequest="30"
-                                WidthRequest="90"
-                                VerticalOptions="Center"
-                                HorizontalOptions="End"
-                                Padding="0"
-                                FontAttributes="Bold"
-                                BackgroundColor="CornflowerBlue"
-                                    />
-                        </Grid>
-                </toolkit:Expander.Header>
+                            <!-- Content -->
+                            <toolkit:Expander.Content>
+                                <VerticalStackLayout Padding="0, 0">
 
-                <VerticalStackLayout Padding="14, 0">
-                    <Label
-                        Text="Uploaded on 10/10/2023 by Erika Janssen"
-                        FontAttributes="Italic"
-                        Margin="4, 0, 0, 0"/>
-                     <Label
-                        Text="Due by 02/07/2024"
-                        TextColor="Red"
-                        Margin="4, 0, 0, 0"/>
-                    <Frame BorderColor="#CAC4D0" CornerRadius="5" Margin="0, 14, 0, 0">
-                        <StackLayout>
-                            
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition />
-                                        <ColumnDefinition />
-                                    </Grid.ColumnDefinitions>
-                                    <Label
-                                        Grid.Column="0"
-                                        HorizontalOptions="Start"
-                                        TextDecorations="Underline"
-                                        FontAttributes="Bold"
-                                        Text="File Name"
-                                    />
-                                    <Label
-                                        Grid.Column="1"
-                                        HorizontalOptions="End"
-                                        TextDecorations="Underline"
-                                        FontAttributes="Bold"
-                                        Text="Submission Date" />
-                                </Grid>
-
-                                <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition />
-                                            <ColumnDefinition />
-                                        </Grid.ColumnDefinitions>
-                                        <Label
-                                            Grid.Column="0"
-                                            HorizontalOptions="Start"
-                                            TextColor="Red"
-                                            Text="No Submissions"
-                                        />
-                                        <Label
-                                            Grid.Column="1"
-                                            HorizontalOptions="End"
-                                            TextColor="Red"
-                                            Text="N/A" />
+                                    <!-- Report Details: Uploaded By -->
+                                    <Grid ColumnDefinitions="1*, 2*" Margin="0, 7, 0, 0">
+                                        <Label Text="Uploaded By:"
+                                              Grid.Column="0"/>
+                                        <Label Text="{Binding UploadedBy}"
+                                               TextColor="DimGray"
+                                               HorizontalTextAlignment="Start"
+                                               VerticalTextAlignment="End"
+                                               Grid.Column="1"
+                                               Margin="4, 0, 0, 0"/>
                                     </Grid>
-                                
-                           
-                        </StackLayout>
-                    </Frame>
 
-                    <Button
-                        Text="Upload Completed Report"
-                        Padding="0 "
-                        Margin="0, 14, 0, 10"
-                        HeightRequest="30"
-                        WidthRequest="200"
-                        FontAttributes="Bold"
-                        BackgroundColor="CornflowerBlue"
-                        />
-                </VerticalStackLayout>
-
-            </toolkit:Expander>
-
-         </Border>
-
-        <Border
-            StrokeShape="RoundRectangle 8,8,8,8"
-            Margin="{OnPlatform Default='8,8,8,8'}"
-            Stroke="#CAC4D0"
-            StrokeThickness="{OnPlatform MacCatalyst=2,Default=1}">
-
-            <toolkit:Expander>
-
-                <toolkit:Expander.Header>
-                    <Grid Padding="14, 0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="5*" />
-                            <ColumnDefinition Width="4*" />
-                        </Grid.ColumnDefinitions>
- 
-                        <Label
-                            Grid.Column="0"
-                            Text="May Cohort '23"
-                            TextColor="Black"
-                            VerticalTextAlignment="Center"
-                            HorizontalOptions="Start"
-                            HeightRequest="35"
-                            Margin="5"/>
-                            <Button
-                                Grid.Column="1"
-                                Text="Download"
-                                HeightRequest="30"
-                                WidthRequest="90"
-                                VerticalOptions="Center"
-                                HorizontalOptions="End"
-                                Padding="0"
-                                FontAttributes="Bold"
-                                BackgroundColor="CornflowerBlue"
-                                    />
-                        </Grid>
-                </toolkit:Expander.Header>
-
-                <VerticalStackLayout Padding="14, 0">
-                    <Label
-                        Text="Uploaded on 2/03/2023 by Erika Janssen"
-                        FontAttributes="Italic"
-                        Margin="4, 0, 0, 0"/>
-                    <Label
-                        Text="Due by 08/01/2023"
-                        TextColor="Red"
-                        Margin="4, 0, 0, 0"/>
-                    <Frame BorderColor="#CAC4D0" CornerRadius="5" Margin="0, 14, 0, 0">
-                        <StackLayout>
-                            
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition />
-                                        <ColumnDefinition />
-                                    </Grid.ColumnDefinitions>
-                                    <Label
-                                        Grid.Column="0"
-                                        HorizontalOptions="Start"
-                                        TextDecorations="Underline"
-                                        FontAttributes="Bold"
-                                        Text="File Name"
-                                    />
-                                    <Label
-                                        Grid.Column="1"
-                                        HorizontalOptions="End"
-                                        TextDecorations="Underline"
-                                        FontAttributes="Bold"
-                                        Text="Submission Date" />
-                                </Grid>
-
-                                <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition />
-                                            <ColumnDefinition />
-                                        </Grid.ColumnDefinitions>
-                                        <Label
-                                            Grid.Column="0"
-                                            HorizontalOptions="Start"
-                                            Text="May-2023-Report.docx"
-                                        />
-                                        <Label
-                                            Grid.Column="1"
-                                            HorizontalOptions="End"
-                                            Text="07/13/2023" />
+                                    <!-- Report Details: Due Date -->
+                                    <Grid ColumnDefinitions="1*,3*" Margin="0, 7, 0, 0">
+                                        <Label Text="Due Date:"
+                                               Grid.Column="0"/>
+                                        <Label Text="{Binding DueDate.Date, StringFormat='{0:MM/dd/yyyy}'}"
+                                               FontAttributes="Bold"
+                                               FontSize="Small"
+                                               Grid.Column="1"
+                                               TextColor="MediumPurple"
+                                               HorizontalTextAlignment="Start"
+                                               VerticalTextAlignment="End"
+                                               Margin="4, 0, 0, 0"/>
                                     </Grid>
-                                
-                           
-                        </StackLayout>
+
+                                    <!-- View Submissions Button -->
+                                    <Button
+                                        x:Name="DownloadReportButton"
+                                        Clicked="DownloadReportButtonTapped"
+                                        Text="Download Copy"
+                                        FontSize="Small"
+                                        BackgroundColor="Lavender"
+                                        TextColor="Black"
+                                        Padding="0 "
+                                        Margin="0, 14, 0, 0"
+                                        HeightRequest="30"
+                                        CommandParameter="{Binding ReportName}"
+                                        />
+
+                                    <!-- Upload Submission Button-->
+                                    <Button
+                                        Text="Upload Submission"
+                                        Clicked="UploadCompletedReportButtonClicked"
+                                        Padding="0"
+                                        Margin="0, 7, 0, 0"
+                                        FontSize="Small"
+                                        FontAttributes="Bold"
+                                        CommandParameter="{Binding ReportName}"/>
+
+                                </VerticalStackLayout>
+                            </toolkit:Expander.Content>
+                        </toolkit:Expander>
                     </Frame>
-
-                    <Button
-                        Text="Upload Completed Report"
-                        Padding="0 "
-                        Margin="0, 14, 0, 10"
-                        HeightRequest="30"
-                        WidthRequest="200"
-                        FontAttributes="Bold"
-                        BackgroundColor="CornflowerBlue"
-                        />
-                </VerticalStackLayout>
-
-            </toolkit:Expander>
-
-         </Border>
-
-    </VerticalStackLayout>
-
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </ScrollView>
 </ContentPage>
