@@ -1,6 +1,10 @@
 ﻿using System.Collections.ObjectModel;
+using System.Text;
+using System.Threading;
 using ClinicalCoordinationApplication.Model;
 using ClinicalCoordinationApplication.Model.Reports;
+using CommunityToolkit.Maui.Alerts;
+using CommunityToolkit.Maui.Storage;
 
 namespace ClinicalCoordinationApplication;
 
@@ -30,15 +34,5 @@ public partial class ReportSubmissionsViewer : ContentPage
         Viewer.Title = reportName + " Submissions";
 
         BindingContext = Submissions;
-    }
-
-    /// <summary>
-    /// Downloads a copy of the report to the user's device
-    /// </summary>
-    /// <param name="sender">Object sending the request</param>
-    /// <param name="e">Event arguments for the request</param>
-    public void DownloadReportButtonTapped(object sender, EventArgs e)
-    {
-        // TODO
     }
 }

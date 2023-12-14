@@ -5,7 +5,7 @@
                 x:Class="ClinicalCoordinationApplication.DirectorAddReportPopup"
                 Color="Transparent">
     <Frame BackgroundColor="White" CornerRadius="16" HasShadow="True">
-    <VerticalStackLayout HeightRequest="600" WidthRequest="300">
+    <VerticalStackLayout HeightRequest="520" WidthRequest="300">
         <Label 
             Text="Add New Report"
             VerticalOptions="Center" 
@@ -15,8 +15,9 @@
         <Border StrokeThickness="3"
                 StrokeDashArray="1, 1"
                 StrokeDashOffset="2"
-                Margin="0, 32"
+                Margin="0, 14"
                 BackgroundColor="WhiteSmoke">
+
             <Button
                 x:Name="uploadButton"
                 Text="Upload File"
@@ -25,27 +26,32 @@
                 TextColor="Black"
                 HorizontalOptions="Center"
                 VerticalOptions="Center"
-                Margin="16, 8"
+                Margin="7, 8"
                 BackgroundColor="Transparent"
                 />
+
         </Border>
 
-        <Label FontSize="Small"
+        <Label Text="Report Name:"
+                FontSize="Subtitle"
                FontAttributes="Bold" />
-        <Entry x:Name="ReportName" Placeholder="Report Name" />
+        <Entry x:Name="ReportName" Text="" Placeholder="Report Name" />
 
         <Label Text="Due Date:"
                x:Name="dueDate"
-               FontSize="Small"
+               FontSize="Subtitle"
                FontAttributes="Bold"
                Margin="0, 10, 0, 0" />
+
         <DatePicker x:Name="DueDate"/>
 
         <Label Text="Send Report To:"
-               FontSize="Small"
+               FontSize="Subtitle"
                FontAttributes="Bold"
                Margin="0, 10, 0, 0" />
-        <Entry x:Name="SendTo" Placeholder="Person 1, Person 2..." />
+        <Entry x:Name="SendTo" Text="" Placeholder="Person 1, Person 2..." />
+
+         <Label Text="" x:Name="ErrorText" FontSize="Subtitle" TextColor="MediumPurple" Margin="0, 7"/>
 
         <Button
             Text="Upload and Send Report"
@@ -61,5 +67,3 @@
     </VerticalStackLayout>
     </Frame>
 </toolkit:Popup>
-
-

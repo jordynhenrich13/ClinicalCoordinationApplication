@@ -1,4 +1,5 @@
 ﻿using ClinicalCoordinationApplication.Model;
+using CommunityToolkit.Maui.Storage;
 using Microsoft.Maui.ApplicationModel.Communication;
 
 namespace ClinicalCoordinationApplication
@@ -42,7 +43,7 @@ namespace ClinicalCoordinationApplication
             if (userType == "Coordinator")
             {
                 Items.Add(new AddCoordinator());
-                Items.Add(new CoordinatorReportsDashboard());
+                Items.Add(new CoordinatorReportsDashboard(FileSaver.Default));
                 SignIn signInItem = new SignIn();
                 signInItem.Title = "Log Out";
                 Items.Add(signInItem);
@@ -51,8 +52,8 @@ namespace ClinicalCoordinationApplication
             if (userType == "Director")
             {
                 Items.Add(new AddCoordinator());
-                Items.Add(new CoordinatorReportsDashboard());
-                Items.Add(new DirectorReportsDashboard());
+                Items.Add(new CoordinatorReportsDashboard(FileSaver.Default));
+                Items.Add(new DirectorReportsDashboard(FileSaver.Default));
                 SignIn signInItem = new SignIn();
                 signInItem.Title = "Log Out";
                 Items.Add(signInItem);

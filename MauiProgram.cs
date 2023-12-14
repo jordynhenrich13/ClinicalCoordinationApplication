@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
 using ClinicalCoordinationApplication.Model;
+using CommunityToolkit.Maui.Storage;
 
 namespace ClinicalCoordinationApplication
 {
@@ -22,6 +23,7 @@ namespace ClinicalCoordinationApplication
 #if DEBUG
 		builder.Logging.AddDebug();
 #endif
+            builder.Services.AddSingleton(FileSaver.Default); 
 
             return builder.Build();
         }

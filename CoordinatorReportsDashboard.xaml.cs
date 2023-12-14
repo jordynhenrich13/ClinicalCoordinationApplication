@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Text;
 using System.Threading;
 using AndroidX.Lifecycle;
 using AndroidX.Navigation;
@@ -6,6 +7,7 @@ using ClinicalCoordinationApplication.Model;
 using ClinicalCoordinationApplication.Model.Reports;
 using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Maui.Core;
+using CommunityToolkit.Maui.Storage;
 using CommunityToolkit.Maui.Views;
 using Microsoft.Maui;
 using static Android.Icu.Text.AlphabeticIndex;
@@ -16,8 +18,9 @@ public partial class CoordinatorReportsDashboard : ContentPage
 {
     private readonly BusinessLogic bl;
     public ReportsView CoordinatorReports;
+    private readonly IFileSaver fileSaver;
 
-    public CoordinatorReportsDashboard()
+    public CoordinatorReportsDashboard(IFileSaver fileSaver)
     {
         InitializeComponent();
         bl = new(); // Assign business logic
@@ -28,6 +31,8 @@ public partial class CoordinatorReportsDashboard : ContentPage
 
         // Set the reports as the binding context
         BindingContext = CoordinatorReports;
+
+        this.fileSaver = fileSaver;
     }
 
 
@@ -111,4 +116,31 @@ public partial class CoordinatorReportsDashboard : ContentPage
         }
     }
 
+    /// <summary>
+    /// Downloads a copy of the report to the user's device
+    /// </summary>
+    /// <param name="sender">Object sending the request</param>
+    /// <param name="e">Event arguments for the request</param>
+    public async void DownloadReportButtonTapped(object sender, EventArgs e)
+    {
+        if (sender is Button button && button.CommandParameter is string reportName)
+        {
+            CancellationToken cancellationToken = new();
+
+            ReportItem report = CoordinatorReports.ReportItems.FirstOrDefault(item => item.ReportName == reportName);
+
+            var fileSaverResult = await fileSaver.SaveAsync($"{report.ReportName}_{report.FileName}", report.ReportStream, cancellationToken);
+
+            fileSaverResult.EnsureSuccess();
+            await Toast.Make($"File is saved: {fileSaverResult.FilePath}").Show(cancellationToken);
+        }
     }
+
+    void DownloadSubmissionsButton_Clicked(System.Object sender, System.EventArgs e)
+    {
+    }
+
+    void DownloadSubmissionsButton_Clicked_1(System.Object sender, System.EventArgs e)
+    {
+    }
+}

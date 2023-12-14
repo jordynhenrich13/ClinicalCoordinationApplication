@@ -15,6 +15,7 @@ using System.Collections;
 using System.Net.WebSockets;
 //using Windows.Networking;
 using static Android.Provider.ContactsContract.CommonDataKinds;
+using System.Data;
 
 namespace ClinicalCoordinationApplication;
 public class Database : IDatabase
@@ -835,27 +836,25 @@ public class Database : IDatabase
             cmd.Connection = conn;
 
             // Query Text
-            cmd.CommandText = @"SELECT *
-                                FROM ReportSubmission
-                                WHERE reportname = @ReportName";
+            cmd.CommandText = @"SELECT fileName, reportStream, uploadedBy, submissionDate
+                            FROM ReportSubmission
+                            WHERE reportname = @ReportName";
 
             // Execute query
             cmd.ExecuteNonQuery();
 
-            using (var reader = cmd.ExecuteReader())
+            using var reader = cmd.ExecuteReader();
+            while (reader.Read())
             {
-                while (reader.Read())
-                {
-                    // Read and contents of each line
-                    string fileName = reader["fileName"].ToString();
-                    Stream reportStream = (Stream)reader["reportStream"];
-                    string uploadedBy = reader["uploadedBy"].ToString();
-                    DateTime submissionDate = (DateTime)reader["submissionDate"];
+                // Read and contents of each line
+                string fileName = reader["fileName"].ToString();
+                Stream reportStream = (Stream)reader["reportStream"];
+                string uploadedBy = reader["uploadedBy"].ToString();
+                DateTime submissionDate = (DateTime)reader["submissionDate"];
 
-                    // Create new report item and add to return collection
-                    ReportSubmission submission = new(fileName, reportStream, uploadedBy, submissionDate, reportName);
-                    submissions.Add(submission);
-                }
+                // Create new report item and add to return collection
+                ReportSubmission submission = new(fileName, reportStream, uploadedBy, submissionDate, reportName);
+                submissions.Add(submission);
             }
         }
         catch (Npgsql.PostgresException pe)

@@ -1,5 +1,8 @@
 ﻿using CommunityToolkit.Maui.Views;
 using ClinicalCoordinationApplication.Model;
+using System.Drawing;
+using Android.Graphics;
+
 namespace ClinicalCoordinationApplication;
 
 public partial class DirectorAddReportPopup : Popup
@@ -11,7 +14,7 @@ public partial class DirectorAddReportPopup : Popup
     public DateTime SelectedDate { get; set; }
 
     public DirectorAddReportPopup()
-	{
+    {
         InitializeComponent();
 
         // Initialize business logic
@@ -48,11 +51,12 @@ public partial class DirectorAddReportPopup : Popup
         {
             return;
         }
+
         // Assign file name as variable
         selectedFileName = result.FileName;
 
         // Update the upload button text with the selected file name
-        uploadButton.Text = $"Upload File: {selectedFileName}";
+        uploadButton.Text = $"{selectedFileName}";
 
         // Open stream for file
         Stream stream = await result.OpenReadAsync();
@@ -67,6 +71,15 @@ public partial class DirectorAddReportPopup : Popup
         string reportName = ReportName.Text;
         DateTime dueDate = SelectedDate;
         string[] sendTo = SendTo.Text.Split(',');
+
+        if (reportName == null || reportName == "" || dueDate == null
+            || sendTo == null || sendTo.Length < 1)
+        {
+            // Form is incomplete
+            ErrorText.Text = "Please fill out all fields";
+            return;
+        }
+
 
         // Get logged in user's email from preferences
         //string uploadedBy = bl.LoggedInUserName;
@@ -104,12 +117,6 @@ public partial class DirectorAddReportPopup : Popup
             if (result == false) return false;
         }
         return true;
-    }
-
-    public void OnDeleteReportButtonClicked(object sender, EventArgs e)
-    {
-        // TODO: Implement this
-        throw new NotImplementedException();
     }
 
     public async void OnCancelButtonClicked(object sender, EventArgs e)

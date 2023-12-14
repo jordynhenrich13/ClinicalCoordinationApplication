@@ -30,33 +30,20 @@ namespace ClinicalCoordinationApplication.Model
         public BusinessLogic()
         {
             database = new Database();
-            //AllReports = database.GetAllReports();
-            //CoordinatorReports = database.GetCoordinatorReports(Preferences.Get("user_email", "Unknown"));
+            AllReports = database.GetAllReports();
+            CoordinatorReports = database.GetCoordinatorReports(Preferences.Get("user_email", "Unknown"));
         }
 
-        /// <summary>
-        /// TODO
-        /// </summary>
-        /// <returns>TODO</returns>
         public Account GetUserType()
         {
             return database.GetUserType();
         }
 
-        /// <summary>
-        /// Deletes the user's profile
-        /// </summary>
         public void DeleteProfile()
         {
             database.DeleteProfile();
         }
 
-        /// <summary>
-        /// Signs the user into the app.
-        /// </summary>
-        /// <param name="email">The user's email</param>
-        /// <param name="password">The user's password</param>
-        /// <returns>Error on sign in status</returns>
         public SignInError SignIn(string email, string password)
         {
             Account account = database.GetAccount(email);
@@ -96,14 +83,6 @@ namespace ClinicalCoordinationApplication.Model
             return SignInError.NoError;
         }
 
-        /// <summary>
-        /// Creates a student account by calling the database to add to the student table
-        /// </summary>
-        /// <param name="email">Student's email</param>
-        /// <param name="password">Student's password</param>
-        /// <param name="firstName">Student's first name</param>
-        /// <param name="lastName">Student's last name</param>
-        /// <returns></returns>
         public CreateAccountError CreateStudentAccount(string email, string password, string firstName, string lastName)
         {
             // Account exists for the email entered
@@ -147,11 +126,6 @@ namespace ClinicalCoordinationApplication.Model
             return CreateAccountError.NoError;
         }
 
-        /// <summary>
-        /// TODO
-        /// </summary>
-        /// <param name="email">TODO</param>
-        /// <returns>TODO</returns>
         public AddCoordinatorError AddCoordinator(string email)
         {
             // Account exists for the email entered
@@ -165,14 +139,6 @@ namespace ClinicalCoordinationApplication.Model
             return AddCoordinatorError.NoError;
         }
 
-        /// <summary>
-        /// Edits a user's account information.
-        /// </summary>
-        /// <param name="email">TODO</param>
-        /// <param name="password">TODO</param>
-        /// <param name="firstName">TODO</param>
-        /// <param name="lastName">TODO</param>
-        /// <returns></returns>
         public EditAccountError EditAccount(string email, string password, string firstName, string lastName)
         {
             //call db for account with email
@@ -215,80 +181,48 @@ namespace ClinicalCoordinationApplication.Model
             return AddWorkedHoursError.NoError;
         }
 
-        /// <summary>
-        /// TODO
-        /// </summary>
-        /// <returns>TODO</returns>
         public EditWorkedHoursError EditWorkedHours()
         {
 
             return EditWorkedHoursError.NoError;
         }
 
-        /// <summary>
-        /// TODO
-        /// </summary>
-        /// <returns>TODO</returns>
         public DeleteWorkedHoursError DeleteWorkedHours()
         {
 
             return DeleteWorkedHoursError.NoError;
         }
 
-        /// <summary>
-        /// TODO
-        /// </summary>
-        /// <returns>TODO</returns>
         public UpdateClinicalInfoError UpdateClinicalInfo()
         {
 
             return UpdateClinicalInfoError.NoError;
         }
 
-        /// <summary>
-        /// TODO
-        /// </summary>
-        /// <returns>TODO</returns>
         public AddClinicalNoteError AddClinicalNote()
         {
 
             return AddClinicalNoteError.NoError;
         }
 
-        /// <summary>
-        /// TODO
-        /// </summary>
-        /// <returns>TODO</returns>
         public EditClinicalNoteError EditClinicalNote()
         {
 
             return EditClinicalNoteError.NoError;
         }
 
-        /// <summary>
-        /// TODO
-        /// </summary>
-        /// <returns>TODO</returns>
         public DeleteClinicalNoteError DeleteClinicalNote()
         {
 
             return DeleteClinicalNoteError.NoError;
         }
 
-        /// <summary>
-        /// TODO
-        /// </summary>
-        /// <returns>TODO</returns>
         public FindPreviousClinicsError FindPreviousClinics()
         {
 
             return FindPreviousClinicsError.NoError;
         }
 
-        /// <summary>
-        /// TODO
-        /// </summary>
-        /// <returns>TODO</returns>
         public FindNewClinicError FindNewClinic()
         {
 
@@ -421,7 +355,11 @@ namespace ClinicalCoordinationApplication.Model
             await toast.Show(cancellationTokenSource.Token);
         }
 
-        
+        /// <summary>
+        /// A toast that states that a report already exists with the same name
+        /// </summary>
+        /// <param name="reportName">The report name</param>
+        /// <returns>Toast</returns>
         public async Task ShowDuplicateReportNameToast(string reportName)
         {
             // Generate a cancellation token
@@ -469,20 +407,20 @@ namespace ClinicalCoordinationApplication.Model
         }
 
         /// <summary>
-        /// TODO
+        /// Gets all submissions for a report
         /// </summary>
-        /// <param name="reportName">TODO</param>
-        /// <returns>TODO</returns>
+        /// <param name="reportName">name of report</param>
+        /// <returns>collection of submissions</returns>
         public ObservableCollection<ReportSubmission> GetReportSubmissions(string reportName)
         {
             return database.GetReportSubmissions(reportName);
         }
 
         /// <summary>
-        /// TODO
+        /// Checks if coordinator exists in the DB
         /// </summary>
-        /// <param name="email">TODO</param>
-        /// <returns>TODO</returns>
+        /// <param name="email">Coordinator's email</param>
+        /// <returns>true or false if found</returns>
         public bool FindCoordinatorByEmail(string email)
         {
             bool result = database.FindCoordinatorByEmail(email);
