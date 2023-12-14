@@ -407,7 +407,7 @@ public class Database : IDatabase
 
                 var conn4 = new NpgsqlConnection(GetConnectionString());
                 conn4.Open();
-                using var cmd4 = new NpgsqlCommand("UPDATE Preceptor SET studentemail = @email WHERE studentemail @currentEmail", conn4);
+                using var cmd4 = new NpgsqlCommand("UPDATE Preceptor SET studentemail = @email WHERE studentemail = @currentEmail", conn4);
                 cmd4.Parameters.AddWithValue("email", email);
                 cmd4.Parameters.AddWithValue("currentEmail", UserId);
                 cmd4.ExecuteNonQuery();
