@@ -16,7 +16,7 @@ public partial class StudentClinical1 : ContentPage
         SelectedDate = DateTime.Now;
         StartTime = TimeSpan.FromHours(DateTime.Now.Hour);
         EndTime = TimeSpan.FromHours(DateTime.Now.Hour + 1);
-        //Comments = string.Empty;
+        Comments = string.Empty;
         obja = businessLogic.GetUserType();
         InitializeComponent();
     }
@@ -24,7 +24,7 @@ public partial class StudentClinical1 : ContentPage
     private void ConfirmHours_Clicked(object sender, EventArgs e)
     {
 
-        //businessLogic.AddWorkedHours(clinicalPicker.SelectedItem?.ToString(), SelectedDate, startTimePicker.Time, endTimePicker.Time, commentsEditor.Text, obja.Email, DateTime.Now);
+        businessLogic.AddWorkedHours(clinicalEditor.Text, SelectedDate, startTimePicker.Time, endTimePicker.Time, commentsEditor.Text, obja.Email, DateTime.Now);
         Navigation.PushAsync(new StudentDashSuccess());
     }
 }
