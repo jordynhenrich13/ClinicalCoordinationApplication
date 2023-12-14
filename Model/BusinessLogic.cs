@@ -7,6 +7,8 @@ using CommunityToolkit.Maui.Core;
 
 namespace ClinicalCoordinationApplication.Model
 {
+    // The BusinessLogic class serves as the business logic layer for the application.
+    // It implements the IBusinessLogic interface and contains methods for various operations.
     public class BusinessLogic : IBusinessLogic
     {
         private IDatabase database { get; set; }
@@ -46,34 +48,44 @@ namespace ClinicalCoordinationApplication.Model
             database.DeleteProfile();
         }
 
+        // Method to authenticate a user with the provided email and password.
         public SignInError SignIn(string email, string password)
         {
+            // Retrieve the account information from the database based on the provided email.
             Account account = database.GetAccount(email);
+
+            // If no account is found for the provided email, return an error.
             if (account == null)
             {
                 return SignInError.InvalidEmailOrPassword;
             }
+
+            // Verify the provided password against the stored hashed password.
             if (!BCrypt.Net.BCrypt.Verify(password, account.Password))
             {
+                // If the password is incorrect, return an error.
                 return SignInError.InvalidEmailOrPassword;
             }
 
-            // Store user type in preferences
+            // Store user type in application preferences.
             Preferences.Set("user_type", account.Role);
 
-            // Sign user in (in the DB)
+            // Sign the user in (update the user's login status in the database).
             database.SignIn(email);
 
-            // Assign the rest of the user preferences
+            // Assign additional user preferences based on the user's role.
             if (account.Role == "Student")
             {
+                // If the user is a student, retrieve student-specific information.
                 Student studentInfo = database.GetStudentInfo(email);
                 Preferences.Set("user_full_name", studentInfo.FirstName + " " + studentInfo.LastName);
                 Preferences.Set("user_first_name", studentInfo.FirstName);
                 Preferences.Set("user_last_name", studentInfo.LastName);
                 Preferences.Set("user_email", studentInfo.Email);
-            } else if (account.Role == "Coordinator" || account.Role == "Director")
+            }
+            else if (account.Role == "Coordinator" || account.Role == "Director")
             {
+                // If the user is a coordinator or director, retrieve coordinator-specific information.
                 Coordinator coordinatorInfo = database.GetCoordinatorInfo(email);
                 Preferences.Set("user_full_name", coordinatorInfo.FirstName + " " + coordinatorInfo.LastName);
                 Preferences.Set("user_first_name", coordinatorInfo.FirstName);
@@ -81,9 +93,10 @@ namespace ClinicalCoordinationApplication.Model
                 Preferences.Set("user_email", coordinatorInfo.Email);
             }
 
-            // Login completed successfully!
+            // Login completed successfully, return no error.
             return SignInError.NoError;
         }
+
 
         public CreateAccountError CreateStudentAccount(string email, string password, string firstName, string lastName)
         {
