@@ -38,9 +38,9 @@ namespace ClinicalCoordinationApplication.Model
             CoordinatorReports = database.GetCoordinatorReports(Preferences.Get("user_email", "Unknown"));
         }
 
-        public Account GetUserType()
+        public Account GetUserAccount()
         {
-            return database.GetUserType();
+            return database.GetUserAccount();
         }
 
         public void DeleteProfile()
@@ -133,9 +133,10 @@ namespace ClinicalCoordinationApplication.Model
 
             // Hash the user's password
             string hashedPassword = BCrypt.Net.BCrypt.HashPassword(password);
-
-            // Create a student account
-            database.CreateStudentAccount(email, hashedPassword, firstName, lastName);
+            if (!database.CreateStudentAccount(email, hashedPassword, firstName, lastName))
+            {
+                return CreateAccountError.DBError;
+            }
 
             // Account created successfully
             return CreateAccountError.NoError;
@@ -149,40 +150,67 @@ namespace ClinicalCoordinationApplication.Model
             {
                 return AddCoordinatorError.InvalidEmail;
             }
-
-            database.AddCoordinator(email);
+            if (!database.AddCoordinator(email))
+            {
+                return AddCoordinatorError.DBError;
+            }
             return AddCoordinatorError.NoError;
         }
-
-        public EditAccountError EditAccount(string email, string password, string firstName, string lastName)
+        public EditAccountError EditAccount(string email, string firstName, string lastName)
         {
-            //call db for account with email
-            Account account = database.GetAccount(email);
-            if (account != null)
+            Account accountToEdit = database.GetAccount(database.UserId);
+            if (!string.IsNullOrWhiteSpace(email))
             {
-                return EditAccountError.EmailAlreadyUsed;
+                Account account = database.GetAccount(email);
+                if (account != null)
+                {
+                    return EditAccountError.EmailAlreadyUsed;
+                }
+                if (!email.Contains("@uwosh.edu") || (email.Length < 10 || email.Length > 150))
+                {
+                    return EditAccountError.InvalidEmail;
+                }
             }
-            if (!email.Contains("@uwosh.edu") || (email.Length < 10 || email.Length > 150))
+            else
             {
-                return EditAccountError.InvalidEmail;
+                email = database.UserId;
             }
-            if (password.Length < 8 || password.Length > 50)
+            if (!string.IsNullOrWhiteSpace(firstName))
             {
-                return EditAccountError.InvalidPassword;
+                if (firstName.Length < 1 || firstName.Length > 50)
+                {
+                    return EditAccountError.InvalidFirstName;
+                }
             }
-            if (firstName.Length < 1 || firstName.Length > 50)
+           else
             {
-                return EditAccountError.InvalidFirstName;
+                firstName = "";
             }
-            if (lastName.Length < 1 || lastName.Length > 50)
+            if (!string.IsNullOrWhiteSpace(lastName))
             {
-                return EditAccountError.InvalidLastName;
+                if (lastName.Length < 1 || lastName.Length > 50)
+                {
+                    return EditAccountError.InvalidLastName;
+                }
             }
-
-            // Hash the password
-            string hashedPassword = BCrypt.Net.BCrypt.HashPassword(password);
-
-            // Update account successful!
+            else
+            {
+                lastName = "";
+            }
+            if (accountToEdit.Role == "Coordinator" || accountToEdit.Role == "Director")
+            {
+                if (!database.EditCoordinatorAccount(email, firstName, lastName)) 
+                {
+                    return EditAccountError.DBError;
+                }
+            }
+            else
+            {
+                if (!database.EditStudentAccount(email, firstName, lastName))
+                {
+                    return EditAccountError.DBError;
+                }
+            }
             return EditAccountError.NoError;
         }
 

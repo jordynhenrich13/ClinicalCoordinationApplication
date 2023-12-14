@@ -6,7 +6,6 @@ using System.Threading;
 using ClinicalCoordinationApplication.Model;
 using ClinicalCoordinationApplication.Model.Reports;
 using CommunityToolkit.Maui.Alerts;
-using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Maui.Storage;
 using CommunityToolkit.Maui.Views;
 using Microsoft.Maui;

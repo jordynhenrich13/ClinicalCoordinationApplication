@@ -14,7 +14,7 @@ namespace ClinicalCoordinationApplication
         public StudentClinicalHours()
         {
             InitializeComponent();
-            obja = businessLogic.GetUserType();
+            obja = businessLogic.GetUserAccount();
 
             // Retrieve student clinical hours
             ClinicalList = businessLogic.GetStudentClinicalHours(obja.Email);

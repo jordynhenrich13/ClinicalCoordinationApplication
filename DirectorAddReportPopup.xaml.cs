@@ -1,7 +1,5 @@
 ﻿using CommunityToolkit.Maui.Views;
 using ClinicalCoordinationApplication.Model;
-using System.Drawing;
-using Android.Graphics;
 
 namespace ClinicalCoordinationApplication;
 

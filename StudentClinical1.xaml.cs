@@ -17,7 +17,7 @@ public partial class StudentClinical1 : ContentPage
         StartTime = TimeSpan.FromHours(DateTime.Now.Hour);
         EndTime = TimeSpan.FromHours(DateTime.Now.Hour + 1);
         Comments = string.Empty;
-        obja = businessLogic.GetUserType();
+        obja = businessLogic.GetUserAccount();
         InitializeComponent();
     }
 

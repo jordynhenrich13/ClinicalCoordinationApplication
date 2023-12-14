@@ -22,7 +22,7 @@ public class Database : IDatabase
     // Constructor initializes and sets up the database.
     // It also ensures that the file exists or creates it if not.
 
-    public static string userId { get; set; }
+    public string UserId { get; set; }
     ObservableCollection<Student> students = new();
 
     public string CurrentlySignedInStudentEmail { get; private set; }
@@ -66,19 +66,12 @@ public class Database : IDatabase
 
     public void SignIn(string email)
     {
-        userId = email;
+        UserId = email;
     }
 
- 
-    public Account GetUserType()
+    public Account GetUserAccount()
     {
-        string role = null;
-        Account account = GetAccount(userId);
-        if (account != null)
-        {
-            role = account.Role;
-        }
-        return account;
+        return GetAccount(UserId);
     }
 
     public void SavePreceptorToDatabase(PreceptorViewModel preceptor)
@@ -355,7 +348,6 @@ public class Database : IDatabase
                     cmd4.Parameters.AddWithValue("lastName", lastName);
                     cmd4.Parameters.AddWithValue("Email", email);
                     cmd4.ExecuteNonQuery();
-                    return true;
                 }
             }
         }
@@ -364,7 +356,139 @@ public class Database : IDatabase
             Console.WriteLine(ex);
             return false;
         }
-        return false;
+        return true;
+    }
+
+    public bool EditStudentAccount(string email, string firstName, string lastName)
+    {
+        try
+        {
+            if (string.IsNullOrWhiteSpace(firstName) || string.IsNullOrWhiteSpace(lastName))
+            {
+                var conn = new NpgsqlConnection(GetConnectionString());
+                conn.Open();
+                using var cmd = new NpgsqlCommand("SELECT firstname, lastname FROM Student WHERE email = @currentEmail", conn);
+                cmd.Parameters.AddWithValue("currentEmail", UserId);
+                using var reader = cmd.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    if (!reader.IsDBNull(0))
+                    {
+                        if (string.IsNullOrWhiteSpace(firstName))
+                        {
+                            firstName = reader.GetString(0);
+                        }
+                        if (string.IsNullOrWhiteSpace(lastName))
+                        {
+                            lastName = reader.GetString(1);
+                        }
+                    }
+                }
+                conn.Close();
+            }
+            if (UserId.CompareTo(email) != 0)
+            {
+                var conn2 = new NpgsqlConnection(GetConnectionString());
+                conn2.Open();
+                using var cmd2 = new NpgsqlCommand("UPDATE Account SET email = @email WHERE email = @currentEmail", conn2);
+                cmd2.Parameters.AddWithValue("email", email);
+                cmd2.Parameters.AddWithValue("currentEmail", UserId);
+                cmd2.ExecuteNonQuery();
+                conn2.Close();
+
+                var conn3 = new NpgsqlConnection(GetConnectionString());
+                conn3.Open();
+                using var cmd3 = new NpgsqlCommand("UPDATE Clinical SET studentemail = @email WHERE studentemail = @currentEmail", conn3);
+                cmd3.Parameters.AddWithValue("email", email);
+                cmd3.Parameters.AddWithValue("currentEmail", UserId);
+                cmd3.ExecuteNonQuery();
+                conn3.Close();
+
+                var conn4 = new NpgsqlConnection(GetConnectionString());
+                conn4.Open();
+                using var cmd4 = new NpgsqlCommand("UPDATE Preceptor SET studentemail = @email WHERE studentemail = @currentEmail", conn4);
+                cmd4.Parameters.AddWithValue("email", email);
+                cmd4.Parameters.AddWithValue("currentEmail", UserId);
+                cmd4.ExecuteNonQuery();
+                conn4.Close();
+            }
+
+            var conn5 = new NpgsqlConnection(GetConnectionString());
+            conn5.Open();
+            using var cmd5 = new NpgsqlCommand("UPDATE Student SET email = @email, firstname = @firstname, lastname = @lastname WHERE email = @currentEmail", conn5);
+            cmd5.Parameters.AddWithValue("email", email);
+            cmd5.Parameters.AddWithValue("firstname", firstName);
+            cmd5.Parameters.AddWithValue("lastname", lastName);
+            cmd5.Parameters.AddWithValue("currentEmail", UserId);
+            cmd5.ExecuteNonQuery();
+            conn5.Close();
+            UserId = email;
+        }
+        catch (Npgsql.PostgresException ex)
+        {
+            Console.WriteLine(ex);
+            return false;
+        }
+        return true;
+    }
+
+    public bool EditCoordinatorAccount(string email, string firstName, string lastName)
+    {
+        try
+        {
+            if (string.IsNullOrWhiteSpace(firstName) || string.IsNullOrWhiteSpace(lastName))
+            {
+                var conn = new NpgsqlConnection(GetConnectionString());
+                conn.Open();
+                using var cmd = new NpgsqlCommand("SELECT firstname, lastname FROM ClinicalCoordinator WHERE email = @currentEmail", conn);
+                cmd.Parameters.AddWithValue("currentEmail", UserId);
+                using var reader = cmd.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    if (!reader.IsDBNull(0))
+                    {
+                        if (string.IsNullOrWhiteSpace(firstName))
+                        {
+                            firstName = reader.GetString(0);
+                        }
+                        if (string.IsNullOrWhiteSpace(lastName))
+                        {
+                            lastName = reader.GetString(1);
+                        }
+                    }
+                }
+                conn.Close();
+            }
+            if (UserId.CompareTo(email) != 0)
+            {
+                var conn2 = new NpgsqlConnection(GetConnectionString());
+                conn2.Open();
+                using var cmd2 = new NpgsqlCommand("UPDATE Account SET email = @email WHERE email = @currentEmail", conn2);
+                cmd2.Parameters.AddWithValue("email", email);
+                cmd2.Parameters.AddWithValue("currentEmail", UserId);
+                cmd2.ExecuteNonQuery();
+                conn2.Close();
+            }
+
+            var conn3 = new NpgsqlConnection(GetConnectionString());
+            conn3.Open();
+            using var cmd3 = new NpgsqlCommand("UPDATE ClinicalCoordinator SET email = @email, firstname = @firstname, lastname = @lastname WHERE email = @currentEmail", conn3);
+            cmd3.Parameters.AddWithValue("email", email);
+            cmd3.Parameters.AddWithValue("firstname", firstName);
+            cmd3.Parameters.AddWithValue("lastname", lastName);
+            cmd3.Parameters.AddWithValue("currentEmail", UserId);
+            cmd3.ExecuteNonQuery();
+            conn3.Close();
+            UserId = email;
+        }
+        catch (Npgsql.PostgresException ex)
+        {
+            Console.WriteLine(ex);
+            return false;
+        }
+        return true;
     }
 
     public Coordinator GetCoordinatorInfo(string email)

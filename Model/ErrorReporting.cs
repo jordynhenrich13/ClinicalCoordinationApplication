@@ -13,6 +13,7 @@ namespace ClinicalCoordinationApplication.Model
         EmailAlreadyUsed,
         InvalidEmail,
         InvalidPassword,
+        DBError,
         NoError
     }
     public enum EditAccountError
@@ -21,7 +22,7 @@ namespace ClinicalCoordinationApplication.Model
         InvalidLastName,
         EmailAlreadyUsed,
         InvalidEmail,
-        InvalidPassword,
+        DBError,
         NoError
     }
     public enum AddWorkedHoursError
@@ -80,6 +81,7 @@ namespace ClinicalCoordinationApplication.Model
     public enum AddCoordinatorError
     {
         InvalidEmail,
+        DBError,
         NoError
     }
 

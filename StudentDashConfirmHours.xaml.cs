@@ -12,7 +12,7 @@ public partial class StudentDashConfirmHours : ContentPage
     {
         InitializeComponent();
         bl = new();
-        obja = bl.GetUserType();
+        obja = bl.GetUserAccount();
         Clinical obj = MauiProgram.BusinessLogic.GetLatestCLinicalSubmission(obja.Email);
         if (obj != null)
         {

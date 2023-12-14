@@ -17,7 +17,7 @@ public partial class StudentDashHourLog : ContentPage
         StartTime = TimeSpan.FromHours(DateTime.Now.Hour);
         EndTime = TimeSpan.FromHours(DateTime.Now.Hour + 1);
         //Comments = string.Empty;
-        obja = businessLogic.GetUserType();
+       // obja = businessLogic.GetUserType();
         InitializeComponent();
     }
 
