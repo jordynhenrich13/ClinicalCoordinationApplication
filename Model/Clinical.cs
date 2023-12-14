@@ -54,6 +54,16 @@ namespace ClinicalCoordinationApplication
             }
         }
 
+        public double HoursWorked
+        {
+            get { return hoursworked; }
+            set
+            {
+                hoursworked = value;
+                OnPropertyChanged(nameof(hoursworked));
+            }
+        }
+
         public string Description
         {
             get { return description; }
@@ -133,6 +143,15 @@ namespace ClinicalCoordinationApplication
             bindname = "Adult Health";
 
         }
+        public Clinical(string studentEmail, string clinicalName, double loghours, string dateWorked, string notes)
+        {
+            this.studentEmail = studentEmail;
+            this.clinicalName = clinicalName;
+            this.hoursworked = loghours;
+            this.dateWorked = dateWorked;
+            this.notes = notes;
+        }
+
         public Clinical(string clinicalName, string name, string clinicalsite, double loghours, int total)
         {
             this.clinicalName = clinicalName;
@@ -149,14 +168,7 @@ namespace ClinicalCoordinationApplication
             this.hoursworked = loghours;
         }
 
-        public Clinical(string studentEmail, string clinicalName, double loghours, string dateWorked, string notes)
-        {
-            this.studentEmail = studentEmail;
-            this.clinicalName = clinicalName;
-            this.hoursworked = loghours;
-            this.dateWorked = dateWorked;
-            this.notes = notes;
-        }
+       
 
 
 

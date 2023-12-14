@@ -27,6 +27,7 @@ namespace ClinicalCoordinationApplication.Model
         FindStudentError FindStudent(string search);
         Clinical GetCLinicalInfo(string email);
         Clinical GetLatestCLinicalSubmission(string email);
+        ObservableCollection<Clinical> GetStudentClinicalHours(string email);
     }
 }
 

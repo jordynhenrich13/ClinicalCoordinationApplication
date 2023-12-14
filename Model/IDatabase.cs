@@ -28,6 +28,7 @@ namespace ClinicalCoordinationApplication.Model
         AddReportSubmissionError AddReportSubmission(ReportSubmission reportSubmission);
         bool FindCoordinatorByEmail(string email);
         public ObservableCollection<ReportItem> GetCoordinatorReports(string userEmail);
+        ObservableCollection<Clinical> GetStudentClinicalHours(string email);
     }
 }
 
