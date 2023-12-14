@@ -7,34 +7,24 @@
 
     <ScrollView>
         <StackLayout Padding="20" Spacing="20">
-            <!--<Frame BorderColor="MediumPurple" CornerRadius="20" BackgroundColor="White" HasShadow="True">-->
                 <StackLayout Spacing="10" Padding="0">
                     <Label Text="Welcome!" FontSize="24" TextColor="Black" FontAttributes="Bold" HorizontalOptions="Center"/>
                     <Label Text="" x:Name="_Email" FontSize="16" TextColor="DimGray" HorizontalOptions="Center"/>
                     <BoxView HeightRequest=".5" Color="MediumPurple" HorizontalOptions="FillAndExpand"/>
-                    <StackLayout Orientation="Horizontal">
-                        <!--<Image Source="clinical_icon.png" WidthRequest="20" VerticalOptions="Center"/>-->
-                        <Label FontSize="18" TextColor="#555" VerticalOptions="Center">
-                            <Label.FormattedText>
-                                <FormattedString>
-                                    <Span Text="Current Clinical: " />
-                                    <Span  x:Name="_Lable"  Text="" FontAttributes="Bold"  />
-                                </FormattedString>
-                            </Label.FormattedText>
-                        </Label>
-                    </StackLayout>
-                    <!--<StackLayout Orientation="Horizontal" Spacing="10">
-                        --><!--<Image Source="site_icon.png" WidthRequest="20" VerticalOptions="Center"/>--><!--
-                        <Label FontSize="18" TextColor="#555" VerticalOptions="Center">
-                            <Label.FormattedText>
-                                <FormattedString>
-                                    <Span Text="Clinical Site: " />
-                                    <Span  x:Name="_Lable1"  Text="" FontAttributes="Bold"  />
-                                </FormattedString>
-                            </Label.FormattedText>
-                        </Label>
-                    </StackLayout>-->
-                    <StackLayout Orientation="Horizontal" Spacing="10">
+                <!-- Updated Clinical Name Entry -->
+                <StackLayout Orientation="Horizontal" Spacing="10">
+                    <Label FontSize="18" TextColor="#555" VerticalOptions="Center">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="Current Clinical: " />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                    <Entry x:Name="_Lable" Text="{Binding CurrentClinical}" WidthRequest="180" FontSize="Medium"/>
+                    <ImageButton Source="reloadicon.png" WidthRequest="20" HeightRequest="20" Clicked="UpdateClinical_Clicked" />
+                </StackLayout>
+
+                <StackLayout Orientation="Horizontal" Spacing="10">
                         <!--<Image Source="hours_icon.png" WidthRequest="20" VerticalOptions="Center"/>-->
                         <Label FontSize="18" TextColor="#555" VerticalOptions="Center">
                             <Label.FormattedText>
@@ -45,28 +35,7 @@
                             </Label.FormattedText>
                         </Label>
                     </StackLayout>
-                    <!--<StackLayout Orientation="Horizontal" Spacing="10">
-                        --><!--<Image Source="preceptor_icon.png" WidthRequest="20" VerticalOptions="Center"/>--><!--
-                        <Label FontSize="18" TextColor="#555" VerticalOptions="Center">
-                            <Label.FormattedText>
-                                <FormattedString>
-                                    <Span Text="Preceptor: " />
-                                    <Span  x:Name="_Lable3"  Text="" FontAttributes="Bold"   />
-                                </FormattedString>
-                            </Label.FormattedText>
-                        </Label>
-                    </StackLayout>
-                    <StackLayout Orientation="Horizontal" Spacing="10">
-                        <Image Source="preceptor_icon.png" WidthRequest="20" VerticalOptions="Center"/>
-                        <Label FontSize="18" TextColor="#555" VerticalOptions="Center">
-                            <Label.FormattedText>
-                                <FormattedString>
-                                    <Span Text="Total Logged Hours by CLINICAL:" />
-                                    <Span x:Name="_Lable4"  Text="" FontAttributes="Bold"   />
-                                </FormattedString>
-                            </Label.FormattedText>
-                        </Label>
-                    </StackLayout>-->
+                   
                 <Button Text="View Clinical Hours" FontSize="18" TextColor="White" Margin="20,20,20,0" Clicked="ViewClinicalHours_Clicked" />
 
                 <BoxView HeightRequest=".5" Color="MediumPurple" HorizontalOptions="FillAndExpand"/>
@@ -84,7 +53,7 @@
                         <Label Text="56 Hours | 2 weeks" FontSize="14" TextColor="Gray"/>
                         <Label Text="Description: Need to bind to notes section in clinical class" FontSize="14"  TextColor="Gray" LineBreakMode="WordWrap"/>
                     </StackLayout>
-                    <ImageButton Clicked="LogClinicalHours_Clicked" Source="grayforwardarrow.png" WidthRequest="30" HeightRequest="30" Margin="15,0,0,0" VerticalOptions="Center"/>
+                    <ImageButton Clicked="NavigateToStudentClinical1" Source="grayforwardarrow.png" WidthRequest="30" HeightRequest="30" Margin="15,0,0,0" VerticalOptions="Center"/>
                 </StackLayout>
             </Frame>
 
@@ -97,7 +66,7 @@
                         <Label Text="112 Hours | 5 weeks" FontSize="14" TextColor="Gray"/>
                         <Label Text="Description: Need to bind to notes section in clinical class" FontSize="14"  TextColor="Gray" LineBreakMode="WordWrap"/>
                     </StackLayout>
-                    <ImageButton Clicked="LogClinicalHours_Clicked" Source="grayforwardarrow.png" WidthRequest="30" HeightRequest="30" Margin="15,0,0,0" VerticalOptions="Center"/>
+                    <ImageButton Clicked="NavigateToStudentClinical2" Source="grayforwardarrow.png" WidthRequest="30" HeightRequest="30" Margin="15,0,0,0" VerticalOptions="Center"/>
                 </StackLayout>
             </Frame>
 
@@ -110,7 +79,7 @@
                         <Label Text="112 Hours | 4 weeks" FontSize="14" TextColor="Gray"/>
                         <Label Text="Description: Need to bind to notes section in clinical class" FontSize="14"  TextColor="Gray" LineBreakMode="WordWrap"/>
                     </StackLayout>
-                    <ImageButton Clicked="LogClinicalHours_Clicked" Source="grayforwardarrow.png" WidthRequest="30" HeightRequest="30" Margin="15,0,0,0" VerticalOptions="Center"/>
+                    <ImageButton Clicked="NavigateToStudentClinical3" Source="grayforwardarrow.png" WidthRequest="30" HeightRequest="30" Margin="15,0,0,0" VerticalOptions="Center"/>
                 </StackLayout>
             </Frame>
 
@@ -123,7 +92,7 @@
                         <Label Text="112 Hours | 4 weeks" FontSize="14" TextColor="Gray"/>
                         <Label Text="Description: Need to bind to notes section in clinical class" FontSize="14"  TextColor="Gray" LineBreakMode="WordWrap"/>
                     </StackLayout>
-                    <ImageButton Clicked="LogClinicalHours_Clicked" Source="grayforwardarrow.png" WidthRequest="30" HeightRequest="30" Margin="15,0,0,0" VerticalOptions="Center"/>
+                    <ImageButton Clicked="NavigateToStudentClinical4" Source="grayforwardarrow.png" WidthRequest="30" HeightRequest="30" Margin="15,0,0,0" VerticalOptions="Center"/>
                 </StackLayout>
             </Frame>
 
@@ -136,7 +105,7 @@
                         <Label Text="168 Hours | 6 weeks" FontSize="14" TextColor="Gray"/>
                         <Label Text="Description: Need to bind to notes section in clinical class" FontSize="14"  TextColor="Gray" LineBreakMode="WordWrap"/>
                     </StackLayout>
-                    <ImageButton Clicked="LogClinicalHours_Clicked" Source="grayforwardarrow.png" WidthRequest="30" HeightRequest="30" Margin="15,0,0,0" VerticalOptions="Center"/>
+                    <ImageButton Clicked="NavigateToStudentClinical5" Source="grayforwardarrow.png" WidthRequest="30" HeightRequest="30" Margin="15,0,0,0" VerticalOptions="Center"/>
                 </StackLayout>
             </Frame>
 
@@ -149,7 +118,7 @@
                         <Label Text="168 Hours | 5 weeks" FontSize="14" TextColor="Gray"/>
                         <Label Text="Description: Need to bind to notes section in clinical class" FontSize="14"  TextColor="Gray" LineBreakMode="WordWrap"/>
                     </StackLayout>
-                    <ImageButton Source="grayforwardarrow.png" WidthRequest="30" HeightRequest="30" Margin="15,0,0,0" VerticalOptions="Center" Clicked="LogClinicalHours_Clicked"/>
+                    <ImageButton Source="grayforwardarrow.png" WidthRequest="30" HeightRequest="30" Margin="15,0,0,0" VerticalOptions="Center" Clicked="NavigateToStudentClinical6"/>
                 </StackLayout>
             </Frame>
         </StackLayout>

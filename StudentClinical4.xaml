@@ -1,23 +1,13 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="ClinicalCoordinationApplication.StudentDashHourLog"
-             Title="Clinical Hour Log">
+             x:Class="ClinicalCoordinationApplication.StudentClinical4"
+             Title="Pediatric of Geriatric">
     <ScrollView>
         <StackLayout>
-            <!-- Select Clinical -->
             <StackLayout Orientation="Horizontal" Margin="20,10">
-                <Label Text="Select Clinical:" FontSize="18" VerticalOptions="Center"/> 
-                <Picker x:Name="clinicalPicker" Title="Select Clinical" >
-                    <Picker.Items>
-                        <x:String>Adult Health</x:String>
-                        <x:String>Adult Health II</x:String>
-                        <x:String>Obstetric or Mental Health</x:String>
-                        <x:String>Pediatric or Geriatric</x:String>
-                        <x:String>Community Health</x:String>
-                        <x:String>Cliical Synthesis</x:String>
-                    </Picker.Items>
-                </Picker>
+                <Label Text="Select Clinical:" FontSize="18" VerticalOptions="Center"/>
+                <Editor x:Name="clinicalEditor" Text="Pediatric or Geriatric" Margin="20,0,20,20"/>
             </StackLayout>
 
             <!-- Select Date -->

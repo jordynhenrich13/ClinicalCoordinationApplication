@@ -1,37 +1,51 @@
 namespace ClinicalCoordinationApplication;
+using ClinicalCoordinationApplication.Model;
 
+// Partial class for the Clinical1 page
 public partial class Clinical1 : ContentPage
 {
+    // Database instance for handling data operations
     public Database database;
+
+    // View model for preceptor information
     private PreceptorViewModel preceptorViewModel;
+
+    // Clinical page number
     public int clinicalPageNumber;
-    public Clinical1()
+
+    // Constructor for Clinical1 page
+    public Clinical1(Student selectedStudent)
     {
         InitializeComponent();
 
-        // Create an instance of PreceptorViewModel and set it as the BindingContext
+        // Initialize the preceptor view model and set the selected student
         preceptorViewModel = new PreceptorViewModel();
+        preceptorViewModel.SelectedStudent = selectedStudent;
         BindingContext = preceptorViewModel;
 
+        // Initialize the database
         database = new Database();
 
-
-        // Load preceptor information when the page appears
-        this.Appearing += (sender, e) => LoadPreceptorInformation();
+        // Attach an event handler to execute when the page appears
+        this.Appearing += (sender, e) => LoadPreceptorInformation(selectedStudent);
     }
+
+    // Event handler for the side menu button click
     private void SideMenuButton_Clicked(object sender, EventArgs e)
     {
         // Handle the side menu button click
         // You can add your code to open the side menu or perform any other action here
     }
 
+    // Event handler for the profile icon click
     private void ProfileIcon_Clicked(object sender, EventArgs e)
     {
         // Handle the profile icon button click
         // You can add your code to navigate to the user's profile or perform any other action here
     }
 
-    private void OnBackButtonClicked(object sender, EventArgs e) // Dashboard button
+    // Event handler for the back button click (Dashboard button)
+    private void OnBackButtonClicked(object sender, EventArgs e)
     {
         // Check if there are pages to navigate back to
         if (Navigation.NavigationStack.Count > 1)
@@ -41,6 +55,7 @@ public partial class Clinical1 : ContentPage
         }
     }
 
+    // Event handler for checkbox state change
     private void OnCheckBoxChanged(object sender, CheckedChangedEventArgs e)
     {
         if (e.Value)
@@ -55,11 +70,14 @@ public partial class Clinical1 : ContentPage
         }
     }
 
-    private void LoadPreceptorInformation()
+    // Method to load preceptor information
+    private void LoadPreceptorInformation(Student selectedStudent)
     {
+        // Set the clinical page number
         clinicalPageNumber = 1;
+
         // Load preceptor information based on the currently signed-in student's email
-        var loadedPreceptor = database.LoadPreceptorInformation(database.CurrentlySignedInStudentEmail, clinicalPageNumber);
+        var loadedPreceptor = database.LoadPreceptorInformation(selectedStudent.Email, clinicalPageNumber);
 
         if (loadedPreceptor != null)
         {
@@ -72,13 +90,11 @@ public partial class Clinical1 : ContentPage
         }
     }
 
+    // Event handler to save preceptor information
     private async void SavePreceptorInformation(object sender, EventArgs e)
     {
         if (PreceptorInfo.IsVisible)
         {
-            // Assuming you have set the BindingContext of the page to a PreceptorViewModel instance
-            // var preceptorViewModel = (PreceptorViewModel)BindingContext;
-
             // Validate if required fields are filled
             if (string.IsNullOrWhiteSpace(preceptorViewModel.Title) || string.IsNullOrWhiteSpace(preceptorViewModel.Name))
             {
@@ -97,5 +113,4 @@ public partial class Clinical1 : ContentPage
             await DisplayAlert("Success", "Saved Preceptor", "OK");
         }
     }
-
 }

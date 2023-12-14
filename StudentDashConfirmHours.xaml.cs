@@ -1,15 +1,28 @@
+using ClinicalCoordinationApplication.Model;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+
 namespace ClinicalCoordinationApplication;
 
 public partial class StudentDashConfirmHours : ContentPage
 {
-	public StudentDashConfirmHours()
-	{
-		InitializeComponent();
-	}
+    BusinessLogic businessLogic = new BusinessLogic();
+    Account obja = new Account(null, null, null);
+    BusinessLogic bl;
+    public StudentDashConfirmHours()
+    {
+        InitializeComponent();
+        bl = new();
+        obja = bl.GetUserType();
+        Clinical obj = MauiProgram.BusinessLogic.GetLatestCLinicalSubmission(obja.Email);
+        if (obj != null)
+        {
+            ClinicalName.Text = obj.clinicalName;
+            HoursWorked.Text = obj.hoursworked.ToString();
+            DateWorked.Text = obj.dateWorked;
+            Notes.Text = obj.notes;
 
-	private void SubmitHours_Clicked(object sender, EventArgs e)
-	{
-		//call business logic to save in DB
-		Navigation.PushAsync(new StudentDashSuccess());
-	}
+        }
+
+
+    }
 }

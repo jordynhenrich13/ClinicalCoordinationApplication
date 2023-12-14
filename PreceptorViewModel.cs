@@ -4,12 +4,28 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ClinicalCoordinationApplication.Model;
+
 
 namespace ClinicalCoordinationApplication
 {
     public class PreceptorViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
+
+        private Student _selectedStudent;
+        public Student SelectedStudent
+        {
+            get { return _selectedStudent; }
+            set
+            {
+                if (_selectedStudent != value)
+                {
+                    _selectedStudent = value;
+                    OnPropertyChanged(nameof(SelectedStudent));
+                }
+            }
+        }
 
         private string _title;
         public string Title

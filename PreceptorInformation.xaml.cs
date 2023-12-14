@@ -18,6 +18,7 @@ public partial class Preceptor : ContentPage
         // You can add your code to navigate to the user's profile or perform any other action here
     }
 
+    [Obsolete]
     private void OnNewNoteButtonClicked(object sender, EventArgs e)
     {
         var newNote = new Frame

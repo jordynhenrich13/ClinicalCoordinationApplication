@@ -2,48 +2,56 @@
 <toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                 xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-                x:Class="ClinicalCoordinationApplication.DirectorAddReportPopup" Color="Transparent">
-    <Frame BackgroundColor="White" CornerRadius="16">
-    <VerticalStackLayout HeightRequest="600" WidthRequest="300">
+                x:Class="ClinicalCoordinationApplication.DirectorAddReportPopup"
+                Color="Transparent">
+    <Frame BackgroundColor="White" CornerRadius="16" HasShadow="True">
+    <VerticalStackLayout HeightRequest="520" WidthRequest="300">
         <Label 
             Text="Add New Report"
             VerticalOptions="Center" 
             HorizontalOptions="Center"
             FontSize="Large"/>
 
-        
         <Border StrokeThickness="3"
                 StrokeDashArray="1, 1"
                 StrokeDashOffset="2"
-                Margin="0, 32"
+                Margin="0, 14"
                 BackgroundColor="WhiteSmoke">
+
             <Button
+                x:Name="uploadButton"
                 Text="Upload File"
+                Clicked="UploadFileButtonClicked"
                 FontSize="Medium"
                 TextColor="Black"
                 HorizontalOptions="Center"
                 VerticalOptions="Center"
-                Margin="16, 8"
+                Margin="7, 8"
                 BackgroundColor="Transparent"
                 />
+
         </Border>
 
         <Label Text="Report Name:"
-               FontSize="Small"
+                FontSize="Subtitle"
                FontAttributes="Bold" />
-        <Entry Placeholder="Report Name" />
+        <Entry x:Name="ReportName" Text="" Placeholder="Report Name" />
 
         <Label Text="Due Date:"
-               FontSize="Small"
+               x:Name="dueDate"
+               FontSize="Subtitle"
                FontAttributes="Bold"
                Margin="0, 10, 0, 0" />
-        <Entry Placeholder="MM/dd/yyyy" />
+
+        <DatePicker x:Name="DueDate"/>
 
         <Label Text="Send Report To:"
-               FontSize="Small"
+               FontSize="Subtitle"
                FontAttributes="Bold"
                Margin="0, 10, 0, 0" />
-        <Entry Placeholder="Person 1, Person 2..." />
+        <Entry x:Name="SendTo" Text="" Placeholder="Person 1, Person 2..." />
+
+         <Label Text="" x:Name="ErrorText" FontSize="Subtitle" TextColor="MediumPurple" Margin="0, 7"/>
 
         <Button
             Text="Upload and Send Report"
@@ -59,5 +67,3 @@
     </VerticalStackLayout>
     </Frame>
 </toolkit:Popup>
-
-

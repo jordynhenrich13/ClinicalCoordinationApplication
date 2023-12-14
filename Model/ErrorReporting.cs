@@ -65,11 +65,13 @@ namespace ClinicalCoordinationApplication.Model
 
         NoError
     }
+
     public enum FindNewClinicError
     {
 
         NoError
     }
+
     public enum FindStudentError
     {
         SearchTooLong,
@@ -80,6 +82,29 @@ namespace ClinicalCoordinationApplication.Model
     {
         InvalidEmail,
         DBError,
+        NoError
+    }
+
+    public enum AddReportError
+    {
+        CreateReportItemError,
+        DuplicateReportNameError,
+        CollectionAddError,
+        DBAddError,
+        NoError
+    }
+
+    public enum DeleteReportError
+    {
+        DBDeleteError,
+        NoError
+    }
+
+    public enum AddReportSubmissionError
+    {
+        CreateReportSubmissionError,
+        CollectionAddError,
+        DBAddError,
         NoError
     }
 }

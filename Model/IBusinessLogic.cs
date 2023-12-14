@@ -3,8 +3,8 @@ using System.Collections.ObjectModel;
 
 namespace ClinicalCoordinationApplication.Model
 {
-	public interface IBusinessLogic
-	{
+    public interface IBusinessLogic
+    {
         public ObservableCollection<Student> Students { get; }
         public ObservableCollection<Clinic> Clinics { get; }
         public ObservableCollection<Clinical> Clinicals { get; }
@@ -26,6 +26,9 @@ namespace ClinicalCoordinationApplication.Model
         void GetAllStudents();
         FindStudentError FindStudent(string search);
         Clinical GetCLinicalInfo(string email);
+        Clinical GetLatestCLinicalSubmission(string email);
+        ObservableCollection<Clinical> GetStudentClinicalHours(string email);
+        void UpdateCurrentClinical(string email, string currentClinical);
 
     }
 }

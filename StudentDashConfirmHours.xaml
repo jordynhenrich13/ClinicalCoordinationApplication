@@ -1,33 +1,63 @@
-<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ClinicalCoordinationApplication.StudentDashConfirmHours"
-             Title="Confirm Clinical Hours">
+             Title="View Submission"
+             BackgroundColor="White">
+
     <ScrollView>
         <StackLayout>
-            <Label Text="Confirm and Submit Time" FontSize="18" />
-
             <Frame BorderColor="Black" CornerRadius="5" Padding="10" Margin="20">
                 <StackLayout>
-                    <Label Text="Date:" FontSize="18" TextColor="Blue" />
-                    <Label Text="DD/MM/YYY" FontSize="16" />
+                    <Label FontSize="18" TextColor="#555" VerticalOptions="Center">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="Clinical: " />
+                                <Span  x:Name="ClinicalName"  Text="" FontAttributes="Bold"  />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
                 </StackLayout>
             </Frame>
 
             <Frame BorderColor="Black" CornerRadius="5" Padding="10" Margin="20">
                 <StackLayout>
-                    <Label Text="Time:" FontSize="18" TextColor="Blue" />
-                    <Label Text="hh:mm-hh:mm" FontSize="16" />
+                    <Label FontSize="18" TextColor="#555" VerticalOptions="Center">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="Hours Logged: " />
+                                <Span  x:Name="HoursWorked" Text="" FontAttributes="Bold"  />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                </StackLayout>
+            </Frame>
+
+            <Frame BorderColor="Black" CornerRadius="5" Padding="10" Margin="20">
+                <StackLayout>
+                    <Label FontSize="18" TextColor="#555" VerticalOptions="Center">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="Date Worked: " />
+                                <Span  x:Name="DateWorked"  Text="" FontAttributes="Bold"  />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
                 </StackLayout>
             </Frame>
 
             <Frame BorderColor="Black" CornerRadius="5" Padding="10" Margin="20" HeightRequest="200">
                 <StackLayout>
-                    <Label Text="Notes / Comments:" FontSize="18" TextColor="Blue" />
-                    <Label Text="Notes will be shown from database here :)" FontSize="16" />
+                    <Label FontSize="18" TextColor="#555" VerticalOptions="Center">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="Notes: " />
+                                <Span  x:Name="Notes"  Text="" FontAttributes="Bold"  />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
                 </StackLayout>
             </Frame>
-            <Button Text="Submit Hours" TextColor="White" HorizontalOptions="FillAndExpand" Margin="70, 80, 70, 0" Clicked="SubmitHours_Clicked" />
         </StackLayout>
     </ScrollView>
+
 </ContentPage>
