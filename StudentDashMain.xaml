@@ -84,7 +84,7 @@
                         <Label Text="56 Hours | 2 weeks" FontSize="14" TextColor="Gray"/>
                         <Label Text="Description: Need to bind to notes section in clinical class" FontSize="14"  TextColor="Gray" LineBreakMode="WordWrap"/>
                     </StackLayout>
-                    <ImageButton Clicked="LogClinicalHours_Clicked" Source="grayforwardarrow.png" WidthRequest="30" HeightRequest="30" Margin="15,0,0,0" VerticalOptions="Center"/>
+                    <ImageButton Clicked="NavigateToStudentClinical1" Source="grayforwardarrow.png" WidthRequest="30" HeightRequest="30" Margin="15,0,0,0" VerticalOptions="Center"/>
                 </StackLayout>
             </Frame>
 
@@ -97,7 +97,7 @@
                         <Label Text="112 Hours | 5 weeks" FontSize="14" TextColor="Gray"/>
                         <Label Text="Description: Need to bind to notes section in clinical class" FontSize="14"  TextColor="Gray" LineBreakMode="WordWrap"/>
                     </StackLayout>
-                    <ImageButton Clicked="LogClinicalHours_Clicked" Source="grayforwardarrow.png" WidthRequest="30" HeightRequest="30" Margin="15,0,0,0" VerticalOptions="Center"/>
+                    <ImageButton Clicked="NavigateToStudentClinical2" Source="grayforwardarrow.png" WidthRequest="30" HeightRequest="30" Margin="15,0,0,0" VerticalOptions="Center"/>
                 </StackLayout>
             </Frame>
 
@@ -110,7 +110,7 @@
                         <Label Text="112 Hours | 4 weeks" FontSize="14" TextColor="Gray"/>
                         <Label Text="Description: Need to bind to notes section in clinical class" FontSize="14"  TextColor="Gray" LineBreakMode="WordWrap"/>
                     </StackLayout>
-                    <ImageButton Clicked="LogClinicalHours_Clicked" Source="grayforwardarrow.png" WidthRequest="30" HeightRequest="30" Margin="15,0,0,0" VerticalOptions="Center"/>
+                    <ImageButton Clicked="NavigateToStudentClinical3" Source="grayforwardarrow.png" WidthRequest="30" HeightRequest="30" Margin="15,0,0,0" VerticalOptions="Center"/>
                 </StackLayout>
             </Frame>
 
@@ -123,7 +123,7 @@
                         <Label Text="112 Hours | 4 weeks" FontSize="14" TextColor="Gray"/>
                         <Label Text="Description: Need to bind to notes section in clinical class" FontSize="14"  TextColor="Gray" LineBreakMode="WordWrap"/>
                     </StackLayout>
-                    <ImageButton Clicked="LogClinicalHours_Clicked" Source="grayforwardarrow.png" WidthRequest="30" HeightRequest="30" Margin="15,0,0,0" VerticalOptions="Center"/>
+                    <ImageButton Clicked="NavigateToStudentClinical4" Source="grayforwardarrow.png" WidthRequest="30" HeightRequest="30" Margin="15,0,0,0" VerticalOptions="Center"/>
                 </StackLayout>
             </Frame>
 
@@ -136,7 +136,7 @@
                         <Label Text="168 Hours | 6 weeks" FontSize="14" TextColor="Gray"/>
                         <Label Text="Description: Need to bind to notes section in clinical class" FontSize="14"  TextColor="Gray" LineBreakMode="WordWrap"/>
                     </StackLayout>
-                    <ImageButton Clicked="LogClinicalHours_Clicked" Source="grayforwardarrow.png" WidthRequest="30" HeightRequest="30" Margin="15,0,0,0" VerticalOptions="Center"/>
+                    <ImageButton Clicked="NavigateToStudentClinical5" Source="grayforwardarrow.png" WidthRequest="30" HeightRequest="30" Margin="15,0,0,0" VerticalOptions="Center"/>
                 </StackLayout>
             </Frame>
 
@@ -149,7 +149,7 @@
                         <Label Text="168 Hours | 5 weeks" FontSize="14" TextColor="Gray"/>
                         <Label Text="Description: Need to bind to notes section in clinical class" FontSize="14"  TextColor="Gray" LineBreakMode="WordWrap"/>
                     </StackLayout>
-                    <ImageButton Source="grayforwardarrow.png" WidthRequest="30" HeightRequest="30" Margin="15,0,0,0" VerticalOptions="Center" Clicked="LogClinicalHours_Clicked"/>
+                    <ImageButton Source="grayforwardarrow.png" WidthRequest="30" HeightRequest="30" Margin="15,0,0,0" VerticalOptions="Center" Clicked="NavigateToStudentClinical6"/>
                 </StackLayout>
             </Frame>
         </StackLayout>
