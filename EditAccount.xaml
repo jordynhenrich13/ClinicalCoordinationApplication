@@ -4,19 +4,19 @@
              x:Class="ClinicalCoordinationApplication.EditAccount"
              Title="Edit Account">
     <VerticalStackLayout
-     Spacing="0"
+     Spacing="20"
      Padding="20,0"
 >
         <Grid ColumnDefinitions="5, *" ColumnSpacing="15">
         </Grid>
         <Label 
-          HorizontalOptions="Start"
+          HorizontalOptions="Center"
           VerticalOptions="Center" 
           Text="Please fill in at least one entry to edit your account."
           Margin="0, 30, 10, 0"
         />
         <VerticalStackLayout
-        Spacing="30"
+        Spacing="50"
         Padding="0, 20"
     >
             <Grid ColumnDefinitions=".9*, *">
@@ -38,6 +38,7 @@
             <Button
             Text="Edit Account"
             HorizontalOptions="Center"
+            WidthRequest="225"
             CornerRadius="0"
             Clicked="EditAccount_Clicked"  
         />

@@ -69,15 +69,9 @@ public class Database : IDatabase
         UserId = email;
     }
 
-    public string GetUserType()
+    public Account GetUserAccount()
     {
-        string role = null;
-        Account account = GetAccount(UserId);
-        if (account != null)
-        {
-            role = account.Role;
-        }
-        return role;
+        return GetAccount(UserId);
     }
 
     public void SavePreceptorToDatabase(PreceptorViewModel preceptor)
@@ -393,7 +387,7 @@ public class Database : IDatabase
                 }
                 conn.Close();
             }
-            if (UserId.CompareTo(email) == 0)
+            if (UserId.CompareTo(email) != 0)
             {
                 var conn2 = new NpgsqlConnection(GetConnectionString());
                 conn2.Open();
@@ -413,12 +407,11 @@ public class Database : IDatabase
 
                 var conn4 = new NpgsqlConnection(GetConnectionString());
                 conn4.Open();
-                using var cmd4 = new NpgsqlCommand("UPDATE Preceptor SET studentemail = @email WHERE studentemail @currentEmail");
+                using var cmd4 = new NpgsqlCommand("UPDATE Preceptor SET studentemail = @email WHERE studentemail @currentEmail", conn4);
                 cmd4.Parameters.AddWithValue("email", email);
                 cmd4.Parameters.AddWithValue("currentEmail", UserId);
                 cmd4.ExecuteNonQuery();
                 conn4.Close();
-                UserId = email;
             }
 
             var conn5 = new NpgsqlConnection(GetConnectionString());
@@ -430,7 +423,7 @@ public class Database : IDatabase
             cmd5.Parameters.AddWithValue("currentEmail", UserId);
             cmd5.ExecuteNonQuery();
             conn5.Close();
-
+            UserId = email;
         }
         catch (Npgsql.PostgresException ex)
         {
@@ -468,7 +461,7 @@ public class Database : IDatabase
                 }
                 conn.Close();
             }
-            if (UserId.CompareTo(email) == 0)
+            if (UserId.CompareTo(email) != 0)
             {
                 var conn2 = new NpgsqlConnection(GetConnectionString());
                 conn2.Open();
@@ -477,7 +470,6 @@ public class Database : IDatabase
                 cmd2.Parameters.AddWithValue("currentEmail", UserId);
                 cmd2.ExecuteNonQuery();
                 conn2.Close();
-                UserId = email;
             }
 
             var conn3 = new NpgsqlConnection(GetConnectionString());
@@ -489,6 +481,7 @@ public class Database : IDatabase
             cmd3.Parameters.AddWithValue("currentEmail", UserId);
             cmd3.ExecuteNonQuery();
             conn3.Close();
+            UserId = email;
         }
         catch (Npgsql.PostgresException ex)
         {

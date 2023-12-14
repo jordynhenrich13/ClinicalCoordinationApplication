@@ -1,17 +1,7 @@
-﻿using System.Collections.ObjectModel;
-using System.Text;
-using System.Threading;
-using AndroidX.Lifecycle;
-using AndroidX.Navigation;
-using ClinicalCoordinationApplication.Model;
+﻿using ClinicalCoordinationApplication.Model;
 using ClinicalCoordinationApplication.Model.Reports;
 using CommunityToolkit.Maui.Alerts;
-using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Maui.Storage;
-using CommunityToolkit.Maui.Views;
-using Microsoft.Maui;
-using static Android.Icu.Text.AlphabeticIndex;
-using Font = Microsoft.Maui.Font;
 
 namespace ClinicalCoordinationApplication;
 public partial class CoordinatorReportsDashboard : ContentPage

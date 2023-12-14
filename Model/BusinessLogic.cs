@@ -36,9 +36,9 @@ namespace ClinicalCoordinationApplication.Model
             CoordinatorReports = database.GetCoordinatorReports(Preferences.Get("user_email", "Unknown"));
         }
 
-        public string GetUserType()
+        public Account GetUserAccount()
         {
-            return database.GetUserType();
+            return database.GetUserAccount();
         }
 
         public void DeleteProfile()
@@ -146,7 +146,7 @@ namespace ClinicalCoordinationApplication.Model
         public EditAccountError EditAccount(string email, string firstName, string lastName)
         {
             Account accountToEdit = database.GetAccount(database.UserId);
-            if (email.Length != 0)
+            if (!string.IsNullOrWhiteSpace(email))
             {
                 Account account = database.GetAccount(email);
                 if (account != null)
@@ -162,7 +162,7 @@ namespace ClinicalCoordinationApplication.Model
             {
                 email = database.UserId;
             }
-            if (firstName.Length != 0)
+            if (!string.IsNullOrWhiteSpace(firstName))
             {
                 if (firstName.Length < 1 || firstName.Length > 50)
                 {
@@ -173,7 +173,7 @@ namespace ClinicalCoordinationApplication.Model
             {
                 firstName = "";
             }
-            if (lastName.Length != 0)
+            if (!string.IsNullOrWhiteSpace(lastName))
             {
                 if (lastName.Length < 1 || lastName.Length > 50)
                 {
